@@ -5,10 +5,16 @@ type Props = {
   handleAdd: (e: FormEvent<HTMLFormElement>) => void;
   handleClear: () => void;
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  editId: string;
   values: inputs;
 };
 
-function FormAddTransaction({ handleAdd, handleChange, values }: Props) {
+function FormAddTransaction({
+  handleAdd,
+  handleChange,
+  editId,
+  values,
+}: Props) {
   return (
     <>
       <form action="" onSubmit={handleAdd}>
@@ -44,11 +50,11 @@ function FormAddTransaction({ handleAdd, handleChange, values }: Props) {
           required
         >
           <option value="">--Elegir--</option>
-          <option value="comida">Comida</option>
-          <option value="transporte">Transporte</option>
-          <option value="salario">Salario</option>
-          <option value="medicina">Medicina</option>
-          <option value="snacks">Snacks/Dulces</option>
+          <option value="Comida">Comida</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Salario">Salario</option>
+          <option value="Medicina">Medicina</option>
+          <option value="Snacks/Dulces">Snacks/Dulces</option>
         </select>
         <input
           type="date"
@@ -57,7 +63,7 @@ function FormAddTransaction({ handleAdd, handleChange, values }: Props) {
           onChange={handleChange}
           required
         />
-        <input type="submit" value="AGREGAR" />
+        <input type="submit" value={editId === "" ? "AGREGAR" : "ACTUALIZAR"} />
       </form>
     </>
   );

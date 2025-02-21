@@ -45,18 +45,9 @@ export const reducer = (
 ): Transaction[] => {
   switch (action.type) {
     case "ADD": {
-      const { description, amount, category, date, type } = action.payload;
-      return [
-        ...state,
-        {
-          id: uuidv4(),
-          description,
-          amount,
-          category,
-          date,
-          type,
-        },
-      ];
+      const newState = [...state, { id: uuidv4(), ...action.payload }];
+      localStorage.setItem("transactions", JSON.stringify(newState));
+      return newState;
     }
 
     case "DELETE": {
@@ -66,17 +57,22 @@ export const reducer = (
           return item;
         }
       });
+      localStorage.setItem("transactions", JSON.stringify(newTrans));
       return newTrans;
     }
 
     case "UPDATE": {
-      const { id, datosAct } = action.payload;
-      return state.map((item) =>
-        item.id === id ? { ...item, ...datosAct } : item
+      const updatedState = state.map((item) =>
+        item.id === action.payload.id
+          ? { ...item, ...action.payload.datosAct }
+          : item
       );
+      localStorage.setItem("transactions", JSON.stringify(updatedState));
+      return updatedState;
     }
 
     case "CLEAR": {
+      localStorage.removeItem("transactions");
       return (state = []);
     }
 

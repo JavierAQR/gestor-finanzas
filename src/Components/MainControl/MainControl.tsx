@@ -4,7 +4,7 @@ import { useTransactions } from "./useTransactions";
 
 function MainControl() {
   const { handleChange, handleClear, handlerAddTransaction, handleDeleteTransaction,
-    handleUpdateTransaction, values } =
+    handleUpdateTransaction, editId, values } =
     useTransactions();
 
   return (
@@ -13,6 +13,7 @@ function MainControl() {
         handleAdd={handlerAddTransaction}
         handleClear={handleClear}
         handleChange={handleChange}
+        editId={editId}
         values={values}
       />
       <DisplayTransactions handleDelete = {handleDeleteTransaction} handleUpdate = {handleUpdateTransaction}/>

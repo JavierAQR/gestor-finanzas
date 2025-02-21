@@ -3,6 +3,7 @@ import {
   Dispatch,
   ReactNode,
   useContext,
+  useEffect,
   useReducer,
 } from "react";
 import { Action, reducer, Transaction } from "./reducer";
@@ -19,7 +20,15 @@ interface ContextType {
 export const DataContext = createContext<ContextType | null>(null);
 
 export function TransactionContextProvider({ children }: Props) {
-  const [state, dispatch] = useReducer(reducer, []);
+  const initialState: Transaction[] = JSON.parse(
+    localStorage.getItem("transactions") || "[]"
+  );
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(state));
+  }, [state]);
 
   const valor = { state, dispatch };
 

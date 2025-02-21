@@ -86,6 +86,7 @@ export function useTransactions() {
     handleDeleteTransaction,
     handleUpdateTransaction,
     handlerAddTransaction,
+    editId,
     values,
   };
 }
