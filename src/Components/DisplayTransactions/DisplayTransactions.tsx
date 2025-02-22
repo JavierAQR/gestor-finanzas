@@ -1,53 +1,39 @@
-import { useDataContext } from "../../context/TransactionContext";
 import SingleTransaction from "../SingleTransaction/SingleTransaction";
 import "./styles.css";
 import { inputs, Transaction } from "../../context/reducer";
 import { ChangeEvent } from "react";
 
 type Props = {
-  tablaSeleccionada: Transaction[];
+  selectedTable: Transaction[];
   handleDelete: (id: string) => void;
   handleUpdate: (datos: inputs, id: string) => void;
   handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
+  tableSort: string;
+  handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
+
   categoryFilter: string;
 };
 
 function DisplayTransactions({
   handleDelete,
   handleUpdate,
-  categoryFilter,
-  handleChangeFilter,
-  tablaSeleccionada,
+  selectedTable,
 }: Props) {
-  const contextData = useDataContext();
-
   return (
     <>
-      <select
-        name="categoryFilter"
-        value={categoryFilter}
-        onChange={handleChangeFilter}
-      >
-        <option value="">Todo</option>
-        {contextData.categoryArray.map((item, index) => (
-          <option key={index} value={item.name}>
-            {item.name}
-          </option>
-        ))}
-      </select>
       <div className="transaction-list">
         <table>
           <thead>
             <tr>
               <th>Descripción</th>
               <th>Categoría</th>
-              <th>Monto (S/)</th>
+              <th>Monto S/.</th>
               <th>Fecha</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {tablaSeleccionada.map((item) => {
+            {selectedTable.map((item) => {
               return (
                 <SingleTransaction
                   handleDelete={handleDelete}

@@ -2,6 +2,7 @@ import BalanceTotal from "../BalanceTotal/BalanceTotal";
 import DisplayTransactions from "../DisplayTransactions/DisplayTransactions";
 import FormAddTransaction from "../FormAddTransaction/FormAddTransaction";
 import { useTransactions } from "../hooks/useTransactions";
+import TableControls from "../TableControls/TableControls";
 
 function MainControl() {
   const {
@@ -10,9 +11,11 @@ function MainControl() {
     handleDeleteTransaction,
     handleUpdateTransaction,
     handleChangeFilter,
+    handleSortByDate,
+    tableSort,
     expenseCategories,
     incomeCategories,
-    tablaSeleccionada,
+    selectedTable,
     categoryFilter,
     editId,
     values,
@@ -23,19 +26,27 @@ function MainControl() {
       <FormAddTransaction
         handleAdd={handlerAddTransaction}
         handleChange={handleChange}
-        expenseCategories = {expenseCategories}
-        incomeCategories = {incomeCategories}
+        expenseCategories={expenseCategories}
+        incomeCategories={incomeCategories}
         editId={editId}
         values={values}
       />
+      <TableControls
+        handleChangeFilter={handleChangeFilter}
+        categoryFilter={categoryFilter}
+        handleSortByDate={handleSortByDate}
+        tableSort={tableSort}
+      />
       <DisplayTransactions
-        tablaSeleccionada={tablaSeleccionada}
+        selectedTable={selectedTable}
         handleDelete={handleDeleteTransaction}
         handleUpdate={handleUpdateTransaction}
         handleChangeFilter={handleChangeFilter}
         categoryFilter={categoryFilter}
+        handleSortByDate={handleSortByDate}
+        tableSort={tableSort}
       />
-      <BalanceTotal tablaSeleccionada={tablaSeleccionada} />
+      <BalanceTotal selectedTable={selectedTable} />
     </>
   );
 }

@@ -7,6 +7,7 @@ type Props = {
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   expenseCategories: CategoryArray[];
   incomeCategories: CategoryArray[];
+
   editId: string;
   values: inputs;
 };

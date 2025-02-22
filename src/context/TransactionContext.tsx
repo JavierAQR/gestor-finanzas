@@ -54,6 +54,10 @@ export function TransactionContextProvider({ children }: Props) {
       name: "Otros",
       type: "income",
     },
+    {
+      name: "Deuda",
+      type: "expense",
+    },
   ]);
 
   useEffect(() => {

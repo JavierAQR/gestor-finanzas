@@ -1,15 +1,15 @@
 import { Transaction } from "../../context/reducer";
 
 type Props = {
-  tablaSeleccionada: Transaction[];
+  selectedTable: Transaction[];
 };
 
-function BalanceTotal({ tablaSeleccionada }: Props) {
-  const ingresoTotal = tablaSeleccionada
+function BalanceTotal({ selectedTable }: Props) {
+  const ingresoTotal = selectedTable
     .filter((item) => item.type === "income")
     .reduce((acc, total) => acc + Number(total.amount), 0);
 
-  const egresoTotal = tablaSeleccionada
+  const egresoTotal = selectedTable
     .filter((item) => item.type === "expense")
     .reduce((acc, total) => acc + Number(total.amount), 0);
 
