@@ -1,7 +1,7 @@
 import BalanceTotal from "../BalanceTotal/BalanceTotal";
 import DisplayTransactions from "../DisplayTransactions/DisplayTransactions";
 import FormAddTransaction from "../FormAddTransaction/FormAddTransaction";
-import { useTransactions } from "./useTransactions";
+import { useTransactions } from "../hooks/useTransactions";
 
 function MainControl() {
   const {
@@ -10,6 +10,8 @@ function MainControl() {
     handleDeleteTransaction,
     handleUpdateTransaction,
     handleChangeFilter,
+    expenseCategories,
+    incomeCategories,
     tablaSeleccionada,
     categoryFilter,
     editId,
@@ -21,6 +23,8 @@ function MainControl() {
       <FormAddTransaction
         handleAdd={handlerAddTransaction}
         handleChange={handleChange}
+        expenseCategories = {expenseCategories}
+        incomeCategories = {incomeCategories}
         editId={editId}
         values={values}
       />

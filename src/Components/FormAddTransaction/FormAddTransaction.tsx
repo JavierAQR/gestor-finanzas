@@ -1,10 +1,12 @@
 import { ChangeEvent, FormEvent } from "react";
 import { inputs } from "../../context/reducer";
-import { useDataContext } from "../../context/TransactionContext";
+import { CategoryArray } from "../../context/TransactionContext";
 
 type Props = {
   handleAdd: (e: FormEvent<HTMLFormElement>) => void;
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  expenseCategories: CategoryArray[];
+  incomeCategories: CategoryArray[];
   editId: string;
   values: inputs;
 };
@@ -14,8 +16,11 @@ function FormAddTransaction({
   handleChange,
   editId,
   values,
+  expenseCategories,
+  incomeCategories,
 }: Props) {
-  const contextData = useDataContext();
+  const typeSelected =
+    values.type === "income" ? incomeCategories : expenseCategories;
 
   return (
     <>
@@ -44,6 +49,7 @@ function FormAddTransaction({
           value={values.amount}
           onChange={handleChange}
           min={1}
+          step="any"
           required
         />
         <select
@@ -52,10 +58,10 @@ function FormAddTransaction({
           onChange={handleChange}
           required
         >
-          <option value="">--Elegir--</option>
-          {contextData.categoryArray.map((item, index) => (
-            <option key={index} value={item}>
-              {item}
+          <option value="">--Elegir Categoría--</option>
+          {typeSelected.map((item, index) => (
+            <option key={index} value={item.name}>
+              {item.name}
             </option>
           ))}
         </select>

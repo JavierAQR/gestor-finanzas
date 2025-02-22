@@ -85,6 +85,18 @@ export function useTransactions() {
     }
   });
 
+  const expenseCategories = contextData.categoryArray.filter((item) => {
+    if (item.type === "expense") {
+      return item.name;
+    }
+  });
+
+  const incomeCategories = contextData.categoryArray.filter((item) => {
+    if (item.type === "income") {
+      return item.name;
+    }
+  });
+
   const tablaSeleccionada =
     categoryFilter === "" ? contextData.state : filterTable;
 
@@ -94,6 +106,8 @@ export function useTransactions() {
     handleUpdateTransaction,
     handlerAddTransaction,
     handleChangeFilter,
+    expenseCategories,
+    incomeCategories,
     tablaSeleccionada,
     categoryFilter,
     editId,

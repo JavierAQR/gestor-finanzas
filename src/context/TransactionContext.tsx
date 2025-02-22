@@ -7,7 +7,7 @@ import {
   useReducer,
   useState,
 } from "react";
-import { Action, reducer, Transaction } from "./reducer";
+import { Action, reducer, Transaction, TransactionType } from "./reducer";
 
 type Props = {
   children?: ReactNode;
@@ -16,7 +16,12 @@ type Props = {
 interface ContextType {
   state: Transaction[];
   dispatch: Dispatch<Action>;
-  categoryArray: string[];
+  categoryArray: CategoryArray[];
+}
+
+export interface CategoryArray {
+  name: string;
+  type: TransactionType;
 }
 
 export const DataContext = createContext<ContextType | null>(null);
@@ -27,13 +32,28 @@ export function TransactionContextProvider({ children }: Props) {
   );
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [categoryArray, setCategoryArray] = useState([
-    "Comida",
-    "Transporte",
-    "Salario",
-    "Propina",
-    "Medicina",
-    "Snacks/Dulces",
+
+  const [categoryArray, setCategoryArray] = useState<CategoryArray[]>([
+    {
+      name: "Transporte",
+      type: "expense",
+    },
+    {
+      name: "Medicina",
+      type: "expense",
+    },
+    {
+      name: "Alimentación",
+      type: "expense",
+    },
+    {
+      name: "Salario",
+      type: "income",
+    },
+    {
+      name: "Otros",
+      type: "income",
+    },
   ]);
 
   useEffect(() => {

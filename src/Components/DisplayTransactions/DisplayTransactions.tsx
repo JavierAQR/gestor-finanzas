@@ -30,8 +30,8 @@ function DisplayTransactions({
       >
         <option value="">Todo</option>
         {contextData.categoryArray.map((item, index) => (
-          <option key={index} value={item}>
-            {item}
+          <option key={index} value={item.name}>
+            {item.name}
           </option>
         ))}
       </select>
