@@ -36,7 +36,6 @@ function SingleTransaction({
       <td>{typeTransaction}</td>
       <td>{date}</td>
       <td>
-        <button onClick={() => handleDelete(id)}>Eliminar</button>
         <button
           onClick={() =>
             handleUpdate(
@@ -53,6 +52,7 @@ function SingleTransaction({
         >
           Editar
         </button>
+        <button onClick={() => handleDelete(id)}>Eliminar</button>
       </td>
     </tr>
   );

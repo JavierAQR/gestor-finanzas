@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent } from "react";
 import { inputs } from "../../context/reducer";
+import { useDataContext } from "../../context/TransactionContext";
 
 type Props = {
   handleAdd: (e: FormEvent<HTMLFormElement>) => void;
@@ -15,6 +16,8 @@ function FormAddTransaction({
   editId,
   values,
 }: Props) {
+  const contextData = useDataContext();
+
   return (
     <>
       <form action="" onSubmit={handleAdd}>
@@ -50,11 +53,11 @@ function FormAddTransaction({
           required
         >
           <option value="">--Elegir--</option>
-          <option value="Comida">Comida</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Salario">Salario</option>
-          <option value="Medicina">Medicina</option>
-          <option value="Snacks/Dulces">Snacks/Dulces</option>
+          {contextData.categoryArray.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
         </select>
         <input
           type="date"

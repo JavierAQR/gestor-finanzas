@@ -3,9 +3,18 @@ import FormAddTransaction from "../FormAddTransaction/FormAddTransaction";
 import { useTransactions } from "./useTransactions";
 
 function MainControl() {
-  const { handleChange, handleClear, handlerAddTransaction, handleDeleteTransaction,
-    handleUpdateTransaction, editId, values } =
-    useTransactions();
+  const {
+    handleChange,
+    handleClear,
+    handlerAddTransaction,
+    handleDeleteTransaction,
+    handleUpdateTransaction,
+    handleChangeFilter,
+    categoryFilter,
+    filterTable,
+    editId,
+    values,
+  } = useTransactions();
 
   return (
     <>
@@ -16,7 +25,13 @@ function MainControl() {
         editId={editId}
         values={values}
       />
-      <DisplayTransactions handleDelete = {handleDeleteTransaction} handleUpdate = {handleUpdateTransaction}/>
+      <DisplayTransactions
+        filterTable={filterTable}
+        handleDelete={handleDeleteTransaction}
+        handleUpdate={handleUpdateTransaction}
+        handleChangeFilter={handleChangeFilter}
+        categoryFilter={categoryFilter}
+      />
     </>
   );
 }

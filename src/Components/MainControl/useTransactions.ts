@@ -5,6 +5,7 @@ import { inputs } from "../../context/reducer";
 export function useTransactions() {
   const [editId, setEditId] = useState("");
   const contextData = useDataContext();
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   const [values, setValues] = useState<inputs>({
     description: "",
@@ -80,12 +81,25 @@ export function useTransactions() {
     });
   };
 
+  const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCategoryFilter(e.target.value);
+  };
+
+  const filterTable = contextData.state.filter((item) => {
+    if (item.category === categoryFilter) {
+      return item;
+    }
+  });
+
   return {
     handleChange,
     handleClear,
     handleDeleteTransaction,
     handleUpdateTransaction,
     handlerAddTransaction,
+    handleChangeFilter,
+    categoryFilter,
+    filterTable,
     editId,
     values,
   };

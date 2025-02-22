@@ -1,18 +1,43 @@
 import { useDataContext } from "../../context/TransactionContext";
 import SingleTransaction from "../SingleTransaction/SingleTransaction";
 import "./styles.css";
-import { inputs } from "../../context/reducer";
+import { inputs, Transaction } from "../../context/reducer";
+import { ChangeEvent } from "react";
 
 type Props = {
+  filterTable: Transaction[];
   handleDelete: (id: string) => void;
   handleUpdate: (datos: inputs, id: string) => void;
+  handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
+  categoryFilter: string;
 };
 
-function DisplayTransactions({ handleDelete, handleUpdate }: Props) {
+function DisplayTransactions({
+  handleDelete,
+  handleUpdate,
+  categoryFilter,
+  handleChangeFilter,
+  filterTable,
+}: Props) {
   const contextData = useDataContext();
+
+  const tablaSeleccionada =
+    categoryFilter === "" ? contextData.state : filterTable;
 
   return (
     <>
+      <select
+        name="categoryFilter"
+        value={categoryFilter}
+        onChange={handleChangeFilter}
+      >
+        <option value="">Todo</option>
+        {contextData.categoryArray.map((item, index) => (
+          <option key={index} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
       <div className="transaction-list">
         <table>
           <thead>
@@ -25,7 +50,7 @@ function DisplayTransactions({ handleDelete, handleUpdate }: Props) {
             </tr>
           </thead>
           <tbody>
-            {contextData.state.map((item) => {
+            {tablaSeleccionada.map((item) => {
               return (
                 <SingleTransaction
                   handleDelete={handleDelete}

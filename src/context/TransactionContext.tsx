@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useReducer,
+  useState,
 } from "react";
 import { Action, reducer, Transaction } from "./reducer";
 
@@ -15,6 +16,7 @@ type Props = {
 interface ContextType {
   state: Transaction[];
   dispatch: Dispatch<Action>;
+  categoryArray: string[];
 }
 
 export const DataContext = createContext<ContextType | null>(null);
@@ -25,12 +27,19 @@ export function TransactionContextProvider({ children }: Props) {
   );
 
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [categoryArray, setCategoryArray] = useState([
+    "Comida",
+    "Transporte",
+    "Salario",
+    "Medicina",
+    "Snacks/Dulces",
+  ]);
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(state));
   }, [state]);
 
-  const valor = { state, dispatch };
+  const valor = { state, dispatch, categoryArray, setCategoryArray };
 
   return <DataContext.Provider value={valor}>{children}</DataContext.Provider>;
 }
