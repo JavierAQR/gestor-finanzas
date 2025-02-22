@@ -4,12 +4,12 @@ import { inputs } from "../../context/reducer";
 
 export function useTransactions() {
   const [editId, setEditId] = useState("");
-  const contextData = useDataContext();
   const [categoryFilter, setCategoryFilter] = useState("");
+  const contextData = useDataContext();
 
   const [values, setValues] = useState<inputs>({
     description: "",
-    amount: 0,
+    amount: 1,
     category: "",
     date: new Date().toISOString().split("T")[0],
     type: "expense",
@@ -66,12 +66,6 @@ export function useTransactions() {
     });
   };
 
-  const handleClear = () => {
-    contextData.dispatch({
-      type: "CLEAR",
-    });
-  };
-
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -91,15 +85,17 @@ export function useTransactions() {
     }
   });
 
+  const tablaSeleccionada =
+    categoryFilter === "" ? contextData.state : filterTable;
+
   return {
     handleChange,
-    handleClear,
     handleDeleteTransaction,
     handleUpdateTransaction,
     handlerAddTransaction,
     handleChangeFilter,
+    tablaSeleccionada,
     categoryFilter,
-    filterTable,
     editId,
     values,
   };

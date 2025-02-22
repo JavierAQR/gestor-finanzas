@@ -4,7 +4,6 @@ import { useDataContext } from "../../context/TransactionContext";
 
 type Props = {
   handleAdd: (e: FormEvent<HTMLFormElement>) => void;
-  handleClear: () => void;
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   editId: string;
   values: inputs;
@@ -44,6 +43,7 @@ function FormAddTransaction({
           placeholder="Monto"
           value={values.amount}
           onChange={handleChange}
+          min={1}
           required
         />
         <select

@@ -29,9 +29,6 @@ export type Action =
       payload: string;
     }
   | {
-      type: "CLEAR";
-    }
-  | {
       type: "UPDATE";
       payload: {
         id: string;
@@ -69,11 +66,6 @@ export const reducer = (
       );
       localStorage.setItem("transactions", JSON.stringify(updatedState));
       return updatedState;
-    }
-
-    case "CLEAR": {
-      localStorage.removeItem("transactions");
-      return (state = []);
     }
 
     default:

@@ -31,6 +31,7 @@ export function TransactionContextProvider({ children }: Props) {
     "Comida",
     "Transporte",
     "Salario",
+    "Propina",
     "Medicina",
     "Snacks/Dulces",
   ]);

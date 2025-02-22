@@ -1,3 +1,4 @@
+import BalanceTotal from "../BalanceTotal/BalanceTotal";
 import DisplayTransactions from "../DisplayTransactions/DisplayTransactions";
 import FormAddTransaction from "../FormAddTransaction/FormAddTransaction";
 import { useTransactions } from "./useTransactions";
@@ -5,13 +6,12 @@ import { useTransactions } from "./useTransactions";
 function MainControl() {
   const {
     handleChange,
-    handleClear,
     handlerAddTransaction,
     handleDeleteTransaction,
     handleUpdateTransaction,
     handleChangeFilter,
+    tablaSeleccionada,
     categoryFilter,
-    filterTable,
     editId,
     values,
   } = useTransactions();
@@ -20,18 +20,18 @@ function MainControl() {
     <>
       <FormAddTransaction
         handleAdd={handlerAddTransaction}
-        handleClear={handleClear}
         handleChange={handleChange}
         editId={editId}
         values={values}
       />
       <DisplayTransactions
-        filterTable={filterTable}
+        tablaSeleccionada={tablaSeleccionada}
         handleDelete={handleDeleteTransaction}
         handleUpdate={handleUpdateTransaction}
         handleChangeFilter={handleChangeFilter}
         categoryFilter={categoryFilter}
       />
+      <BalanceTotal tablaSeleccionada={tablaSeleccionada} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import { inputs, Transaction } from "../../context/reducer";
 import { ChangeEvent } from "react";
 
 type Props = {
-  filterTable: Transaction[];
+  tablaSeleccionada: Transaction[];
   handleDelete: (id: string) => void;
   handleUpdate: (datos: inputs, id: string) => void;
   handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -17,12 +17,9 @@ function DisplayTransactions({
   handleUpdate,
   categoryFilter,
   handleChangeFilter,
-  filterTable,
+  tablaSeleccionada,
 }: Props) {
   const contextData = useDataContext();
-
-  const tablaSeleccionada =
-    categoryFilter === "" ? contextData.state : filterTable;
 
   return (
     <>
