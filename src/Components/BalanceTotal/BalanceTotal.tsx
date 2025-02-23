@@ -1,4 +1,5 @@
 import { Transaction } from "../../context/reducer";
+import "./styles.css";
 
 type Props = {
   selectedTable: Transaction[];
@@ -14,10 +15,19 @@ function BalanceTotal({ selectedTable }: Props) {
     .reduce((acc, total) => acc + Number(total.amount), 0);
 
   return (
-    <div>
-      <h4>Total de ingresos: S/ {ingresoTotal}</h4>
-      <h4>Total de egresos: S/ {egresoTotal}</h4>
-      <h4>Diferencia: S/{ingresoTotal - egresoTotal}</h4>
+    <div className="balance-total">
+      <div className="total">
+        <h4>Total de ingresos</h4>
+        <span>S/ {ingresoTotal}</span>
+      </div>
+      <div className="total">
+        <h4>Total de egresos</h4>
+        <span> S/ {egresoTotal}</span>
+      </div>
+      <div className="total">
+        <h4>Diferencia</h4>
+        <span>S/ {ingresoTotal - egresoTotal}</span>
+      </div>
     </div>
   );
 }

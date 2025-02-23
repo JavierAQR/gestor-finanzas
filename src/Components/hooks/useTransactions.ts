@@ -13,10 +13,10 @@ export function useTransactions() {
 
   const [values, setValues] = useState<inputs>({
     description: "",
-    amount: 1,
+    amount: NaN,
     category: "",
     date: new Date().toISOString().split("T")[0],
-    type: "expense",
+    type: "",
   });
 
   // Metodo para agregar una transacción, asigna los valores (values) del formulario a los requeridos por el dispatch para agregar nuevos registros.
@@ -51,8 +51,8 @@ export function useTransactions() {
       description: "",
       category: "",
       date: new Date().toISOString().split("T")[0],
-      amount: 0,
-      type: "expense",
+      amount: NaN,
+      type: "",
     });
   };
 
@@ -109,16 +109,12 @@ export function useTransactions() {
     }
   });
 
-  // filterTable filtra el array original de transacciones para obtener un array que contenga solo transacciones con la misma categoría que el estado categoryFilter
-  // tablaSeleccionada obtiene el array original si en caso categoryFilter contiene un string vacío, si categoryFilter tiene una categoría asignada, se obtiene el array filtrado.
-
-
-
-  // Metodos para manejar el ordenamiento de la tabla por fechas
-
+  // handleSortByDate: Metodo para establecer el valor de ordenamiento seleccionado en TableControls
   const handleSortByDate = (e: ChangeEvent<HTMLSelectElement>) => {
     setTableSort(e.target.value);
   };
+
+  //Metodo para aplicar en selectedTable el valor actualizado de un array filtrado y ordenado.
 
   const applyFilterAndSort = () => {
     let filteredTransactions = contextData.state;
@@ -131,12 +127,14 @@ export function useTransactions() {
     const sortedTransactions = [...filteredTransactions].sort((a, b) => {
       const A = new Date(a.date);
       const B = new Date(b.date);
-      if (tableSort === "reciente") return A.getTime() - B.getTime();
+      if (tableSort === "antiguo") return A.getTime() - B.getTime();
       return B.getTime() - A.getTime();
     });
 
     setSelectedTable(sortedTransactions);
   };
+
+  //Cada que cambien los valores como el filtro por categoria, el orden de la tabla o los datos orgininales, se aplica el metodo de ordenamiento y filtrado.
 
   useEffect(() => {
     applyFilterAndSort();

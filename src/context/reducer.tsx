@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-export type TransactionType = "income" | "expense";
+export type TransactionType = "income" | "expense" | "";
 
 export interface inputs {
   description: string;

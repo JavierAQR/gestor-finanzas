@@ -31,6 +31,7 @@ function MainControl() {
         editId={editId}
         values={values}
       />
+      <BalanceTotal selectedTable={selectedTable} />
       <TableControls
         handleChangeFilter={handleChangeFilter}
         categoryFilter={categoryFilter}
@@ -46,7 +47,6 @@ function MainControl() {
         handleSortByDate={handleSortByDate}
         tableSort={tableSort}
       />
-      <BalanceTotal selectedTable={selectedTable} />
     </>
   );
 }

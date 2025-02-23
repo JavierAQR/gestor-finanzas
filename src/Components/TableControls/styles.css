@@ -1,0 +1,22 @@
+.table-controls {
+  display: flex;
+  gap: 40px;
+  margin: 1rem 0;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+
+.control {
+  display: flex;
+  height: 30px;
+  gap: 15px;
+}
+
+.control h4 {
+  color: var(--color-suave);
+}
+
+.control select {
+  border: 2px solid var(--color-borde);
+  border-radius: 6px;
+}

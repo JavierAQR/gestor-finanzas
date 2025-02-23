@@ -1,0 +1,7 @@
+header {
+  display: flex;
+  flex-direction: flex-start;
+  background-color: #4b02b0;
+  color: white;
+  padding: 1rem 5rem;
+}

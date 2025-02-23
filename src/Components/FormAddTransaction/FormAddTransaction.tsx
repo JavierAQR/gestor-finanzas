@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from "react";
 import { inputs } from "../../context/reducer";
 import { CategoryArray } from "../../context/TransactionContext";
+import "./styles.css";
 
 type Props = {
   handleAdd: (e: FormEvent<HTMLFormElement>) => void;
@@ -24,58 +25,74 @@ function FormAddTransaction({
     values.type === "income" ? incomeCategories : expenseCategories;
 
   return (
-    <>
+    <div className="formulario-transaccion">
+      <h1>Ingresar Transacción</h1>
       <form action="" onSubmit={handleAdd}>
-        <select
-          name="type"
-          value={values.type}
-          onChange={handleChange}
-          required
-        >
-          <option value="expense">Egreso</option>
-          <option value="income">Ingreso</option>
-        </select>
-        <input
-          type="text"
-          name="description"
-          placeholder="Descripción"
-          value={values.description}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="amount"
-          placeholder="Monto"
-          value={values.amount}
-          onChange={handleChange}
-          min={1}
-          step="any"
-          required
-        />
-        <select
-          name="category"
-          value={values.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">--Elegir Categoría--</option>
-          {typeSelected.map((item, index) => (
-            <option key={index} value={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-        <input
-          type="date"
-          name="date"
-          value={values.date}
-          onChange={handleChange}
-          required
-        />
-        <input type="submit" value={editId === "" ? "AGREGAR" : "ACTUALIZAR"} />
+        <div className="input-field">
+          <select
+            name="type"
+            value={values.type}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled selected></option>
+            <option value="expense">Egreso</option>
+            <option value="income">Ingreso</option>
+          </select>
+          <label htmlFor="type">Tipo</label>
+        </div>
+        <div className="input-field">
+          <input
+            type="text"
+            name="description"
+            value={values.description}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="description">Descripción</label>
+        </div>
+        <div className="input-field">
+          <input
+            type="number"
+            name="amount"
+            value={values.amount}
+            onChange={handleChange}
+            min={1}
+            step="any"
+            required
+          />
+          <label htmlFor="amount">Monto(Soles)</label>
+        </div>
+        <div className="input-field">
+          <select
+            name="category"
+            value={values.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled selected></option>
+            {typeSelected.map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="category">Categoría</label>
+        </div>
+        <div className="input-field">
+          <input
+            type="date"
+            name="date"
+            value={values.date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit" className="boton-formulario">
+          {editId === "" ? "AGREGAR" : "ACTUALIZAR"}
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 

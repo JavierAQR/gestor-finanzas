@@ -1,0 +1,71 @@
+.formulario-transaccion {
+  margin: 3.5rem 0 3.5rem 0;
+}
+
+.formulario-transaccion h1 {
+  margin-left: 6em;
+}
+
+.formulario-transaccion form {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.boton-formulario {
+  background-color: #d8cdff;
+  border-radius: 10px;
+  width: 120px;
+  color: #843aff;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+
+.boton-formulario:hover {
+  background-color: #bea5ff;
+}
+
+.input-field {
+  position: relative;
+}
+
+.input-field input,
+.input-field select {
+  width: 150px;
+  height: 45px;
+  border-radius: 6px;
+  padding: 0 15px;
+  font-size: 15px;
+  border: 2px solid #843aff;
+  background: transparent;
+  outline: none;
+}
+
+.input-field select {
+  height: 49px;
+}
+
+.input-field label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s;
+  color: #843aff;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label,
+.input-field select:focus ~ label,
+.input-field select:valid ~ label {
+  top: 0;
+  left: 10px;
+  font-size: 13px;
+  padding: 0 5px;
+  background: var(--background);
+}

@@ -50,9 +50,11 @@ function SingleTransaction({
             )
           }
         >
-          Editar
+          <i className="fa-solid fa-pen"></i>
         </button>
-        <button onClick={() => handleDelete(id)}>Eliminar</button>
+        <button onClick={() => handleDelete(id)}>
+          <i className="fa-solid fa-trash"></i>
+        </button>
       </td>
     </tr>
   );

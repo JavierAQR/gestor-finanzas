@@ -1,0 +1,21 @@
+:root {
+  --background: rgb(247, 247, 247);
+  --color-primary: #6200ea;
+  --color-secondary: #7912ff;
+  --color-tertiary: #843aff;
+  --color-light: #9f72ff;
+  --color-texto: #2c0078;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: var(--color-texto);
+}
