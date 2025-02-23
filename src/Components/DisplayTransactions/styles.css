@@ -40,4 +40,8 @@ tr:hover {
   .hide-on-mobile {
     display: none;
   }
+
+  table {
+    width: 95%;
+  }
 }
