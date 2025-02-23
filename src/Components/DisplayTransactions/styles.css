@@ -1,6 +1,7 @@
 .transaction-list {
   display: flex;
   justify-content: center;
+  overflow-x: auto;
 }
 
 table {
@@ -14,7 +15,7 @@ table {
 
 th,
 td {
-  padding: 12px 0px 16px 16px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -33,10 +34,4 @@ tr:hover {
   background: #e0e0ff;
   transform: scale(1.01);
   transition: 0.2s ease;
-}
-
-@media screen and (max-width: 500px) {
-  table {
-    width: 100px;
-  }
 }
