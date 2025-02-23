@@ -6,27 +6,31 @@ type Props = {
 };
 
 function BalanceTotal({ selectedTable }: Props) {
-  const ingresoTotal = selectedTable
-    .filter((item) => item.type === "income")
-    .reduce((acc, total) => acc + Number(total.amount), 0);
+  const { ingresoTotal, egresoTotal } = selectedTable.reduce(
+    (acc, item) => {
+      if (item.type === "income") acc.ingresoTotal += Number(item.amount);
+      if (item.type === "expense") acc.egresoTotal += Number(item.amount);
+      return acc;
+    },
+    { ingresoTotal: 0, egresoTotal: 0 }
+  );
 
-  const egresoTotal = selectedTable
-    .filter((item) => item.type === "expense")
-    .reduce((acc, total) => acc + Number(total.amount), 0);
+  const getClass = (value: number) => (value === 0 ? "vacío" : "total");
+  const diferencia = ingresoTotal - egresoTotal;
 
   return (
     <div className="balance-total">
-      <div className="total">
+      <div className={getClass(ingresoTotal)}>
         <h4>Total de ingresos</h4>
         <span>S/ {ingresoTotal}</span>
       </div>
-      <div className="total">
+      <div className={getClass(egresoTotal)}>
         <h4>Total de egresos</h4>
         <span> S/ {egresoTotal}</span>
       </div>
       <div className="total">
-        <h4>Diferencia</h4>
-        <span>S/ {ingresoTotal - egresoTotal}</span>
+        <h4>{diferencia > 0 ? "A favor" : "En contra"}</h4>
+        <span>S/ {diferencia}</span>
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
 .balance-total {
   display: flex;
   justify-content: center;
+  height: 89px;
   margin: 0 2rem;
   gap: 20px;
 }
 
-.total {
+.balance-total .total {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -17,11 +18,15 @@
   border-radius: 10px;
 }
 
-.total h4 {
+.balance-total .total h4 {
   font-weight: 300;
 }
 
-.total span {
+.balance-total .total span {
   font-size: 25px;
   font-weight: 500;
+}
+
+.balance-total .vacío {
+  display: none;
 }
