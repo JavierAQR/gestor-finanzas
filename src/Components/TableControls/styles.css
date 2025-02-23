@@ -3,12 +3,13 @@
   gap: 40px;
   margin: 1rem 0;
   justify-content: center;
+  align-items: center;
   margin-top: 3.5rem;
 }
 
 .control {
   display: flex;
-  height: 30px;
+
   gap: 15px;
 }
 

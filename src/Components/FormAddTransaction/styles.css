@@ -3,7 +3,7 @@
 }
 
 .formulario-transaccion h1 {
-  margin-left: 6em;
+  margin-left: 10%;
 }
 
 .formulario-transaccion form {
@@ -22,6 +22,7 @@
   cursor: pointer;
   border: none;
   font-weight: 600;
+  padding: 15px 10px;
 }
 
 .boton-formulario:hover {

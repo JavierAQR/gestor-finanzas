@@ -61,7 +61,7 @@ function FormAddTransaction({
             step="any"
             required
           />
-          <label htmlFor="amount">Monto(Soles)</label>
+          <label htmlFor="amount">Monto (Soles)</label>
         </div>
         <div className="input-field">
           <select
@@ -71,11 +71,14 @@ function FormAddTransaction({
             required
           >
             <option value="" disabled selected></option>
-            {typeSelected.map((item, index) => (
-              <option key={index} value={item.name}>
-                {item.name}
-              </option>
-            ))}
+            //Si no hay un tipo Seleccionado, no cargan las categorías
+            {values.type !== ""
+              ? typeSelected.map((item, index) => (
+                  <option key={index} value={item.name}>
+                    {item.name}
+                  </option>
+                ))
+              : null}
           </select>
           <label htmlFor="category">Categoría</label>
         </div>
