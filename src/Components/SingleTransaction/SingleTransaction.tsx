@@ -35,7 +35,7 @@ function SingleTransaction({
       <td>{category}</td>
       <td>{typeTransaction}</td>
       <td>{date}</td>
-      <td>
+      <td className="acciones">
         <button
           onClick={() =>
             handleUpdate(

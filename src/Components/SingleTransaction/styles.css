@@ -18,11 +18,15 @@ button {
   background-color: transparent;
 }
 
+.acciones {
+  display: flex;
+  gap: 10px;
+}
+
 button i {
   color: blueviolet;
   font-size: 15px;
   cursor: pointer;
-  margin-right: 1.5em;
   transition: 0.3s;
 }
 
