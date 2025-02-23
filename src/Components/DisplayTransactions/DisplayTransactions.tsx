@@ -26,7 +26,7 @@ function DisplayTransactions({
           <thead>
             <tr>
               <th>Descripción</th>
-              <th>Categoría</th>
+              <th className="hide-on-mobile">Categoría</th>
               <th>Monto S/.</th>
               <th>Fecha</th>
               <th>Acciones</th>

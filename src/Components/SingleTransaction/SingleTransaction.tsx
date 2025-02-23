@@ -32,7 +32,7 @@ function SingleTransaction({
   return (
     <tr>
       <td>{description}</td>
-      <td>{category}</td>
+      <td className="hide-on-mobile">{category}</td>
       <td>{typeTransaction}</td>
       <td>{date}</td>
       <td className="acciones">
