@@ -1,59 +1,42 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent,  useEffect, useState } from "react";
 import { useDataContext } from "../../context/TransactionContext";
-import { inputs, Transaction } from "../../context/reducer";
+import { initialState, inputs, Transaction } from "../../context/reducer";
 
 export function useTransactions() {
-  const [editId, setEditId] = useState("");
+  const [editTransaction, setEditTransaction] = useState<Transaction>(initialState);
   const [categoryFilter, setCategoryFilter] = useState("");
   const [tableSort, setTableSort] = useState("reciente");
-
   const [selectedTable, setSelectedTable] = useState<Transaction[]>([]);
 
   const contextData = useDataContext();
 
-  const [values, setValues] = useState<inputs>({
-    description: "",
-    amount: NaN,
-    category: "",
-    date: new Date().toISOString().split("T")[0],
-    type: "",
-  });
+
 
   // Metodo para agregar una transacción, asigna los valores (values) del formulario a los requeridos por el dispatch para agregar nuevos registros.
-  // Maneja también la actualización, si el estado editId contiene un valor (id de registro a actualizar), primero lo borra y luego asigna los datos del formulario para el registro que contenga la id que estaba contenida en editId.
+  // Maneja también la actualización, si el estado editTransaction contiene un valor (id de registro a actualizar), primero lo borra y luego asigna los datos del formulario para el registro que contenga la id que estaba contenida en editTransaction.
 
-  const handlerAddTransaction = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (editId === "") {
+  const handlerAddTransaction = (data: inputs) => {
+    if (editTransaction === initialState) {
       contextData.dispatch({
         type: "ADD",
         payload: {
-          description: values.description,
-          amount: values.amount,
-          category: values.category,
-          date: values.date,
-          type: values.type,
+          description: data.description,
+          amount: data.amount,
+          category: data.category,
+          date: data.date,
+          type: data.type,
         },
       });
     } else {
-      setEditId("");
+      setEditTransaction(initialState);
       contextData.dispatch({
         type: "UPDATE",
         payload: {
-          id: editId,
-          datosAct: values,
+          id: editTransaction.id,
+          datosAct: data,
         },
       });
     }
-
-    setValues({
-      description: "",
-      category: "",
-      date: new Date().toISOString().split("T")[0],
-      amount: NaN,
-      type: "",
-    });
   };
 
   // Metodo para eliminar una transacción tomando como parametro su id
@@ -65,29 +48,13 @@ export function useTransactions() {
     });
   };
 
-  //Metodo para editar una transacción, especificamente para que al ejecutar esta funcion, los datos del registro se coloquen en el formulario, y el id de este registro sea el nuevo valor del estado editId, para luego manejar la actualización.
+  //Metodo para editar una transacción, especificamente para que al ejecutar esta funcion, los datos del registro se coloquen en el formulario, y el id de este registro sea el nuevo valor del estado editTransaction, para luego manejar la actualización.
 
-  const handleUpdateTransaction = (datos: inputs, id: string) => {
-    setEditId(id);
-    setValues({
-      amount: datos.amount,
-      category: datos.category,
-      date: datos.date,
-      description: datos.description,
-      type: datos.type,
-    });
+  const handleUpdateTransaction = (datos: Transaction) => {
+    setEditTransaction(datos);
   };
 
-  // handleChange: Función que permite modificar los valores de values con los que son seleccionados o escritos durante el formulario
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   //handleChangeFilter: Función que maneja el cambio de estado de la cantegoría seleccionada para filtrar la tabla de transacciones.
 
@@ -141,7 +108,6 @@ export function useTransactions() {
   }, [categoryFilter, tableSort, contextData.state]);
 
   return {
-    handleChange,
     handleDeleteTransaction,
     handleUpdateTransaction,
     handlerAddTransaction,
@@ -153,7 +119,6 @@ export function useTransactions() {
     incomeCategories,
     selectedTable,
     categoryFilter,
-    editId,
-    values,
+    editTransaction,
   };
 }

@@ -1,58 +1,31 @@
-import { inputs, TransactionType } from "../../context/reducer";
+import { Transaction } from "../../context/reducer";
 import "./styles.css";
 
 type Props = {
-  description: string;
-  date: string;
-  amount: number;
-  category: string;
-  id: string;
-  type: TransactionType;
   handleDelete: (id: string) => void;
-  handleUpdate: (datos: inputs, id: string) => void;
+  handleUpdate: (item: Transaction) => void;
+  item: Transaction;
 };
 
-function SingleTransaction({
-  id,
-  description,
-  date,
-  amount,
-  category,
-  handleDelete,
-  handleUpdate,
-  type,
-}: Props) {
+function SingleTransaction({ handleDelete, handleUpdate, item }: Props) {
   const typeTransaction =
-    type === "income" ? (
-      <span className="type ingreso"> + {amount}</span>
+    item.type === "income" ? (
+      <span className="type ingreso"> + {item.amount}</span>
     ) : (
-      <span className="type egreso"> - {amount}</span>
+      <span className="type egreso"> - {item.amount}</span>
     );
 
   return (
     <tr>
-      <td>{description}</td>
-      <td className="hide-on-mobile">{category}</td>
+      <td>{item.description}</td>
+      <td className="hide-on-mobile">{item.category}</td>
       <td>{typeTransaction}</td>
-      <td>{date}</td>
+      <td>{item.date}</td>
       <td className="acciones">
-        <button
-          onClick={() =>
-            handleUpdate(
-              {
-                amount: amount,
-                category: category,
-                date: date,
-                description: description,
-                type: type,
-              },
-              id
-            )
-          }
-        >
+        <button onClick={() => handleUpdate(item)}>
           <i className="fa-solid fa-pen"></i>
         </button>
-        <button onClick={() => handleDelete(id)}>
+        <button onClick={() => handleDelete(item.id)}>
           <i className="fa-solid fa-trash"></i>
         </button>
       </td>

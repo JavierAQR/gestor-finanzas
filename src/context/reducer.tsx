@@ -10,6 +10,15 @@ export interface inputs {
   type: TransactionType;
 }
 
+export const initialState: Transaction = {
+  id: "",
+  description: "",
+  amount: 0,
+  category: "",
+  date: "",
+  type: "",
+};
+
 export interface Transaction {
   id: string;
   description: string;
@@ -42,8 +51,7 @@ export const reducer = (
 ): Transaction[] => {
   switch (action.type) {
     case "ADD": {
-      const newState = [...state, { id: uuidv4(), ...action.payload }];
-      localStorage.setItem("transactions", JSON.stringify(newState));
+      const newState = [{ id: uuidv4(), ...action.payload }, ...state];
       return newState;
     }
 
@@ -54,7 +62,7 @@ export const reducer = (
           return item;
         }
       });
-      localStorage.setItem("transactions", JSON.stringify(newTrans));
+
       return newTrans;
     }
 
@@ -64,7 +72,7 @@ export const reducer = (
           ? { ...item, ...action.payload.datosAct }
           : item
       );
-      localStorage.setItem("transactions", JSON.stringify(updatedState));
+
       return updatedState;
     }
 

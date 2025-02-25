@@ -10,7 +10,7 @@ import {
 import { Action, reducer, Transaction, TransactionType } from "./reducer";
 
 type Props = {
-  children?: ReactNode;
+  children: ReactNode;
 };
 
 interface ContextType {

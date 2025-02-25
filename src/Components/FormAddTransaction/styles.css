@@ -61,10 +61,9 @@
   color: #843aff;
 }
 
+.input-field.filled label,
 .input-field input:focus ~ label,
-.input-field input:valid ~ label,
-.input-field select:focus ~ label,
-.input-field select:valid ~ label {
+.input-field select:focus ~ label {
   top: 0;
   left: 10px;
   font-size: 13px;

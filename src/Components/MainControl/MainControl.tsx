@@ -6,7 +6,7 @@ import TableControls from "../TableControls/TableControls";
 
 function MainControl() {
   const {
-    handleChange,
+ 
     handlerAddTransaction,
     handleDeleteTransaction,
     handleUpdateTransaction,
@@ -17,19 +17,19 @@ function MainControl() {
     incomeCategories,
     selectedTable,
     categoryFilter,
-    editId,
-    values,
+    editTransaction,
+    
   } = useTransactions();
 
   return (
     <>
       <FormAddTransaction
         handleAdd={handlerAddTransaction}
-        handleChange={handleChange}
+  
         expenseCategories={expenseCategories}
         incomeCategories={incomeCategories}
-        editId={editId}
-        values={values}
+        editTransaction={editTransaction}
+     
       />
       <BalanceTotal selectedTable={selectedTable} />
       <TableControls

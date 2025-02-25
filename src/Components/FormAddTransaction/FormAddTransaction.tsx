@@ -1,78 +1,100 @@
-import { ChangeEvent, FormEvent } from "react";
-import { inputs } from "../../context/reducer";
+import { useEffect } from "react";
+import { initialState, inputs, Transaction } from "../../context/reducer";
 import { CategoryArray } from "../../context/TransactionContext";
 import "./styles.css";
+import { useForm } from "react-hook-form";
 
 type Props = {
-  handleAdd: (e: FormEvent<HTMLFormElement>) => void;
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleAdd: (data: inputs) => void;
+
   expenseCategories: CategoryArray[];
   incomeCategories: CategoryArray[];
-
-  editId: string;
-  values: inputs;
+  editTransaction: Transaction;
 };
 
 function FormAddTransaction({
-  handleAdd,
-  handleChange,
-  editId,
-  values,
+  editTransaction,
   expenseCategories,
   incomeCategories,
+  handleAdd,
 }: Props) {
+  const { register, handleSubmit, watch, reset } = useForm<inputs>({
+    defaultValues: {
+      description: "",
+      category: "",
+      date: new Date().toISOString().split("T")[0],
+      amount: NaN,
+      type: "",
+    },
+  });
+
+  useEffect(() => {
+    if (editTransaction !== initialState) {
+      reset(editTransaction);
+    } else {
+      reset({
+        description: "",
+        category: "",
+        date: new Date().toISOString().split("T")[0],
+        amount: NaN,
+        type: "",
+      });
+    }
+  }, [editTransaction, reset]);
+
+  const onSubmit = handleSubmit((data) => {
+    handleAdd(data);
+    reset();
+  });
+
   const typeSelected =
-    values.type === "income" ? incomeCategories : expenseCategories;
+    watch("type") === "income" ? incomeCategories : expenseCategories;
 
   return (
     <div className="formulario-transaccion">
       <h1>Ingresar Transacción</h1>
-      <form action="" onSubmit={handleAdd}>
-        <div className="input-field">
+      <form onSubmit={onSubmit}>
+        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
           <select
-            name="type"
-            value={values.type}
-            onChange={handleChange}
-            required
+            {...register("type", {
+              required: true,
+            })}
           >
-            <option value="" disabled selected></option>
+            <option value="" disabled></option>
             <option value="expense">Egreso</option>
             <option value="income">Ingreso</option>
           </select>
-          <label htmlFor="type">Tipo</label>
+          <label>Tipo</label>
         </div>
-        <div className="input-field">
+        <div className={`input-field ${watch("description") ? "filled" : ""}`}>
           <input
             type="text"
-            name="description"
-            value={values.description}
-            onChange={handleChange}
-            required
+            {...register("description", {
+              required: true,
+            })}
           />
-          <label htmlFor="description">Descripción</label>
+          <label>Descripción</label>
         </div>
-        <div className="input-field">
+        <div className={`input-field ${watch("amount") ? "filled" : ""}`}>
           <input
             type="number"
-            name="amount"
-            value={values.amount}
-            onChange={handleChange}
-            min={1}
             step="any"
-            required
+            {...register("amount", {
+              required: true,
+              minLength: 1,
+            })}
           />
-          <label htmlFor="amount">Monto (Soles)</label>
+          <label>Monto (Soles)</label>
         </div>
-        <div className="input-field">
+        <div className={`input-field ${watch("category") ? "filled" : ""}`}>
           <select
-            name="category"
-            value={values.category}
-            onChange={handleChange}
-            required
+            {...register("category", {
+              required: true,
+            })}
           >
-            <option value="" disabled selected></option>
+            <option value="" disabled></option>
             //Si no hay un tipo Seleccionado, no cargan las categorías
-            {values.type !== ""
+            {watch("type") !== ""
               ? typeSelected.map((item, index) => (
                   <option key={index} value={item.name}>
                     {item.name}
@@ -80,19 +102,18 @@ function FormAddTransaction({
                 ))
               : null}
           </select>
-          <label htmlFor="category">Categoría</label>
+          <label>Categoría</label>
         </div>
-        <div className="input-field">
+        <div className={`input-field ${watch("date") ? "filled" : ""}`}>
           <input
             type="date"
-            name="date"
-            value={values.date}
-            onChange={handleChange}
-            required
+            {...register("date", {
+              required: true,
+            })}
           />
         </div>
         <button type="submit" className="boton-formulario">
-          {editId === "" ? "AGREGAR" : "ACTUALIZAR"}
+          {editTransaction.id === "" ? "AGREGAR" : "ACTUALIZAR"}
         </button>
       </form>
     </div>
