@@ -1,23 +1,27 @@
-import SingleTransaction from "../SingleTransaction/SingleTransaction";
-import "./styles.css";
+import SingleTransaction from "./SingleTransaction";
+import "./DisplayStyles.css";
 import { Transaction } from "../../context/reducer";
-import { ChangeEvent } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { useDataContext } from "../../context/TransactionContext";
 
 type Props = {
   selectedTable: Transaction[];
-  handleDelete: (id: string) => void;
-  handleUpdate: (datos: Transaction) => void;
-  handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
-  tableSort: string;
-  handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
-  categoryFilter: string;
+  setEditTransaction: Dispatch<SetStateAction<Transaction>>;
 };
 
-function DisplayTransactions({
-  handleDelete,
-  handleUpdate,
-  selectedTable,
-}: Props) {
+function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
+  const contextData = useDataContext();
+  const handleUpdateTransaction = (datos: Transaction) => {
+    setEditTransaction(datos);
+  };
+
+  const handleDeleteTransaction = (id: string) => {
+    contextData.dispatch({
+      type: "DELETE",
+      payload: id,
+    });
+  };
+
   return (
     <>
       <div className="transaction-list">
@@ -35,8 +39,8 @@ function DisplayTransactions({
             {selectedTable.map((item) => {
               return (
                 <SingleTransaction
-                  handleDelete={handleDelete}
-                  handleUpdate={handleUpdate}
+                  handleDelete={handleDeleteTransaction}
+                  handleUpdate={handleUpdateTransaction}
                   key={item.id}
                   item={item}
                 />

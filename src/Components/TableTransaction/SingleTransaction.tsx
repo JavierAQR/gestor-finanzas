@@ -1,5 +1,5 @@
 import { Transaction } from "../../context/reducer";
-import "./styles.css";
+import "./SingleStyles.css";
 
 type Props = {
   handleDelete: (id: string) => void;

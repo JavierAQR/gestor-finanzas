@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react";
 import { useDataContext } from "../../context/TransactionContext";
-import "./styles.css";
 
 type Props = {
   handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -9,13 +8,15 @@ type Props = {
   categoryFilter: string;
 };
 
-function TableControls({
+const TableLayout = ({
+  categoryFilter,
   handleChangeFilter,
   tableSort,
   handleSortByDate,
-  categoryFilter,
-}: Props) {
+}: Props) => {
+    
   const contextData = useDataContext();
+
   return (
     <div className="table-controls">
       <div className="control">
@@ -42,6 +43,6 @@ function TableControls({
       </div>
     </div>
   );
-}
+};
 
-export default TableControls;
+export default TableLayout;

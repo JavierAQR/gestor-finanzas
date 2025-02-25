@@ -1,9 +1,10 @@
 .balance-total {
   display: flex;
   justify-content: center;
-  height: 89px;
+  min-height: 89px;
   margin: 0 2rem;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .balance-total .total {

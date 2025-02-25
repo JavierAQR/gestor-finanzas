@@ -1,24 +1,29 @@
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { initialState, inputs, Transaction } from "../../context/reducer";
 import { CategoryArray } from "../../context/TransactionContext";
-import "./styles.css";
-import { useForm } from "react-hook-form";
+import "./FormStyles.css";
 
 type Props = {
-  handleAdd: (data: inputs) => void;
-
+  handlerAddTransaction: (data: inputs) => void;
   expenseCategories: CategoryArray[];
   incomeCategories: CategoryArray[];
   editTransaction: Transaction;
 };
 
-function FormAddTransaction({
-  editTransaction,
+const FormLayout = ({
+  handlerAddTransaction,
   expenseCategories,
   incomeCategories,
-  handleAdd,
-}: Props) {
-  const { register, handleSubmit, watch, reset } = useForm<inputs>({
+  editTransaction,
+}: Props) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<inputs>({
     defaultValues: {
       description: "",
       category: "",
@@ -43,7 +48,7 @@ function FormAddTransaction({
   }, [editTransaction, reset]);
 
   const onSubmit = handleSubmit((data) => {
-    handleAdd(data);
+    handlerAddTransaction(data);
     reset();
   });
 
@@ -57,7 +62,10 @@ function FormAddTransaction({
         <div className={`input-field ${watch("type") ? "filled" : ""}`}>
           <select
             {...register("type", {
-              required: true,
+              required: {
+                value: true,
+                message: "El tipo es requerido",
+              },
             })}
           >
             <option value="" disabled></option>
@@ -65,31 +73,52 @@ function FormAddTransaction({
             <option value="income">Ingreso</option>
           </select>
           <label>Tipo</label>
+          {errors.type && (
+            <span className="error-message">{errors.type.message}</span>
+          )}
         </div>
         <div className={`input-field ${watch("description") ? "filled" : ""}`}>
           <input
             type="text"
             {...register("description", {
-              required: true,
+              required: {
+                value: true,
+                message: "La descripción es requerida",
+              },
             })}
           />
           <label>Descripción</label>
+          {errors.description && (
+            <span className="error-message">{errors.description.message}</span>
+          )}
         </div>
         <div className={`input-field ${watch("amount") ? "filled" : ""}`}>
           <input
             type="number"
             step="any"
             {...register("amount", {
-              required: true,
-              minLength: 1,
+              required: {
+                value: true,
+                message: "El monto es requerido",
+              },
+              min: {
+                value: 0,
+                message: "El monto mínimo es 1",
+              },
             })}
           />
           <label>Monto (Soles)</label>
+          {errors.amount && (
+            <span className="error-message">{errors.amount.message}</span>
+          )}
         </div>
         <div className={`input-field ${watch("category") ? "filled" : ""}`}>
           <select
             {...register("category", {
-              required: true,
+              required: {
+                value: true,
+                message: "La categoría es requerida",
+              },
             })}
           >
             <option value="" disabled></option>
@@ -103,14 +132,23 @@ function FormAddTransaction({
               : null}
           </select>
           <label>Categoría</label>
+          {errors.category && (
+            <span className="error-message">{errors.category.message}</span>
+          )}
         </div>
         <div className={`input-field ${watch("date") ? "filled" : ""}`}>
           <input
             type="date"
             {...register("date", {
-              required: true,
+              required: {
+                value: true,
+                message: "La fecha es requerida",
+              },
             })}
           />
+          {errors.date && (
+            <span className="error-message">{errors.date.message}</span>
+          )}
         </div>
         <button type="submit" className="boton-formulario">
           {editTransaction.id === "" ? "AGREGAR" : "ACTUALIZAR"}
@@ -118,6 +156,6 @@ function FormAddTransaction({
       </form>
     </div>
   );
-}
+};
 
-export default FormAddTransaction;
+export default FormLayout;

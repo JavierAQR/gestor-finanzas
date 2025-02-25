@@ -38,12 +38,12 @@
 .input-field select {
   width: 150px;
   height: 45px;
+  border: 2px solid #843aff;
   border-radius: 6px;
+  outline: none;
   padding: 0 15px;
   font-size: 15px;
-  border: 2px solid #843aff;
   background: transparent;
-  outline: none;
 }
 
 .input-field select {
@@ -69,4 +69,12 @@
   font-size: 13px;
   padding: 0 5px;
   background: var(--background);
+}
+
+.error-message {
+  color: tomato;
+  position: absolute;
+  left: 0px;
+  top: 105%;
+  font-size: 14px;
 }

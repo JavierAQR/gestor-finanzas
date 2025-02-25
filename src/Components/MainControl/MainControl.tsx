@@ -1,51 +1,27 @@
+import { useState } from "react";
 import BalanceTotal from "../BalanceTotal/BalanceTotal";
-import DisplayTransactions from "../DisplayTransactions/DisplayTransactions";
-import FormAddTransaction from "../FormAddTransaction/FormAddTransaction";
-import { useTransactions } from "../hooks/useTransactions";
-import TableControls from "../TableControls/TableControls";
+import DisplayTransactions from "../TableTransaction/DisplayTransactions";
+import FormAddTransaction from "../FormTransaction/FormContainer";
+import TableControls from "../TableControls/TableControlsContainer";
+import { initialState, Transaction } from "../../context/reducer";
 
 function MainControl() {
-  const {
- 
-    handlerAddTransaction,
-    handleDeleteTransaction,
-    handleUpdateTransaction,
-    handleChangeFilter,
-    handleSortByDate,
-    tableSort,
-    expenseCategories,
-    incomeCategories,
-    selectedTable,
-    categoryFilter,
-    editTransaction,
-    
-  } = useTransactions();
+  const [editTransaction, setEditTransaction] =
+    useState<Transaction>(initialState);
+
+  const [selectedTable, setSelectedTable] = useState<Transaction[]>([]);
 
   return (
     <>
       <FormAddTransaction
-        handleAdd={handlerAddTransaction}
-  
-        expenseCategories={expenseCategories}
-        incomeCategories={incomeCategories}
         editTransaction={editTransaction}
-     
+        setEditTransaction={setEditTransaction}
       />
       <BalanceTotal selectedTable={selectedTable} />
-      <TableControls
-        handleChangeFilter={handleChangeFilter}
-        categoryFilter={categoryFilter}
-        handleSortByDate={handleSortByDate}
-        tableSort={tableSort}
-      />
+      <TableControls setSelectedTable={setSelectedTable} />
       <DisplayTransactions
         selectedTable={selectedTable}
-        handleDelete={handleDeleteTransaction}
-        handleUpdate={handleUpdateTransaction}
-        handleChangeFilter={handleChangeFilter}
-        categoryFilter={categoryFilter}
-        handleSortByDate={handleSortByDate}
-        tableSort={tableSort}
+        setEditTransaction={setEditTransaction}
       />
     </>
   );
