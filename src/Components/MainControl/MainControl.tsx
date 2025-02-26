@@ -1,8 +1,8 @@
 import { useState } from "react";
 import BalanceTotal from "../BalanceTotal/BalanceTotal";
-import DisplayTransactions from "../TableTransaction/DisplayTransactions";
-import FormAddTransaction from "../FormTransaction/FormContainer";
-import TableControls from "../TableControls/TableControlsContainer";
+import { DisplayTransactions } from "../TableTransaction";
+import { FormContainer } from "../FormTransaction";
+import { TableControlsContainer } from "../TableControls";
 import { initialState, Transaction } from "../../context/reducer";
 
 function MainControl() {
@@ -13,12 +13,12 @@ function MainControl() {
 
   return (
     <>
-      <FormAddTransaction
+      <FormContainer
         editTransaction={editTransaction}
         setEditTransaction={setEditTransaction}
       />
       <BalanceTotal selectedTable={selectedTable} />
-      <TableControls setSelectedTable={setSelectedTable} />
+      <TableControlsContainer setSelectedTable={setSelectedTable} />
       <DisplayTransactions
         selectedTable={selectedTable}
         setEditTransaction={setEditTransaction}

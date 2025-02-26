@@ -1,18 +1,23 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useDataContext } from "../../context/TransactionContext";
 import "./styles.css";
-import TableLayout from "./TableControlsLayout";
+import TableControlsLayout from "./TableControlsLayout";
 import { Transaction } from "../../context/reducer";
 
-interface Props{
-  setSelectedTable: Dispatch<SetStateAction<Transaction[]>>
+interface Props {
+  setSelectedTable: Dispatch<SetStateAction<Transaction[]>>;
 }
 
-function TableControls({setSelectedTable}: Props) {
+function TableControlsContainer({ setSelectedTable }: Props) {
   const contextData = useDataContext();
   const [tableSort, setTableSort] = useState("reciente");
   const [categoryFilter, setCategoryFilter] = useState("");
-  
 
   const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategoryFilter(e.target.value);
@@ -45,7 +50,7 @@ function TableControls({setSelectedTable}: Props) {
   }, [categoryFilter, tableSort, contextData.state]);
 
   return (
-    <TableLayout
+    <TableControlsLayout
       handleChangeFilter={handleChangeFilter}
       tableSort={tableSort}
       handleSortByDate={handleSortByDate}
@@ -54,4 +59,4 @@ function TableControls({setSelectedTable}: Props) {
   );
 }
 
-export default TableControls;
+export default TableControlsContainer;

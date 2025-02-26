@@ -9,7 +9,7 @@ type Props = {
   setEditTransaction: Dispatch<SetStateAction<Transaction>>;
 };
 
-function FormAddTransaction({ editTransaction, setEditTransaction }: Props) {
+function FormContainer({ editTransaction, setEditTransaction }: Props) {
   const contextData = useDataContext();
 
   const handlerAddTransaction = (data: inputs) => {
@@ -58,4 +58,4 @@ function FormAddTransaction({ editTransaction, setEditTransaction }: Props) {
   );
 }
 
-export default FormAddTransaction;
+export default FormContainer;

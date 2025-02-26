@@ -8,13 +8,12 @@ type Props = {
   categoryFilter: string;
 };
 
-const TableLayout = ({
+const TableControlsLayout = ({
   categoryFilter,
   handleChangeFilter,
   tableSort,
   handleSortByDate,
 }: Props) => {
-    
   const contextData = useDataContext();
 
   return (
@@ -45,4 +44,4 @@ const TableLayout = ({
   );
 };
 
-export default TableLayout;
+export default TableControlsLayout;
