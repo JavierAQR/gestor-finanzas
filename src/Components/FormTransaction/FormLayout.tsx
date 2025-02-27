@@ -102,7 +102,7 @@ const FormLayout = ({
                 message: "El monto es requerido",
               },
               min: {
-                value: 0,
+                value: 1,
                 message: "El monto mínimo es 1",
               },
             })}

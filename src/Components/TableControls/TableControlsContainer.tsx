@@ -19,10 +19,6 @@ function TableControlsContainer({ setSelectedTable }: Props) {
   const [tableSort, setTableSort] = useState("reciente");
   const [categoryFilter, setCategoryFilter] = useState("");
 
-  const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
-    setCategoryFilter(e.target.value);
-  };
-
   const applyFilterAndSort = () => {
     let filteredTransactions = contextData.state;
     if (categoryFilter !== "") {
@@ -51,7 +47,7 @@ function TableControlsContainer({ setSelectedTable }: Props) {
 
   return (
     <TableControlsLayout
-      handleChangeFilter={handleChangeFilter}
+      setCategoryFilter={setCategoryFilter}
       tableSort={tableSort}
       handleSortByDate={handleSortByDate}
       categoryFilter={categoryFilter}

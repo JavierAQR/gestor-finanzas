@@ -1,18 +1,18 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { useDataContext } from "../../context/TransactionContext";
 
 type Props = {
-  handleChangeFilter: (e: ChangeEvent<HTMLSelectElement>) => void;
   tableSort: string;
   handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
   categoryFilter: string;
+  setCategoryFilter: Dispatch<SetStateAction<string>>;
 };
 
 const TableControlsLayout = ({
   categoryFilter,
-  handleChangeFilter,
   tableSort,
   handleSortByDate,
+  setCategoryFilter,
 }: Props) => {
   const contextData = useDataContext();
 
@@ -23,7 +23,9 @@ const TableControlsLayout = ({
         <select
           name="categoryFilter"
           value={categoryFilter}
-          onChange={handleChangeFilter}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setCategoryFilter(e.target.value)
+          }
         >
           <option value="">Todo</option>
           {contextData.categoryArray.map((item, index) => (
