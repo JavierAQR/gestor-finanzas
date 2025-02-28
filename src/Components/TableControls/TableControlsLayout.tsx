@@ -6,6 +6,9 @@ type Props = {
   handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
   categoryFilter: string;
   setCategoryFilter: Dispatch<SetStateAction<string>>;
+  monthSelected: string;
+  handleMonth: (e: ChangeEvent<HTMLSelectElement>) => void;
+  keysHistoryTransactions: string[];
 };
 
 const TableControlsLayout = ({
@@ -13,13 +16,24 @@ const TableControlsLayout = ({
   tableSort,
   handleSortByDate,
   setCategoryFilter,
+  monthSelected,
+  handleMonth,
+  keysHistoryTransactions,
 }: Props) => {
   const contextData = useDataContext();
 
   return (
     <div className="table-controls">
       <div className="control">
-        <h4>Ver</h4>
+        <h4>Fecha</h4>
+        <select name="monthSelected" onChange={handleMonth} value={monthSelected}>
+          {keysHistoryTransactions.map((item, index) => (
+            <option key={index}>{item}</option>
+          ))}
+        </select>
+      </div>
+      <div className="control">
+        <h4>Categoría</h4>
         <select
           name="categoryFilter"
           value={categoryFilter}

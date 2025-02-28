@@ -27,7 +27,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       return (
         <>
-          <h1>Oops! Algo ha salido mal!</h1>
+          <h1>Oops! Aun no tienes registros!</h1>
+          <p>Ingresa transacciones para poder visualizarlas</p>
           <a href="/index.html">Refrescar página</a>
         </>
       );
