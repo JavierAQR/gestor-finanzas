@@ -44,7 +44,6 @@ function TableControlsContainer({
     (a, b) => b.localeCompare(a)
   );
 
-  //La fecha seleccionada es igual al array de transacciones del mes seleccionado.
   const monthTransactions = historyTransactions[monthSelected];
 
   //Metodo para aplicar filtro categoria y ordenamiento

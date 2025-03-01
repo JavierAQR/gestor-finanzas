@@ -26,7 +26,6 @@ function MainControl() {
 
   // Variable de estado para el mes seleccionado, cuyo valor inicial es el de el mes actual
   const [monthSelected, setMonthSelected] = useState(fechaActual);
-  console.log(selectedTable);
 
   return (
     <>
