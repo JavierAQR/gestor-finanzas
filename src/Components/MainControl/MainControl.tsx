@@ -25,25 +25,36 @@ function MainControl() {
   const fechaActual = `${currentDate.getFullYear()}-${formattedMonth}`;
 
   // Variable de estado para el mes seleccionado, cuyo valor inicial es el de el mes actual
-  const [monthSelected, setMonthSelected] = useState(fechaActual);
+  const [monthSelected, setMonthSelected] = useState(fechaActual || "");
+
+  console.log(selectedTable);
 
   return (
     <>
-      <FormContainer
-        editTransaction={editTransaction}
-        setEditTransaction={setEditTransaction}
-      />
       <ErrorBoundary>
-        <BalanceTotal selectedTable={selectedTable} />
-        <TableControlsContainer
-          setSelectedTable={setSelectedTable}
-          monthSelected={monthSelected}
-          setMonthSelected={setMonthSelected}
-        />
-        <DisplayTransactions
-          selectedTable={selectedTable}
+        <FormContainer
+          editTransaction={editTransaction}
           setEditTransaction={setEditTransaction}
         />
+        <div className="resultados-tabla">
+          <BalanceTotal selectedTable={selectedTable} />
+          <TableControlsContainer
+            setSelectedTable={setSelectedTable}
+            monthSelected={monthSelected}
+            setMonthSelected={setMonthSelected}
+          />
+          {selectedTable.length === 0 ? (
+            <div className="tabla-vacía">
+              <h3>No se encontraron transacciones registradas.</h3>
+              <span>📁</span>
+            </div>
+          ) : (
+            <DisplayTransactions
+              selectedTable={selectedTable}
+              setEditTransaction={setEditTransaction}
+            />
+          )}
+        </div>
       </ErrorBoundary>
     </>
   );

@@ -72,7 +72,12 @@ export function TransactionContextProvider({ children }: Props) {
     localStorage.setItem("transactions", JSON.stringify(state));
   }, [state]);
 
-  const valor = { state, dispatch, categoryArray, setCategoryArray };
+  const valor = {
+    state,
+    dispatch,
+    categoryArray,
+    setCategoryArray,
+  };
 
   return <DataContext.Provider value={valor}>{children}</DataContext.Provider>;
 }

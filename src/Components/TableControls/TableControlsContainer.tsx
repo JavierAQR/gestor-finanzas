@@ -21,21 +21,20 @@ function TableControlsContainer({
   monthSelected,
   setMonthSelected,
 }: Props) {
-  const contextData = useDataContext();
+  const { state } = useDataContext();
+
   const [tableSort, setTableSort] = useState("reciente");
   const [categoryFilter, setCategoryFilter] = useState("");
+  
 
-  // Crear un objeto donde las keys sean los meses (YYYY-MM) y sus valores un array con objetos cuyas fechas correspondan a la key
-  const historyTransactions = contextData.state.reduce<{
+  const historyTransactions = state.reduce<{
     [key: string]: Transaction[];
   }>((obj, item) => {
     const monthKey = item.date.slice(0, 7);
     if (!obj[monthKey]) {
       obj[monthKey] = [];
     }
-
     obj[monthKey].push(item);
-
     return obj;
   }, {});
 
@@ -43,8 +42,6 @@ function TableControlsContainer({
   const keysHistoryTransactions = Object.keys(historyTransactions).sort(
     (a, b) => b.localeCompare(a)
   );
-
-  const monthTransactions = historyTransactions[monthSelected];
 
   //Metodo para aplicar filtro categoria y ordenamiento
   //Primero define filteredTransactions con el valor del array de transacciones del mes seleccionado.
@@ -54,12 +51,16 @@ function TableControlsContainer({
   //Luego el estado selectedTable toma el valor de sortedTransactions.
 
   const applyFilterAndSort = () => {
-    const transactions =
-      monthTransactions !== undefined ? monthTransactions : contextData.state;
+    let filteredTransactions =
+      historyTransactions[monthSelected] ||
+      historyTransactions[keysHistoryTransactions[0]];
 
-    let filteredTransactions = transactions;
+    if (!filteredTransactions) {
+      filteredTransactions = [];
+    }
+
     if (categoryFilter !== "") {
-      filteredTransactions = transactions.filter(
+      filteredTransactions = state.filter(
         (item) => item.category === categoryFilter
       );
     }
@@ -74,6 +75,10 @@ function TableControlsContainer({
     setSelectedTable(sortedTransactions);
   };
 
+  useEffect(() => {
+    applyFilterAndSort();
+  }, [categoryFilter, tableSort, state, monthSelected]);
+
   //Metodo para cambiar el ordenamiento
   const handleSortByDate = (e: ChangeEvent<HTMLSelectElement>) => {
     setTableSort(e.target.value);
@@ -82,10 +87,6 @@ function TableControlsContainer({
   const handleMonth = (e: ChangeEvent<HTMLSelectElement>) => {
     setMonthSelected(e.target.value);
   };
-
-  useEffect(() => {
-    applyFilterAndSort();
-  }, [categoryFilter, tableSort, contextData.state, monthSelected]);
 
   return (
     <TableControlsLayout

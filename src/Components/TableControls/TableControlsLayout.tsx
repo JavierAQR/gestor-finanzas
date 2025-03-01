@@ -22,11 +22,17 @@ const TableControlsLayout = ({
 }: Props) => {
   const contextData = useDataContext();
 
+  console.log(categoryFilter);
+
   return (
-    <div className="table-controls">
+    <div className={`table-controls `}>
       <div className="control">
         <h4>Fecha</h4>
-        <select name="monthSelected" onChange={handleMonth} value={monthSelected}>
+        <select
+          name="monthSelected"
+          onChange={handleMonth}
+          value={monthSelected}
+        >
           {keysHistoryTransactions.map((item, index) => (
             <option key={index}>{item}</option>
           ))}
