@@ -11,6 +11,7 @@ type Props = {
 
 function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
   const contextData = useDataContext();
+  
   const handleUpdateTransaction = (datos: Transaction) => {
     setEditTransaction(datos);
   };

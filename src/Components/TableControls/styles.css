@@ -1,7 +1,7 @@
 .table-controls {
   display: flex;
   gap: 40px;
-  margin: 1rem 0;
+  margin: 50px 0;
   justify-content: center;
   align-items: center;
   margin-top: 3.5rem;
@@ -11,7 +11,6 @@
 
 .control {
   display: flex;
-
   gap: 15px;
 }
 
@@ -39,12 +38,11 @@
   color: var(--color-light);
   display: grid;
   align-content: center;
-  margin: 20px 0px;
   background-color: var(--color-fondo);
   text-align: center;
   border-radius: 25px;
   padding: 30px;
-  width: 600px;
+  width: 80%;
   height: 200px;
 }
 

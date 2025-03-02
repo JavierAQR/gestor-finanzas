@@ -29,7 +29,7 @@ function BalanceTotal({ selectedTable }: Props) {
         <span> S/ {egresoTotal}</span>
       </div>
       <div className="total">
-        <h4>{diferencia >= 0 ? "A favor" : "En contra"}</h4>
+        <h4>{diferencia >= 0 ? "Restante" : "Perdida"}</h4>
         <span>S/ {diferencia}</span>
       </div>
     </div>
