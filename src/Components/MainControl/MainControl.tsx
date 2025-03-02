@@ -12,8 +12,6 @@ function MainControl() {
 
   const [selectedTable, setSelectedTable] = useState<Transaction[]>([]);
 
-  
-
   return (
     <>
       <ErrorBoundary>
@@ -23,21 +21,19 @@ function MainControl() {
         />
         <div className="resultados-tabla">
           <BalanceTotal selectedTable={selectedTable} />
-          <TableControlsContainer
-            setSelectedTable={setSelectedTable}
-        
-          />
-
+          <TableControlsContainer setSelectedTable={setSelectedTable} />
           {selectedTable.length === 0 ? (
             <div className="tabla-vacía">
               <h3>No se encontraron transacciones registradas.</h3>
               <span>📁</span>
             </div>
           ) : (
-            <DisplayTransactions
-              selectedTable={selectedTable}
-              setEditTransaction={setEditTransaction}
-            />
+            <>
+              <DisplayTransactions
+                selectedTable={selectedTable}
+                setEditTransaction={setEditTransaction}
+              />
+            </>
           )}
         </div>
       </ErrorBoundary>

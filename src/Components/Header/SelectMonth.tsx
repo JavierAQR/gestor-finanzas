@@ -8,15 +8,20 @@ const SelectMonth = () => {
   const handleMonth = (e: ChangeEvent<HTMLSelectElement>) => {
     setMonthSelected(e.target.value);
   };
-  console.log(keysMonths);
 
   return (
     <>
-      <select name="monthSelected" onChange={handleMonth} value={monthSelected}>
-        {keysMonths.map((item, index) => (
-          <option key={index}>{item}</option>
-        ))}
-      </select>
+      {keysMonths.length !== 0 && (
+        <select
+          name="monthSelected"
+          onChange={handleMonth}
+          value={monthSelected}
+        >
+          {keysMonths.map((item, index) => (
+            <option key={index}>{item}</option>
+          ))}
+        </select>
+      )}
     </>
   );
 };
