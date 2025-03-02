@@ -8,6 +8,7 @@ const SelectMonth = () => {
   const handleMonth = (e: ChangeEvent<HTMLSelectElement>) => {
     setMonthSelected(e.target.value);
   };
+  console.log(keysMonths);
 
   return (
     <>
