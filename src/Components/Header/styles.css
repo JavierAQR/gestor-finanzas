@@ -10,7 +10,7 @@ select[name="monthSelected"] {
   background-color: var(--color-light);
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 700;
   border-radius: 10px;
   margin-left: 20px;

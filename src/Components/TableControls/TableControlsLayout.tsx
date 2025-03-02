@@ -6,6 +6,8 @@ type Props = {
   handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
   categoryFilter: string;
   setCategoryFilter: Dispatch<SetStateAction<string>>;
+  typeFilter: string;
+  setTypeFilter: Dispatch<SetStateAction<string>>;
 };
 
 const TableControlsLayout = ({
@@ -13,11 +15,27 @@ const TableControlsLayout = ({
   tableSort,
   handleSortByDate,
   setCategoryFilter,
+  typeFilter,
+  setTypeFilter,
 }: Props) => {
   const contextData = useDataContext();
 
   return (
     <div className={`table-controls `}>
+      <div className="control">
+        <h4>Tipo</h4>
+        <select
+          name="typeFilter"
+          value={typeFilter}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setTypeFilter(e.target.value)
+          }
+        >
+          <option value="">Todo</option>
+          <option value="income">Ingreso</option>
+          <option value="expense">Egreso</option>
+        </select>
+      </div>
       <div className="control">
         <h4>Categoría</h4>
         <select
@@ -28,11 +46,13 @@ const TableControlsLayout = ({
           }
         >
           <option value="">Todo</option>
-          {contextData.categoryArray.map((item, index) => (
-            <option key={index} value={item.name}>
-              {item.name}
-            </option>
-          ))}
+          {contextData.categoryArray
+            .filter((item) => item.type === typeFilter)
+            .map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ))}
         </select>
       </div>
       <div className="control">

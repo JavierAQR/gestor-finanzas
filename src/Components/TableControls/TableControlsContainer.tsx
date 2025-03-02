@@ -28,6 +28,9 @@ function TableControlsContainer({ setSelectedTable }: Props) {
   //Estado para el filtro por categoría
   const [categoryFilter, setCategoryFilter] = useState("");
 
+  //Estado para el filtro por tipo
+  const [typeFilter, setTypeFilter] = useState("");
+
   //Metodo para aplicar categoria y ordenamiento del mes seleccionado
   const applyFilterAndSort = () => {
     let filteredTransactions =
@@ -37,10 +40,17 @@ function TableControlsContainer({ setSelectedTable }: Props) {
       filteredTransactions = [];
     }
 
-    if (categoryFilter !== "") {
-      filteredTransactions = state.filter(
-        (item) => item.category === categoryFilter
-      );
+    if (typeFilter !== "" || categoryFilter !== "") {
+      filteredTransactions = [...filteredTransactions].filter((item) => {
+        const matchesType = typeFilter === "" || item.type === typeFilter;
+        const matchesCategory =
+          categoryFilter === "" || item.category === categoryFilter;
+        return matchesType && matchesCategory;
+      });
+    }
+
+    if (typeFilter === "") {
+      setCategoryFilter("");
     }
 
     const sortedTransactions = [...filteredTransactions].sort((a, b) => {
@@ -56,7 +66,7 @@ function TableControlsContainer({ setSelectedTable }: Props) {
   //Se vuelve a ejecutar el metodo si cambia el filtro, ordenamiento, los registros o el mes seleccionado
   useEffect(() => {
     applyFilterAndSort();
-  }, [categoryFilter, tableSort, state, monthSelected]);
+  }, [categoryFilter, tableSort, state, monthSelected, typeFilter]);
 
   //Metodo para cambiar el ordenamiento
   const handleSortByDate = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -69,6 +79,8 @@ function TableControlsContainer({ setSelectedTable }: Props) {
       tableSort={tableSort}
       handleSortByDate={handleSortByDate}
       categoryFilter={categoryFilter}
+      setTypeFilter={setTypeFilter}
+      typeFilter={typeFilter}
     />
   );
 }
