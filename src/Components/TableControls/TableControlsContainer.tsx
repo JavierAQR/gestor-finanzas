@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDataContext } from "../../context/TransactionContext";
 import "./styles.css";
 import TableControlsLayout from "./TableControlsLayout";
 import { Transaction } from "../../context/reducer";
@@ -16,13 +15,10 @@ interface Props {
 }
 
 function TableControlsContainer({ setSelectedTable }: Props) {
-  //Se importan las transacciones
-  const { state } = useDataContext();
+  //Se importan las transacciones del mes correspondiente
+  const { transaccionesDelMes } = useMonthContext();
 
-  //Se importan las transacciones separadas por mes, el mes seleccionado y el array de meses registrados
-  const { transaccionesPorMes, monthSelected, keysMonths } = useMonthContext();
-
-  //Estado para el ordenamiento
+  //Estado para el filtro de ordenamiento
   const [tableSort, setTableSort] = useState("reciente");
 
   //Estado para el filtro por categoría
@@ -31,17 +27,13 @@ function TableControlsContainer({ setSelectedTable }: Props) {
   //Estado para el filtro por tipo
   const [typeFilter, setTypeFilter] = useState("");
 
-  //Metodo para aplicar categoria y ordenamiento del mes seleccionado
+  //Metodo para aplicar categoria y ordenamiento al mes seleccionado
+  //Se hace una copia para no alterar el array original
   const applyFilterAndSort = () => {
-    let filteredTransactions =
-      transaccionesPorMes[monthSelected] || transaccionesPorMes[keysMonths[0]];
-
-    if (!filteredTransactions) {
-      filteredTransactions = [];
-    }
+    let filteredTransactions = [...transaccionesDelMes];
 
     if (typeFilter !== "" || categoryFilter !== "") {
-      filteredTransactions = [...filteredTransactions].filter((item) => {
+      filteredTransactions = filteredTransactions.filter((item) => {
         const matchesType = typeFilter === "" || item.type === typeFilter;
         const matchesCategory =
           categoryFilter === "" || item.category === categoryFilter;
@@ -49,10 +41,12 @@ function TableControlsContainer({ setSelectedTable }: Props) {
       });
     }
 
+    //Si el filtro de tipo es Todos, la categoría también será Todos
     if (typeFilter === "") {
       setCategoryFilter("");
     }
 
+    //Una vez filtrado por tipo y categoría, se ordena segun el estado
     const sortedTransactions = [...filteredTransactions].sort((a, b) => {
       const A = new Date(a.date);
       const B = new Date(b.date);
@@ -60,27 +54,38 @@ function TableControlsContainer({ setSelectedTable }: Props) {
       return B.getTime() - A.getTime();
     });
 
+    //Finalmente este resultado se establece en la tabla a pintar
     setSelectedTable(sortedTransactions);
   };
 
-  //Se vuelve a ejecutar el metodo si cambia el filtro, ordenamiento, los registros o el mes seleccionado
+  //Se vuelve a ejecutar el metodo si cambian los filtros(tipo, categoria y ordenamiento) o las transacciones del mes
   useEffect(() => {
     applyFilterAndSort();
-  }, [categoryFilter, tableSort, state, monthSelected, typeFilter]);
+  }, [categoryFilter, tableSort, transaccionesDelMes, typeFilter]);
 
   //Metodo para cambiar el ordenamiento
   const handleSortByDate = (e: ChangeEvent<HTMLSelectElement>) => {
     setTableSort(e.target.value);
   };
 
+  //Metodo para cambiar el filtro de tipo
+  const handleType = (e: ChangeEvent<HTMLSelectElement>) => {
+    setTypeFilter(e.target.value);
+  };
+
+  //Metodo para cambiar el filtro de categoria
+  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCategoryFilter(e.target.value);
+  };
+
   return (
     <TableControlsLayout
-      setCategoryFilter={setCategoryFilter}
       tableSort={tableSort}
       handleSortByDate={handleSortByDate}
       categoryFilter={categoryFilter}
-      setTypeFilter={setTypeFilter}
       typeFilter={typeFilter}
+      handleCategory={handleCategory}
+      handleType={handleType}
     />
   );
 }

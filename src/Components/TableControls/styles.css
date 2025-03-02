@@ -21,6 +21,7 @@
 .control select {
   border: 2px solid var(--color-borde);
   border-radius: 6px;
+  width: 100px;
 }
 
 .controles-desactivados {

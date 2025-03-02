@@ -14,10 +14,10 @@ interface Props {
 }
 
 export interface ContextType {
-  transaccionesPorMes: { [key: string]: Transaction[] };
   monthSelected: string;
   setMonthSelected: Dispatch<SetStateAction<string>>;
   keysMonths: string[];
+  transaccionesDelMes: Transaction[];
 }
 
 export const MonthContext = createContext<ContextType | null>(null);
@@ -37,6 +37,7 @@ export function MonthTransactionProvider({ children }: Props) {
   // Obtener la fecha actual en formato YYYY-MM
   const fechaActual = `${currentDate.getFullYear()}-${formattedMonth}`;
 
+  
   const [monthSelected, setMonthSelected] = useState(fechaActual);
 
   function agruparPorFecha(transacciones: Transaction[]) {
@@ -59,11 +60,16 @@ export function MonthTransactionProvider({ children }: Props) {
     b.localeCompare(a)
   );
 
+  const transaccionesDelMes =
+    transaccionesPorMes[monthSelected] ||
+    transaccionesPorMes[keysMonths[0]] ||
+    [];
+
   const valor = {
-    transaccionesPorMes,
     monthSelected,
     setMonthSelected,
     keysMonths,
+    transaccionesDelMes,
   };
 
   return (
