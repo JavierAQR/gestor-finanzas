@@ -37,7 +37,6 @@ export function MonthTransactionProvider({ children }: Props) {
   // Obtener la fecha actual en formato YYYY-MM
   const fechaActual = `${currentDate.getFullYear()}-${formattedMonth}`;
 
-  
   const [monthSelected, setMonthSelected] = useState(fechaActual);
 
   function agruparPorFecha(transacciones: Transaction[]) {
@@ -60,10 +59,13 @@ export function MonthTransactionProvider({ children }: Props) {
     b.localeCompare(a)
   );
 
+  //Array con todas las transacciones del mes seleccionado o del primer mes disponible
   const transaccionesDelMes =
     transaccionesPorMes[monthSelected] ||
     transaccionesPorMes[keysMonths[0]] ||
     [];
+
+  console.log(transaccionesDelMes);
 
   const valor = {
     monthSelected,

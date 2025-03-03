@@ -2,13 +2,14 @@ header {
   display: flex;
   flex-direction: flex-start;
   flex-wrap: wrap;
+  gap: 20px;
   background-color: #4b02b0;
   color: white;
   padding: 1rem 5rem;
+  margin-bottom: 50px;
 }
 
 header h1 {
-  margin-right: 30px;
   display: grid;
   align-items: center;
 }
@@ -24,7 +25,6 @@ select[name="monthSelected"] {
   padding: 0 5px;
   width: 110px;
   height: 50px;
-  margin-right: 20px;
 }
 
 select[name="monthSelected"] option {

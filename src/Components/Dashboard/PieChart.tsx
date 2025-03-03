@@ -16,8 +16,8 @@ const PieChart = ({ array, text }: Props) => {
       trigger: "item",
     },
     legend: {
-      orient: "vertical",
-      left: "left",
+      orient: "horizontal",
+      bottom: "0%",
     },
     series: [
       {
@@ -35,10 +35,7 @@ const PieChart = ({ array, text }: Props) => {
     ],
   };
   return (
-    <ReactECharts
-      option={options}
-      style={{ height: "400px", width: "500px" }}
-    />
+    <ReactECharts option={options} style={{ height: "400px", width: "70%" }} />
   );
 };
 

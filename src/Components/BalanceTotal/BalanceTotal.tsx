@@ -6,6 +6,8 @@ type Props = {
 };
 
 function BalanceTotal({ selectedTable }: Props) {
+  console.log(selectedTable);
+
   const { ingresoTotal, egresoTotal } = selectedTable.reduce(
     (acc, item) => {
       if (item.type === "income") acc.ingresoTotal += Number(item.amount);

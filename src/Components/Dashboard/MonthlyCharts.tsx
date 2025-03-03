@@ -45,16 +45,20 @@ const MonthlyCharts = () => {
   );
 
   return (
-    <div className="dashboard-mes">
-      <PieChart
-        array={arrayGastosCategoria}
-        text={"Egresos Totales Por Categoría"}
-      />
-      <PieChart
-        array={arrayIngresosCategoria}
-        text={"Ingresos Totales Por Categoría"}
-      />
-    </div>
+    <>
+      <div className="chart">
+        <PieChart
+          array={arrayGastosCategoria}
+          text={"Egresos Totales Por Categoría"}
+        />
+      </div>
+      <div className="chart">
+        <PieChart
+          array={arrayIngresosCategoria}
+          text={"Ingresos Totales Por Categoría"}
+        />
+      </div>
+    </>
   );
 };
 
