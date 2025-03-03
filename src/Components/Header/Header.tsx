@@ -1,13 +1,26 @@
+import { NavLink } from "react-router-dom";
 import SelectMonth from "./SelectMonth";
 import "./styles.css";
 
-type Props = {};
-
-function Header({}: Props) {
+function Header() {
   return (
     <header>
       <h1>Finanzas Personales</h1>
       <SelectMonth />
+      <div className="links">
+        <NavLink
+          to={"/table-transactions"}
+          className={({ isActive }) => (isActive ? "active-link" : "")}
+        >
+          <button>TABLA</button>
+        </NavLink>
+        <NavLink
+          to={"/dashboard"}
+          className={({ isActive }) => (isActive ? "active-link" : "")}
+        >
+          <button>DASHBOARD</button>
+        </NavLink>
+      </div>
     </header>
   );
 }

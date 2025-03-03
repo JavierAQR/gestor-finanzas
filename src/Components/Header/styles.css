@@ -1,18 +1,55 @@
 header {
   display: flex;
   flex-direction: flex-start;
+  flex-wrap: wrap;
   background-color: #4b02b0;
   color: white;
   padding: 1rem 5rem;
 }
 
+header h1 {
+  margin-right: 30px;
+  display: grid;
+  align-items: center;
+}
+
 select[name="monthSelected"] {
-  background-color: var(--color-light);
-  border: none;
-  color: white;
-  font-size: 23px;
-  font-weight: 700;
+  background-color: #4a02b000;
+  outline: none;
+  border: 1px solid var(--color-light);
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  font-weight: 600;
   border-radius: 10px;
-  margin-left: 20px;
-  padding: 0 10px;
+  padding: 0 5px;
+  width: 110px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+select[name="monthSelected"] option {
+  background-color: var(--color-light);
+  font-size: 15px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-light);
+  border-radius: 25px;
+  padding: 5px 5px;
+  height: 40px;
+}
+
+.links button {
+  color: white;
+  cursor: pointer;
+  padding: 12px 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.active-link {
+  background-color: var(--color-light);
+  border-radius: 20px;
 }

@@ -34,7 +34,7 @@ function TableControlsContainer({ setSelectedTable }: Props) {
 
     if (typeFilter !== "" || categoryFilter !== "") {
       filteredTransactions = filteredTransactions.filter((item) => {
-        const matchesType = typeFilter === "" || item.type === typeFilter;
+        const matchesType = typeFilter === "" || item.type  === typeFilter;
         const matchesCategory =
           categoryFilter === "" || item.category === categoryFilter;
         return matchesType && matchesCategory;
