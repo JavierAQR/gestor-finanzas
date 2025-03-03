@@ -22,6 +22,7 @@
   border: 2px solid var(--color-borde);
   border-radius: 6px;
   width: 100px;
+  outline: none;
 }
 
 .controles-desactivados {
