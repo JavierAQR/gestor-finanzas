@@ -1,62 +1,58 @@
 import { useMonthContext } from "../../context/MonthContext";
-import PieChart from "./PieChart";
+import BarChart from "./eCharts/BarChart";
+import PieChart from "./eCharts/PieChart";
 
 const MonthlyCharts = () => {
   const { transaccionesDelMes } = useMonthContext();
 
-  //Objeto con los nombres de las categorias y el gasto total correspondiente
-  const sumaDeGastosPorCategoría = transaccionesDelMes
-    .filter((item) => item.type === "expense")
-    .reduce<{ [key: string]: number }>((acc, item) => {
-      if (acc[item.category]) {
-        acc[item.category] += Number(item.amount);
-      } else {
-        acc[item.category] = Number(item.amount);
-      }
-      return acc;
-    }, {});
+  const sumaMontoPorCategoría = (categoria: string) => {
+    const objetoSuma = transaccionesDelMes
+      .filter((item) => item.type === categoria)
+      .reduce<{ [key: string]: number }>((acc, item) => {
+        if (acc[item.category]) {
+          acc[item.category] += Number(item.amount);
+        } else {
+          acc[item.category] = Number(item.amount);
+        }
+        return acc;
+      }, {});
 
-  // Convertir el objeto en un array y aplicar map
-  const arrayGastosCategoria = Object.entries(sumaDeGastosPorCategoría).map(
-    ([category, amount]) => ({
+    return Object.entries(objetoSuma).map(([category, amount]) => ({
       name: category,
       value: amount,
-    })
-  );
+    }));
+  };
 
-  //Objeto con los nombres de las categorias y el gasto total correspondiente
-  const sumaDeIngresosPorCategoría = transaccionesDelMes
-    .filter((item) => item.type === "income")
-    .reduce<{ [key: string]: number }>((acc, item) => {
-      if (acc[item.category]) {
-        acc[item.category] += Number(item.amount);
-      } else {
-        acc[item.category] = Number(item.amount);
-      }
+  const arrayEgresosCategoría = sumaMontoPorCategoría("egreso");
+  const arrayIngresosCategoria = sumaMontoPorCategoría("ingreso");
+
+  //Obtener ingresos y egresos totales
+  const totalType = (arrayType: { name: string; value: number }[]) => {
+    return arrayType.reduce<number>((acc, item) => {
+      acc += item.value;
       return acc;
-    }, {});
+    }, 0);
+  };
 
-  // Convertir el objeto en un array y aplicar map
-  const arrayIngresosCategoria = Object.entries(sumaDeIngresosPorCategoría).map(
-    ([category, amount]) => ({
-      name: category,
-      value: amount,
-    })
-  );
+  const sumaIngresosTotales = totalType(arrayIngresosCategoria);
+  const sumaEgresosTotales = totalType(arrayEgresosCategoría);
 
   return (
     <>
       <div className="chart">
         <PieChart
-          array={arrayGastosCategoria}
-          text={"Egresos Totales Por Categoría"}
+          array={arrayEgresosCategoría}
+          text={"Egresos Por Categoría"}
         />
       </div>
       <div className="chart">
         <PieChart
           array={arrayIngresosCategoria}
-          text={"Ingresos Totales Por Categoría"}
+          text={"Ingresos Por Categoría"}
         />
+      </div>
+      <div className="chart">
+        <BarChart ingreso={sumaIngresosTotales} egreso={sumaEgresosTotales} />
       </div>
     </>
   );

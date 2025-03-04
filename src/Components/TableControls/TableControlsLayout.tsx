@@ -28,8 +28,8 @@ const TableControlsLayout = ({
         <h4>Tipo</h4>
         <select name="typeFilter" value={typeFilter} onChange={handleType}>
           <option value="">Todo</option>
-          <option value="income">Ingreso</option>
-          <option value="expense">Egreso</option>
+          <option value="ingreso">Ingreso</option>
+          <option value="egreso">Egreso</option>
         </select>
       </div>
       <div className="control">

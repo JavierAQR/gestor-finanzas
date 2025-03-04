@@ -65,8 +65,6 @@ export function MonthTransactionProvider({ children }: Props) {
     transaccionesPorMes[keysMonths[0]] ||
     [];
 
-  console.log(transaccionesDelMes);
-
   const valor = {
     monthSelected,
     setMonthSelected,

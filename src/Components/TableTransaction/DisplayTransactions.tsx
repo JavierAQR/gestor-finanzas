@@ -1,8 +1,8 @@
-import SingleTransaction from "./SingleTransaction";
 import "./DisplayStyles.css";
 import { Transaction } from "../../context/reducer";
 import { Dispatch, SetStateAction } from "react";
 import { useDataContext } from "../../context/TransactionContext";
+import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
 
 type Props = {
   selectedTable: Transaction[];
@@ -11,7 +11,7 @@ type Props = {
 
 function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
   const contextData = useDataContext();
-  
+
   const handleUpdateTransaction = (datos: Transaction) => {
     setEditTransaction(datos);
   };
@@ -23,33 +23,56 @@ function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
     });
   };
 
+  //Funcion para personalizar un campo
+  const typeAmount = (item: Transaction) =>
+    item.type === "ingreso" ? (
+      <span className="type ingreso"> + {item.amount}</span>
+    ) : (
+      <span className="type egreso"> - {item.amount}</span>
+    );
+
+  const columns: Column<Transaction>[] = [
+    {
+      header: "DESCRIPCIÓN",
+      key: "description",
+      hide: false,
+    },
+    {
+      header: "CATEGORÍA",
+      key: "category",
+      hide: true,
+    },
+    {
+      header: "MONTO S/",
+      key: "amount",
+      hide: false,
+      class: "type",
+      function: typeAmount,
+    },
+    {
+      header: "FECHA",
+      key: "date",
+      hide: false,
+    },
+  ];
+
   return (
     <>
-      <div className="transaction-list">
-        <table>
-          <thead>
-            <tr>
-              <th>Descripción</th>
-              <th className="hide-on-mobile">Categoría</th>
-              <th>Monto S/.</th>
-              <th>Fecha</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {selectedTable.map((item) => {
-              return (
-                <SingleTransaction
-                  handleDelete={handleDeleteTransaction}
-                  handleUpdate={handleUpdateTransaction}
-                  key={item.id}
-                  item={item}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {selectedTable.length === 0 ? (
+        <div className="tabla-vacía">
+          <h3>No se encontraron transacciones registradas.</h3>
+          <span>📁</span>
+        </div>
+      ) : (
+        <>
+          <ReusableTable
+            data={selectedTable}
+            columns={columns}
+            handleDelete={handleDeleteTransaction}
+            handleUpdate={handleUpdateTransaction}
+          />
+        </>
+      )}
     </>
   );
 }

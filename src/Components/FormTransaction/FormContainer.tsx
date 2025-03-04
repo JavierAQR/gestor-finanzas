@@ -1,8 +1,7 @@
-
 import { Dispatch, SetStateAction } from "react";
-import { initialState, inputs, Transaction } from "../../context/reducer";
-import { useDataContext } from "../../context/TransactionContext";
 import FormLayout from "./FormLayout";
+import { useDataContext } from "../../context/TransactionContext";
+import { initialState, inputs, Transaction } from "../../context/reducer";
 
 type Props = {
   editTransaction: Transaction;
@@ -37,13 +36,13 @@ function FormContainer({ editTransaction, setEditTransaction }: Props) {
   };
 
   const expenseCategories = contextData.categoryArray.filter((item) => {
-    if (item.type === "expense") {
+    if (item.type === "egreso") {
       return item.name;
     }
   });
 
   const incomeCategories = contextData.categoryArray.filter((item) => {
-    if (item.type === "income") {
+    if (item.type === "ingreso") {
       return item.name;
     }
   });

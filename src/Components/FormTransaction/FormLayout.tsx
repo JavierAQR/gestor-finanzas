@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { initialState, inputs, Transaction } from "../../context/reducer";
-import { CategoryArray } from "../../context/TransactionContext";
+
 import "./FormStyles.css";
+import { Category } from "../../context/reducerCategories";
 
 type Props = {
   handlerAddTransaction: (data: inputs) => void;
-  expenseCategories: CategoryArray[];
-  incomeCategories: CategoryArray[];
+  expenseCategories: Category[];
+  incomeCategories: Category[];
   editTransaction: Transaction;
 };
 
@@ -59,11 +60,10 @@ const FormLayout = ({
   });
 
   const typeSelected =
-    watch("type") === "income" ? incomeCategories : expenseCategories;
+    watch("type") === "ingreso" ? incomeCategories : expenseCategories;
 
   return (
     <div className="formulario-transaccion">
-      <h1>Ingresar Transacción</h1>
       <form onSubmit={onSubmit}>
         <div className={`input-field ${watch("type") ? "filled" : ""}`}>
           <select
@@ -75,8 +75,8 @@ const FormLayout = ({
             })}
           >
             <option value="" disabled></option>
-            <option value="expense">Egreso</option>
-            <option value="income">Ingreso</option>
+            <option value="egreso">Egreso</option>
+            <option value="ingreso">Ingreso</option>
           </select>
           <label>Tipo</label>
           {errors.type && (

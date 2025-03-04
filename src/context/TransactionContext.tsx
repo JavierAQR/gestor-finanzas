@@ -5,9 +5,14 @@ import {
   useContext,
   useEffect,
   useReducer,
-  useState,
 } from "react";
-import { Action, reducer, Transaction, TransactionType } from "./reducer";
+import { Action, reducer, Transaction } from "./reducer";
+import {
+  ActionCategory,
+  Category,
+  defaultCategories,
+  reducerCategories,
+} from "./reducerCategories";
 
 type Props = {
   children: ReactNode;
@@ -16,12 +21,8 @@ type Props = {
 interface ContextType {
   state: Transaction[];
   dispatch: Dispatch<Action>;
-  categoryArray: CategoryArray[];
-}
-
-export interface CategoryArray {
-  name: string;
-  type: TransactionType;
+  categoryArray: Category[];
+  setCategoryArray: Dispatch<ActionCategory>;
 }
 
 export const DataContext = createContext<ContextType | null>(null);
@@ -31,46 +32,26 @@ export function TransactionContextProvider({ children }: Props) {
     localStorage.getItem("transactions") || "[]"
   );
 
+  const storedCategories = localStorage.getItem("categories");
+
+  const initialStateCategories: Category[] = storedCategories
+    ? JSON.parse(storedCategories)
+    : defaultCategories;
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [categoryArray, setCategoryArray] = useState<CategoryArray[]>([
-    {
-      name: "Transporte",
-      type: "expense",
-    },
-    {
-      name: "Medicina",
-      type: "expense",
-    },
-    {
-      name: "Alimentación",
-      type: "expense",
-    },
-    {
-      name: "Salario",
-      type: "income",
-    },
-    {
-      name: "Deuda",
-      type: "expense",
-    },
-    {
-      name: "Servicio",
-      type: "expense",
-    },
-    {
-      name: "Prestamo",
-      type: "income",
-    },
-    {
-      name: "Otros",
-      type: "income",
-    },
-  ]);
+  const [categoryArray, setCategoryArray] = useReducer(
+    reducerCategories,
+    initialStateCategories
+  );
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(state));
   }, [state]);
+
+  useEffect(() => {
+    localStorage.setItem("categories", JSON.stringify(categoryArray));
+  }, [categoryArray]);
 
   const valor = {
     state,
