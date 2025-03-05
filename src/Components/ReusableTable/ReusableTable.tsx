@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Transaction } from "../../context/reducer";
 import { Category } from "../../context/reducerCategories";
 import "./SingleStyles.css";
@@ -9,7 +10,7 @@ export interface Column<T> {
   key: keyof T;
   hide: boolean;
   class?: string;
-  function?: (item: T) => void;
+  function?: (item: T, colIndex: number) => ReactNode;
 }
 
 interface Props<T> {
@@ -43,20 +44,18 @@ const ReusableTable = <T,>({
       <tbody>
         {data.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            {columns.map((column, colIndex) => (
-              <>
-                {column.function ? (
-                  column.function(row)
-                ) : (
-                  <td
-                    key={colIndex}
-                    className={column.hide ? "hide-on-mobile" : ""}
-                  >
-                    {String(row[column.key])}
-                  </td>
-                )}
-              </>
-            ))}
+            {columns.map((column, colIndex) =>
+              column.function ? (
+                column.function(row, colIndex)
+              ) : (
+                <td
+                  key={colIndex}
+                  className={column.hide ? "hide-on-mobile" : ""}
+                >
+                  {String(row[column.key])}
+                </td>
+              )
+            )}
             <td className="acciones">
               {handleUpdate && (
                 <button onClick={() => handleUpdate(row)}>

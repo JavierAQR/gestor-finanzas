@@ -24,11 +24,15 @@ function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
   };
 
   //Funcion para personalizar un campo
-  const typeAmount = (item: Transaction) =>
+  const typeAmount = (item: Transaction, colIndex: number) =>
     item.type === "ingreso" ? (
-      <span className="type ingreso"> + {item.amount}</span>
+      <td key={colIndex} className="type ingreso">
+        + {item.amount}
+      </td>
     ) : (
-      <span className="type egreso"> - {item.amount}</span>
+      <td key={colIndex} className="type egreso">
+        - {item.amount}
+      </td>
     );
 
   const columns: Column<Transaction>[] = [

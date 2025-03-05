@@ -25,7 +25,13 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
 
   const { categoryArray, setCategoryArray } = useDataContext();
 
-  const { register, handleSubmit, reset } = useForm<categoryInputs>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<categoryInputs>({
     defaultValues: {
       name: "",
       type: "",
@@ -46,31 +52,46 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
 
   return (
     <div className="modal">
-      <button onClick={closeModal}>X</button>
+      <button onClick={closeModal} className="btn-cerrar">
+        <i className="fa-solid fa-xmark"></i>
+      </button>
       <h1>Categorías</h1>
       <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="Nombre Categoría"
-          {...register("name", {
-            required: {
-              value: true,
-              message: "El nombre es requerido",
-            },
-          })}
-        />
-        <select
-          {...register("type", {
-            required: {
-              value: true,
-              message: "El tipo es requerido",
-            },
-          })}
-        >
-          <option value="egreso">Egreso</option>
-          <option value="ingreso">Ingreso</option>
-        </select>
-        <button type="submit">AGREGAR</button>
+        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
+          <input
+            type="text"
+            {...register("name", {
+              required: {
+                value: true,
+                message: "El nombre es requerido",
+              },
+            })}
+          />
+          <label>Nombre</label>
+          {errors.name && (
+            <span className="error-message">{errors.name.message}</span>
+          )}
+        </div>
+        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
+          <select
+            {...register("type", {
+              required: {
+                value: true,
+                message: "El tipo es requerido",
+              },
+            })}
+          >
+            <option value="egreso">Egreso</option>
+            <option value="ingreso">Ingreso</option>
+          </select>
+          <label>Tipo</label>
+          {errors.type && (
+            <span className="error-message">{errors.type.message}</span>
+          )}
+        </div>
+        <button type="submit" className="boton-formulario">
+          AGREGAR
+        </button>
       </form>
       <ReusableTable
         data={categoryArray}

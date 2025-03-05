@@ -23,7 +23,9 @@ const ManageCategories = () => {
   return (
     <div className="manage-categories">
       <h1>Ingresar Transacción</h1>
-      <button onClick={() => setIsModalOpen(true)}>Gestionar Categorías</button>
+      <button onClick={() => setIsModalOpen(true)} className="btn-categorias">
+        GESTIONAR CATEGORÍAS
+      </button>
       <ModalContainer isOpen={isModalOpen}>
         <ModalLayout
           closeModal={() => setIsModalOpen(false)}

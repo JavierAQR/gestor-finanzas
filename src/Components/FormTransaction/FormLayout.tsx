@@ -74,7 +74,6 @@ const FormLayout = ({
               },
             })}
           >
-            <option value="" disabled></option>
             <option value="egreso">Egreso</option>
             <option value="ingreso">Ingreso</option>
           </select>
@@ -127,7 +126,7 @@ const FormLayout = ({
               },
             })}
           >
-            <option value="" disabled></option>
+            <option disabled></option>
             //Si no hay un tipo Seleccionado, no cargan las categorías
             {watch("type") !== ""
               ? typeSelected.map((item, index) => (
