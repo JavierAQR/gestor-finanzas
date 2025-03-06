@@ -20,3 +20,19 @@ body {
   font-style: normal;
   color: var(--color-texto);
 }
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+button i {
+  color: blueviolet;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button i:hover {
+  transform: scale(1.4);
+}

@@ -35,3 +35,13 @@
 .balance-total .vacío {
   display: none;
 }
+
+@media screen and (max-width: 600px) {
+  .balance-total {
+    margin: 0 10px;
+  }
+
+  .balance-total .total {
+    width: 150px;
+  }
+}

@@ -68,3 +68,45 @@
 .modal table {
   width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+  .modal table {
+    width: 100%;
+  }
+
+  .modal {
+    width: 90%;
+    border-radius: 0px;
+    justify-content: center;
+  }
+
+  .modal form {
+    flex-direction: column;
+  }
+
+  .modal form input,
+  .modal form select,
+  .modal form button {
+    width: 226px;
+  }
+
+  .modal form input {
+    width: 193px;
+  }
+
+  .manage-categories {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+    margin-bottom: 50px;
+  }
+
+  .modal .btn-cerrar {
+    right: 30px;
+  }
+
+  .modal .btn-cerrar i {
+    font-size: 35px;
+  }
+}

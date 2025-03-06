@@ -1,6 +1,5 @@
 header {
   display: flex;
-
   flex-wrap: wrap;
   gap: 20px;
   background-color: #4b02b0;
@@ -53,4 +52,11 @@ select[name="monthSelected"] option {
 .active-link {
   background-color: var(--color-light);
   border-radius: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  header {
+    justify-content: center;
+    padding: 13px 0px;
+  }
 }

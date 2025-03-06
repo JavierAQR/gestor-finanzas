@@ -5,48 +5,22 @@
   width: 100%;
 }
 
-table {
-  border-collapse: collapse;
-  width: 80%;
-  background-color: #f4f4f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
 .resultados-tabla table {
   margin-bottom: 30px;
 }
 
-th,
-td {
-  padding: 10px;
-  text-align: left;
+.type {
+  padding: 8px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
-th {
-  background-color: #6200ea;
-  color: white;
-  text-transform: uppercase;
-  font-size: 14px;
+.type.ingreso {
+  color: green;
 }
 
-tr:nth-child(even) {
-  background: #f9f9f9;
+.type.egreso {
+  color: rgb(240, 15, 15);
 }
 
-tr:hover {
-  background: #e0e0ff;
-  transform: scale(1.01);
-  transition: 0.2s ease;
-}
 
-@media screen and (max-width: 600px) {
-  .hide-on-mobile {
-    display: none;
-  }
-
-  table {
-    width: 95%;
-  }
-}
