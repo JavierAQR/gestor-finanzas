@@ -57,6 +57,14 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
       </button>
       <h1>Categorías</h1>
       <form onSubmit={onSubmit}>
+        {/* <InputField
+          name="type"
+          label="Nombre"
+          inputType="text"
+          register={register}
+          errors={errors}
+          watch={watch}
+        /> */}
         <div className={`input-field ${watch("type") ? "filled" : ""}`}>
           <input
             type="text"

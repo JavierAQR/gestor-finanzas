@@ -1,6 +1,6 @@
 header {
   display: flex;
-  flex-direction: flex-start;
+
   flex-wrap: wrap;
   gap: 20px;
   background-color: #4b02b0;

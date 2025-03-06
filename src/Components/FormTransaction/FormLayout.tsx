@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { initialState, inputs, Transaction } from "../../context/reducer";
-
 import "./FormStyles.css";
 import { Category } from "../../context/reducerCategories";
+import { zodResolver } from "@hookform/resolvers/zod";
+import InputField from "../ReusableFormFields/InputField";
+import SelectField from "../ReusableFormFields/SelectField";
+import { formSchema, TformSchema } from "../../schemas/transactionSchema";
 
 type Props = {
   handlerAddTransaction: (data: inputs) => void;
@@ -30,14 +33,8 @@ const FormLayout = ({
     watch,
     reset,
     formState: { errors },
-  } = useForm<inputs>({
-    defaultValues: {
-      description: "",
-      category: "",
-      date: formattedDate,
-      amount: NaN,
-      type: "",
-    },
+  } = useForm<TformSchema>({
+    resolver: zodResolver(formSchema),
   });
 
   useEffect(() => {
@@ -62,99 +59,60 @@ const FormLayout = ({
   const typeSelected =
     watch("type") === "ingreso" ? incomeCategories : expenseCategories;
 
+  const typeSelect = typeSelected.map((item) => {
+    return { name: item.name, value: item.name };
+  });
+
   return (
     <div className="formulario-transaccion">
       <form onSubmit={onSubmit}>
-        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
-          <select
-            {...register("type", {
-              required: {
-                value: true,
-                message: "El tipo es requerido",
-              },
-            })}
-          >
-            <option value="egreso">Egreso</option>
-            <option value="ingreso">Ingreso</option>
-          </select>
-          <label>Tipo</label>
-          {errors.type && (
-            <span className="error-message">{errors.type.message}</span>
-          )}
-        </div>
-        <div className={`input-field ${watch("description") ? "filled" : ""}`}>
-          <input
-            type="text"
-            {...register("description", {
-              required: {
-                value: true,
-                message: "La descripción es requerida",
-              },
-            })}
-          />
-          <label>Descripción</label>
-          {errors.description && (
-            <span className="error-message">{errors.description.message}</span>
-          )}
-        </div>
-        <div className={`input-field ${watch("amount") ? "filled" : ""}`}>
-          <input
-            type="number"
-            step="any"
-            {...register("amount", {
-              required: {
-                value: true,
-                message: "El monto es requerido",
-              },
-              min: {
-                value: 1,
-                message: "El monto mínimo es 1",
-              },
-            })}
-          />
-          <label>Monto (Soles)</label>
-          {errors.amount && (
-            <span className="error-message">{errors.amount.message}</span>
-          )}
-        </div>
-        <div className={`input-field ${watch("category") ? "filled" : ""}`}>
-          <select
-            {...register("category", {
-              required: {
-                value: true,
-                message: "La categoría es requerida",
-              },
-            })}
-          >
-            <option disabled></option>
-            //Si no hay un tipo Seleccionado, no cargan las categorías
-            {watch("type") !== ""
-              ? typeSelected.map((item, index) => (
-                  <option key={index} value={item.name}>
-                    {item.name}
-                  </option>
-                ))
-              : null}
-          </select>
-          <label>Categoría</label>
-          {errors.category && (
-            <span className="error-message">{errors.category.message}</span>
-          )}
-        </div>
-        <div className={`input-field ${watch("date") ? "filled" : ""}`}>
-          <input
-            type="date"
-            {...register("date", {
-              required: {
-                value: true,
-                message: "La fecha es requerida",
-              },
-            })}
-          />
-          {errors.date && (
-            <span className="error-message">{errors.date.message}</span>
-          )}
-        </div>
+        <SelectField
+          name="type"
+          label="Tipo"
+          register={register}
+          errors={errors}
+          watch={watch}
+          data={[
+            { name: "Egreso", value: "egreso" },
+            { name: "Ingreso", value: "ingreso" },
+          ]}
+        />
+
+        <InputField
+          name="description"
+          label="Descripción"
+          inputType="text"
+          register={register}
+          errors={errors}
+          watch={watch}
+        />
+
+        <InputField
+          name="amount"
+          label="Monto"
+          inputType="number"
+          register={register}
+          errors={errors}
+          watch={watch}
+        />
+
+        <SelectField
+          name="category"
+          label="Categoría"
+          register={register}
+          errors={errors}
+          watch={watch}
+          data={typeSelect}
+          disabled={watch("type") === "" && true}
+        />
+
+        <InputField
+          name="date"
+          inputType="date"
+          register={register}
+          errors={errors}
+          watch={watch}
+        />
         <button type="submit" className="boton-formulario">
           {editTransaction.id === "" ? "AGREGAR" : "ACTUALIZAR"}
         </button>
