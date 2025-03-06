@@ -41,6 +41,7 @@
   padding: 20px;
   border-radius: 20px;
   position: relative;
+  height: 580px;
 }
 
 .modal h1 {
@@ -65,8 +66,9 @@
   font-size: 25px;
 }
 
-.modal table {
+.modal .reusable-table {
   width: 100%;
+  max-height: 500px;
 }
 
 @media screen and (max-width: 600px) {
@@ -82,6 +84,7 @@
 
   .modal form {
     flex-direction: column;
+    gap: 25px;
   }
 
   .modal form input,

@@ -1,8 +1,17 @@
+.reusable-table {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
 table {
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
   background-color: #f4f4f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -11,6 +20,12 @@ th,
 td {
   padding: 10px;
   text-align: left;
+  min-height: 30px;
+}
+
+thead {
+  position: sticky;
+  top: 0;
 }
 
 th {
@@ -30,17 +45,21 @@ tr:hover {
   transition: 0.2s ease;
 }
 
+.acciones {
+  display: flex;
+  gap: 20px;
+}
+
 @media screen and (max-width: 600px) {
+  .reusable-table {
+    width: 100%;
+  }
+
   .hide-on-mobile {
     display: none;
   }
 
   table {
-    width: 90%;
+    width: 95%;
   }
-}
-
-.acciones {
-  display: flex;
-  gap: 20px;
 }
