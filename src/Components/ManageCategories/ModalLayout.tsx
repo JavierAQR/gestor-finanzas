@@ -1,8 +1,19 @@
 import { useForm } from "react-hook-form";
-import { Category, categoryInputs } from "../../context/reducerCategories";
+import {
+  Category,
+  categoryInitialInputs,
+  categoryInputs,
+} from "../../context/reducerCategories";
 import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
 
 import { useDataContext } from "../../context/TransactionContext";
+import InputField from "../ReusableFormFields/InputField";
+import SelectField from "../ReusableFormFields/SelectField";
+import {
+  categoriesSchema,
+  TcategoriesSchema,
+} from "../../schemas/categoriesSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
   closeModal: () => void;
@@ -31,11 +42,9 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
     watch,
     reset,
     formState: { errors },
-  } = useForm<categoryInputs>({
-    defaultValues: {
-      name: "",
-      type: "",
-    },
+  } = useForm<TcategoriesSchema>({
+    defaultValues: categoryInitialInputs,
+    resolver: zodResolver(categoriesSchema),
   });
 
   const handleDelete = (id: string) => {
@@ -57,46 +66,25 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
       </button>
       <h1>Categorías</h1>
       <form onSubmit={onSubmit}>
-        {/* <InputField
-          name="type"
+        <InputField
+          name="name"
           label="Nombre"
           inputType="text"
           register={register}
           errors={errors}
           watch={watch}
-        /> */}
-        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
-          <input
-            type="text"
-            {...register("name", {
-              required: {
-                value: true,
-                message: "El nombre es requerido",
-              },
-            })}
-          />
-          <label>Nombre</label>
-          {errors.name && (
-            <span className="error-message">{errors.name.message}</span>
-          )}
-        </div>
-        <div className={`input-field ${watch("type") ? "filled" : ""}`}>
-          <select
-            {...register("type", {
-              required: {
-                value: true,
-                message: "El tipo es requerido",
-              },
-            })}
-          >
-            <option value="egreso">Egreso</option>
-            <option value="ingreso">Ingreso</option>
-          </select>
-          <label>Tipo</label>
-          {errors.type && (
-            <span className="error-message">{errors.type.message}</span>
-          )}
-        </div>
+        />
+        <SelectField
+          name="type"
+          label="Tipo"
+          register={register}
+          errors={errors}
+          watch={watch}
+          data={[
+            { name: "Egreso", value: "egreso" },
+            { name: "Ingreso", value: "ingreso" },
+          ]}
+        />
         <button type="submit" className="boton-formulario">
           AGREGAR
         </button>

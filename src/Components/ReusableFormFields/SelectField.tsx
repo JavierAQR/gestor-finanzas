@@ -1,21 +1,27 @@
-import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
-import { TformSchema } from "../../schemas/transactionSchema";
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+  UseFormWatch,
+} from "react-hook-form";
 
 export interface selectData {
   name: string;
   value: string;
 }
 
-interface Props {
-  name: keyof TformSchema;
-  register: UseFormRegister<TformSchema>;
-  errors: FieldErrors<TformSchema>;
-  watch: UseFormWatch<TformSchema>;
+interface Props<T extends FieldValues> {
+  name: Path<T>;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
+  watch: UseFormWatch<T>;
   data: selectData[];
   label?: string;
   disabled?: boolean;
 }
-const SelectField = ({
+const SelectField = <T extends FieldValues>({
   name,
   label,
   register,
@@ -23,7 +29,7 @@ const SelectField = ({
   watch,
   data,
   disabled,
-}: Props) => {
+}: Props<T>) => {
   return (
     <div className={`input-field ${watch(name) ? "filled" : ""}`}>
       {disabled ? (
@@ -43,7 +49,9 @@ const SelectField = ({
           </select>
           <label>{label}</label>
           {errors[name] && (
-            <span className="error-message">{errors[name].message}</span>
+            <span className="error-message">
+              {(errors[name] as FieldError).message}
+            </span>
           )}
         </>
       )}

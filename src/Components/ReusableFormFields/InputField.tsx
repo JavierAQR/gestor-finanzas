@@ -1,23 +1,29 @@
-import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
-import { TformSchema } from "../../schemas/transactionSchema";
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+  UseFormWatch,
+} from "react-hook-form";
 
-interface Props {
-  name: keyof TformSchema;
+interface Props<T extends FieldValues> {
+  name: Path<T>;
   label?: string;
   inputType: string;
-  register: UseFormRegister<TformSchema>;
-  errors: FieldErrors<TformSchema>;
-  watch: UseFormWatch<TformSchema>;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
+  watch: UseFormWatch<T>;
 }
 
-const InputField = ({
+const InputField = <T extends FieldValues>({
   name,
   label,
   inputType,
   register,
   errors,
   watch,
-}: Props) => {
+}: Props<T>) => {
   return (
     <div
       className={`input-field ${
@@ -32,7 +38,9 @@ const InputField = ({
 
       <label>{label}</label>
       {errors[name] && (
-        <span className="error-message">{errors[name].message}</span>
+        <span className="error-message">
+          {(errors[name] as FieldError).message}
+        </span>
       )}
     </div>
   );

@@ -21,12 +21,6 @@ const FormLayout = ({
   incomeCategories,
   editTransaction,
 }: Props) => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Meses van de 0 a 11
-  const day = String(date.getDate()).padStart(2, "0");
-  const formattedDate = `${year}-${month}-${day}`;
-
   const {
     register,
     handleSubmit,
@@ -34,6 +28,7 @@ const FormLayout = ({
     reset,
     formState: { errors },
   } = useForm<TformSchema>({
+    defaultValues: initialState,
     resolver: zodResolver(formSchema),
   });
 
@@ -41,13 +36,7 @@ const FormLayout = ({
     if (editTransaction !== initialState) {
       reset(editTransaction);
     } else {
-      reset({
-        description: "",
-        category: "",
-        date: formattedDate,
-        amount: NaN,
-        type: "",
-      });
+      reset();
     }
   }, [editTransaction, reset]);
 
@@ -56,9 +45,13 @@ const FormLayout = ({
     reset();
   });
 
+  //Se obtiene el array de categorías correspondiente al tipo seleccionado
   const typeSelected =
     watch("type") === "ingreso" ? incomeCategories : expenseCategories;
 
+  //Este array de objetos [{id: string, name: string, type: string}]
+  //Es convertido a [{name: string, value: string}]
+  //Para luego ser iterado en un SelectField como Options <option value={value}>{name}<option/>
   const typeSelect = typeSelected.map((item) => {
     return { name: item.name, value: item.name };
   });
@@ -89,7 +82,7 @@ const FormLayout = ({
 
         <InputField
           name="amount"
-          label="Monto"
+          label="Monto (Soles)"
           inputType="number"
           register={register}
           errors={errors}
@@ -103,7 +96,8 @@ const FormLayout = ({
           errors={errors}
           watch={watch}
           data={typeSelect}
-          disabled={watch("type") === "" && true}
+          //Deshabilitado hasta que haya un tipo seleccionado.
+          disabled={!watch("type") && true}
         />
 
         <InputField
@@ -113,6 +107,8 @@ const FormLayout = ({
           errors={errors}
           watch={watch}
         />
+
+        {/* El boton dice actualizar solo si hay un id en edición. */}
         <button type="submit" className="boton-formulario">
           {editTransaction.id === "" ? "AGREGAR" : "ACTUALIZAR"}
         </button>

@@ -30,7 +30,7 @@ function BalanceTotal({ selectedTable }: Props) {
       </div>
       {
         <div className={`total`}>
-          <h4>{diferencia >= 0 ? "Restante" : "Perdida"}</h4>
+          <h4>{"Restante"}</h4>
           <span>S/ {diferencia}</span>
         </div>
       }

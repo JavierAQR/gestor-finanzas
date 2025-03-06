@@ -1,7 +1,8 @@
 .table-controls {
   display: flex;
   gap: 40px;
-  margin: 50px 0;
+  margin-top: 50px;
+  margin-bottom: 25px;
   justify-content: center;
   align-items: center;
   margin-top: 3.5rem;
