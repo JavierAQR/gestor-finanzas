@@ -18,6 +18,7 @@ export interface ContextType {
   setMonthSelected: Dispatch<SetStateAction<string>>;
   keysMonths: string[];
   transaccionesDelMes: Transaction[];
+  transaccionesPorMes: { [key: string]: Transaction[] };
 }
 
 export const MonthContext = createContext<ContextType | null>(null);
@@ -39,7 +40,7 @@ export function MonthTransactionProvider({ children }: Props) {
 
   const [monthSelected, setMonthSelected] = useState(fechaActual);
 
-  function agruparPorFecha(transacciones: Transaction[]) {
+  function transaccionesPorFecha(transacciones: Transaction[]) {
     return transacciones.reduce<{
       [key: string]: Transaction[];
     }>((obj, item) => {
@@ -52,14 +53,16 @@ export function MonthTransactionProvider({ children }: Props) {
     }, {});
   }
 
-  const transaccionesPorMes = agruparPorFecha(state);
+  //Objeto donde cada clave es una fecha y los valores de las claves son arrays de transacciones
+  //correspondientes a la fecha
+  const transaccionesPorMes = transaccionesPorFecha(state);
 
   //Array con las todas las claves del objeto historyTransactions (los meses)
   const keysMonths = Object.keys(transaccionesPorMes).sort((a, b) =>
     b.localeCompare(a)
   );
 
-  //Array con todas las transacciones del mes seleccionado o del primer mes disponible
+  //Array con todas las transacciones del mes elegido
   const transaccionesDelMes =
     transaccionesPorMes[monthSelected] ||
     transaccionesPorMes[keysMonths[0]] ||
@@ -69,6 +72,7 @@ export function MonthTransactionProvider({ children }: Props) {
     monthSelected,
     setMonthSelected,
     keysMonths,
+    transaccionesPorMes,
     transaccionesDelMes,
   };
 

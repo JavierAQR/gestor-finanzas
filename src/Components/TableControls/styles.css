@@ -1,8 +1,10 @@
 .table-controls {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   margin-top: 50px;
   margin-bottom: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
   justify-content: center;
   align-items: center;
   margin-top: 3.5rem;
@@ -12,7 +14,7 @@
 
 .control {
   display: flex;
-  gap: 15px;
+  gap: 5px;
 }
 
 .control h4 {

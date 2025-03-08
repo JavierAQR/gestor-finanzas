@@ -16,6 +16,7 @@ function BalanceTotal({ selectedTable }: Props) {
   );
 
   const getClass = (value: number) => (value === 0 ? "vacío" : "total");
+
   const diferencia = ingresoTotal - egresoTotal;
 
   return (
@@ -28,12 +29,10 @@ function BalanceTotal({ selectedTable }: Props) {
         <h4>Total de egresos</h4>
         <span> S/ {egresoTotal}</span>
       </div>
-      {
-        <div className={`total`}>
-          <h4>{"Restante"}</h4>
-          <span>S/ {diferencia}</span>
-        </div>
-      }
+      <div className={`total`}>
+        <h4>{"Restante"}</h4>
+        <span>S/ {diferencia}</span>
+      </div>
     </div>
   );
 }

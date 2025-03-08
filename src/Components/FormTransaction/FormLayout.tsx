@@ -42,7 +42,7 @@ const FormLayout = ({
 
   const onSubmit = handleSubmit((data) => {
     handlerAddTransaction(data);
-    reset();
+    reset(initialState);
   });
 
   //Se obtiene el array de categorías correspondiente al tipo seleccionado
