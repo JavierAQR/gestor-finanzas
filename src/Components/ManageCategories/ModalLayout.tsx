@@ -21,6 +21,7 @@ interface Props {
 }
 
 const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
+
   const columns: Column<Category>[] = [
     {
       header: "NOMBRE",

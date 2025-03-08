@@ -18,7 +18,8 @@ export interface ContextType {
   setMonthSelected: Dispatch<SetStateAction<string>>;
   keysMonths: string[];
   transaccionesDelMes: Transaction[];
-  transaccionesPorMes: { [key: string]: Transaction[] };
+  categoriasIngreso: string[];
+  categoriasEgreso: string[];
 }
 
 export const MonthContext = createContext<ContextType | null>(null);
@@ -38,9 +39,10 @@ export function MonthTransactionProvider({ children }: Props) {
   // Obtener la fecha actual en formato YYYY-MM
   const fechaActual = `${currentDate.getFullYear()}-${formattedMonth}`;
 
+  //Estado para manejar el mes selecciona, el que por defecto será el actual
   const [monthSelected, setMonthSelected] = useState(fechaActual);
 
-  function transaccionesPorFecha(transacciones: Transaction[]) {
+  function obtenerTransaccionesPorFecha(transacciones: Transaction[]) {
     return transacciones.reduce<{
       [key: string]: Transaction[];
     }>((obj, item) => {
@@ -55,7 +57,7 @@ export function MonthTransactionProvider({ children }: Props) {
 
   //Objeto donde cada clave es una fecha y los valores de las claves son arrays de transacciones
   //correspondientes a la fecha
-  const transaccionesPorMes = transaccionesPorFecha(state);
+  const transaccionesPorMes = obtenerTransaccionesPorFecha(state);
 
   //Array con las todas las claves del objeto historyTransactions (los meses)
   const keysMonths = Object.keys(transaccionesPorMes).sort((a, b) =>
@@ -68,12 +70,27 @@ export function MonthTransactionProvider({ children }: Props) {
     transaccionesPorMes[keysMonths[0]] ||
     [];
 
+  //Categorias de ingreso por mes
+  const obtenerCategoriasDelMes = (type: string) => {
+    return transaccionesDelMes
+      .filter((item) => item.type === type)
+      .reduce<string[]>((arr, item) => {
+        if (!arr.includes(item.category)) {
+          arr.push(item.category);
+        }
+        return arr;
+      }, []);
+  };
+  const categoriasIngreso = obtenerCategoriasDelMes("ingreso");
+  const categoriasEgreso = obtenerCategoriasDelMes("egreso");
+
   const valor = {
     monthSelected,
     setMonthSelected,
     keysMonths,
-    transaccionesPorMes,
     transaccionesDelMes,
+    categoriasEgreso,
+    categoriasIngreso,
   };
 
   return (

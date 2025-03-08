@@ -1,11 +1,14 @@
 import { Transaction } from "../../context/reducer";
+import BudgetContainer from "../ManageBudget/BudgetContainer";
 import "./styles.css";
 
 type Props = {
   selectedTable: Transaction[];
+  typeFilter: string;
+  categoryFilter: string;
 };
 
-function BalanceTotal({ selectedTable }: Props) {
+function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
   const { ingresoTotal, egresoTotal } = selectedTable.reduce(
     (acc, item) => {
       if (item.type === "ingreso") acc.ingresoTotal += Number(item.amount);
@@ -15,20 +18,46 @@ function BalanceTotal({ selectedTable }: Props) {
     { ingresoTotal: 0, egresoTotal: 0 }
   );
 
-  const getClass = (value: number) => (value === 0 ? "vacío" : "total");
-
   const diferencia = ingresoTotal - egresoTotal;
 
   return (
     <div className="balance-total">
-      <div className={getClass(ingresoTotal)}>
-        <h4>Total de ingresos</h4>
-        <span>S/ {ingresoTotal}</span>
-      </div>
-      <div className={getClass(egresoTotal)}>
-        <h4>Total de egresos</h4>
-        <span> S/ {egresoTotal}</span>
-      </div>
+      {typeFilter === "" && (
+        <>
+          <div className="total">
+            <h4>Total de ingresos</h4>
+            <span>S/ {ingresoTotal}</span>
+          </div>
+          <div className="total">
+            <h4>Total de egresos</h4>
+            <span> S/ {egresoTotal}</span>
+          </div>
+        </>
+      )}
+      {typeFilter === "ingreso" && (
+        <>
+          <div className="total">
+            <h4>Total de ingresos</h4>
+            <span>S/ {ingresoTotal}</span>
+          </div>
+          <BudgetContainer
+            typeSelected={typeFilter}
+            categoryFilter={categoryFilter}
+          />
+        </>
+      )}
+      {typeFilter === "egreso" && (
+        <>
+          <div className="total">
+            <h4>Total de egresos</h4>
+            <span> S/ {egresoTotal}</span>
+          </div>
+          <BudgetContainer
+            typeSelected={typeFilter}
+            categoryFilter={categoryFilter}
+          />
+        </>
+      )}
       <div className={`total`}>
         <h4>{"Restante"}</h4>
         <span>S/ {diferencia}</span>

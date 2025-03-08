@@ -4,13 +4,8 @@ import PieChart from "./eCharts/PieChart";
 
 const MonthlyCharts = () => {
   const { transaccionesDelMes } = useMonthContext();
-  console.log(transaccionesDelMes);
 
   //Metodo para obtener array de objetos con el nombre de la categoría y su valor total...
-  //---- PUEDO USAR ESTE METODO PARA AGREGAR OTRO CAMPO LLAMADO PRESUPUESTO ----
-  // ---- DECLARAR OTRA VARIABLE DE ESTADO EN MONTH CONTEXT PARA LOS PRESUPUESTOS ----
-  // ---- ASIGNAR LOS VALORES DESDE LA VISTA TABLA...
-  // --- Y ASI TENER EN UN SOLO OBJETO LA CATEGORIA, EL MONTO TOTAL Y EL PRESUPUESTO ...
   const sumaMontoPorCategoría = (categoria: string) => {
     const objetoSuma = transaccionesDelMes
       .filter((item) => item.type === categoria)

@@ -13,6 +13,12 @@ function MainControl() {
 
   const [selectedTable, setSelectedTable] = useState<Transaction[]>([]);
 
+  //Estado para el filtro por categoría
+  const [categoryFilter, setCategoryFilter] = useState("");
+
+  //Estado para el filtro por tipo
+  const [typeFilter, setTypeFilter] = useState("");
+
   return (
     <>
       <ErrorBoundary>
@@ -22,8 +28,18 @@ function MainControl() {
           setEditTransaction={setEditTransaction}
         />
         <div className="resultados-tabla">
-          <BalanceTotal selectedTable={selectedTable} />
-          <TableControlsContainer setSelectedTable={setSelectedTable} />
+          <BalanceTotal
+            selectedTable={selectedTable}
+            typeFilter={typeFilter}
+            categoryFilter={categoryFilter}
+          />
+          <TableControlsContainer
+            setSelectedTable={setSelectedTable}
+            typeFilter={typeFilter}
+            setTypeFilter={setTypeFilter}
+            categoryFilter={categoryFilter}
+            setCategoryFilter={setCategoryFilter}
+          />
           <DisplayTransactions
             selectedTable={selectedTable}
             setEditTransaction={setEditTransaction}

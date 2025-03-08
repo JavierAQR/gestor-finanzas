@@ -45,6 +45,10 @@ export function TransactionContextProvider({ children }: Props) {
     initialStateCategories
   );
 
+
+
+ 
+
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(state));
   }, [state]);

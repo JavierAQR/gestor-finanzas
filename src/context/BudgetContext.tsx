@@ -2,75 +2,49 @@ import {
   createContext,
   Dispatch,
   ReactNode,
-  SetStateAction,
   useContext,
-  useEffect,
-  useState,
+  useReducer,
 } from "react";
+import { ActionBudget, Budget, reducerBudget } from "./reducerBudget";
 import { useMonthContext } from "./MonthContext";
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
-
-interface BudgetItem {
-  category: string;
-  budget: number;
-}
-
-interface MonthlyBudget {
-  egresos: BudgetItem[];
-  ingresos: BudgetItem[];
-}
-
-interface BudgetData {
-  [key: string]: MonthlyBudget;
-}
+};
 
 export interface ContextType {
-  budget: BudgetData;
-  setBudget: Dispatch<SetStateAction<BudgetData>>;
+  budget: Budget[];
+  setBudget: Dispatch<ActionBudget>;
 }
 
 export const BudgetContext = createContext<ContextType | null>(null);
 
 export function BudgetContextProvider({ children }: Props) {
-  const { transaccionesPorMes, keysMonths } = useMonthContext();
+  const [budget, setBudget] = useReducer(reducerBudget, []);
+  const { keysMonths } = useMonthContext();
 
-  const obtenerPresupuestos = (tipo: string, fecha: string) => {
-    return transaccionesPorMes[fecha]
-      .filter((item) => item.type === tipo)
-      .reduce<string[]>((arr, categoria) => {
-        if (!arr.includes(categoria.category)) {
-          arr.push(categoria.category);
+  //--Aqui podria traer keysMonths?
+  //Si la fecha existe dentro de las fechas registradas...
+  //... y si la fecha no forma parte del objeto, se agrega la fecha y se asigna un arreglo vacío
+  //Si la fecha ya existe en el objeto, se pushea el presupuesto a la fecha correspondiente.
+  //Lo de que existe en las fechas registradas lo podría agregar luego, en el metodo para agregar...
+  //Y ahí mismo agrego logica para que no se repitan las transacciones
+  //Y solo se pueda agregar categorias que hayan sido registradas en esa fecha
+  //Para eso debería crear un arreglo con las categorias correspondientes a cada fecha
+  //Javier de manana te deseo suerte, me voy a jugar hogwarts
+  const obtenerPresupuestosPorFecha = (budget: Budget[]) => {
+    return budget.reduce<{ [key: string]: Budget[] }>((obj, item) => {
+      if (keysMonths.includes(item.date)) {
+        if (!obj[item.date]) {
+          obj[item.date] = [];
         }
-        return arr;
-      }, [])
-      .map((item) => {
-        return {
-          category: item,
-          budget: 0,
-        };
-      });
+        obj[item.date].push(item);
+      }
+      return obj;
+    }, {});
   };
 
-  const presupuestos = keysMonths.reduce<BudgetData>((obj, item) => {
-    obj[item] = {
-      ingresos: obtenerPresupuestos("ingreso", item),
-      egresos: obtenerPresupuestos("egreso", item),
-    };
-    return obj;
-  }, {});
-
-  const [budget, setBudget] = useState(presupuestos);
-
-  useEffect(() => {
-    setBudget(presupuestos);
-  }, [transaccionesPorMes]);
-
-  /* presupuestos["2025-03"]["egresos"][0]["budget"] = 100; */
-
-  console.log(budget);
+  const presupuestosPorFecha = obtenerPresupuestosPorFecha(budget);
 
   const valor = {
     budget,

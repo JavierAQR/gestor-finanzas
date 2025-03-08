@@ -12,20 +12,24 @@ import { useMonthContext } from "../../context/MonthContext";
 
 interface Props {
   setSelectedTable: Dispatch<SetStateAction<Transaction[]>>;
+  typeFilter: string;
+  setTypeFilter: Dispatch<SetStateAction<string>>;
+  categoryFilter: string;
+  setCategoryFilter: Dispatch<SetStateAction<string>>;
 }
 
-function TableControlsContainer({ setSelectedTable }: Props) {
+function TableControlsContainer({
+  setSelectedTable,
+  typeFilter,
+  setTypeFilter,
+  categoryFilter,
+  setCategoryFilter,
+}: Props) {
   //Se importan las transacciones del mes correspondiente
   const { transaccionesDelMes } = useMonthContext();
 
   //Estado para el filtro de ordenamiento
   const [tableSort, setTableSort] = useState("reciente");
-
-  //Estado para el filtro por categoría
-  const [categoryFilter, setCategoryFilter] = useState("");
-
-  //Estado para el filtro por tipo
-  const [typeFilter, setTypeFilter] = useState("");
 
   //Metodo para aplicar categoria y ordenamiento al mes seleccionado
   //Se hace una copia para no alterar el array original
