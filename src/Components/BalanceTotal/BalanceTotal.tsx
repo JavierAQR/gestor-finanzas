@@ -32,6 +32,10 @@ function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
             <h4>Total de egresos</h4>
             <span> S/ {egresoTotal}</span>
           </div>
+          <div className={`total`}>
+            <h4>{"Restante"}</h4>
+            <span>S/ {diferencia}</span>
+          </div>
         </>
       )}
       {typeFilter === "ingreso" && (
@@ -43,6 +47,7 @@ function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
           <BudgetContainer
             typeSelected={typeFilter}
             categoryFilter={categoryFilter}
+            montoTotal={ingresoTotal}
           />
         </>
       )}
@@ -55,13 +60,10 @@ function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
           <BudgetContainer
             typeSelected={typeFilter}
             categoryFilter={categoryFilter}
+            montoTotal={egresoTotal}
           />
         </>
       )}
-      <div className={`total`}>
-        <h4>{"Restante"}</h4>
-        <span>S/ {diferencia}</span>
-      </div>
     </div>
   );
 }

@@ -9,9 +9,14 @@ import { useDataContext } from "../../context/TransactionContext";
 interface Props {
   typeSelected: string;
   categoryFilter: string;
+  montoTotal: number;
 }
 
-const BudgetContainer = ({ typeSelected, categoryFilter }: Props) => {
+const BudgetContainer = ({
+  typeSelected,
+  categoryFilter,
+  montoTotal,
+}: Props) => {
   const [budgetIsOpen, setBudgetIsOpen] = useState(false);
   const { monthSelected } = useMonthContext();
   const { budget, setBudget } = useBudgetContext();
@@ -44,40 +49,46 @@ const BudgetContainer = ({ typeSelected, categoryFilter }: Props) => {
 
   const dataTable = obtenerBudgetTable(typeSelected);
 
-  //Falta pulir
-  const obtenerPresupuesto = () => {
-    if (categoryFilter === "") {
-      return "Aqui va total";
-    }
-    const data = dataTable.find((item) => item.category === categoryFilter);
-    if (data) {
-      return data.budget;
-    } else {
-      return "Sin presupuesto";
-    }
-  };
-
   const tituloPresupuesto =
     categoryFilter === "" ? typeSelected + "s" : categoryFilter;
 
+  const presupuestoActual = dataTable.find(
+    (item) => item.category === categoryFilter
+  );
+
+  const mostrarPresupuesto =
+    presupuestoActual !== undefined ? (
+      <span> S/ {presupuestoActual.budget}</span>
+    ) : (
+      <span>Sin presupuesto.</span>
+    );
+
   return (
-    <div className="presupuesto">
-      <div className="total presupuesto">
-        <button onClick={() => setBudgetIsOpen(true)}>
-          Gestionar Presupuesto
-        </button>
-        <h4>Presupuesto {tituloPresupuesto}</h4>
-        <span>{obtenerPresupuesto()}</span>
+    <>
+      <div className="presupuesto">
+        <div className="total presupuesto">
+          <button onClick={() => setBudgetIsOpen(true)}>
+            Gestionar Presupuesto
+          </button>
+          <h4>Presupuesto {tituloPresupuesto}</h4>
+          <span>{mostrarPresupuesto}</span>
+        </div>
+        <ModalContainer isOpen={budgetIsOpen}>
+          <BudgetLayout
+            closeModal={() => setBudgetIsOpen(false)}
+            typeSelected={typeSelected}
+            handleAddBudget={handleAddBudget}
+            dataTable={dataTable}
+          />
+        </ModalContainer>
       </div>
-      <ModalContainer isOpen={budgetIsOpen}>
-        <BudgetLayout
-          closeModal={() => setBudgetIsOpen(false)}
-          typeSelected={typeSelected}
-          handleAddBudget={handleAddBudget}
-          dataTable={dataTable}
-        />
-      </ModalContainer>
-    </div>
+      {presupuestoActual !== undefined && (
+        <div className={`total`}>
+          <h4>Restante</h4>
+          <span>S/ {montoTotal - presupuestoActual.budget}</span>
+        </div>
+      )}
+    </>
   );
 };
 
