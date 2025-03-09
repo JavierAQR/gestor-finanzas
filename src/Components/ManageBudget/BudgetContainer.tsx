@@ -60,7 +60,7 @@ const BudgetContainer = ({
     presupuestoActual !== undefined ? (
       <span> S/ {presupuestoActual.budget}</span>
     ) : (
-      <span>Sin presupuesto.</span>
+      <span>S/ 0</span>
     );
 
   return (

@@ -41,7 +41,8 @@ function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
       {typeFilter === "ingreso" && (
         <>
           <div className="total">
-            <h4>Total de ingresos</h4>
+            <h4>Total de ingresos </h4>{" "}
+            {/*Cambiar a Total de (categoria) cuando haya una categoría seleccionada */}
             <span>S/ {ingresoTotal}</span>
           </div>
           <BudgetContainer
