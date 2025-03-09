@@ -3,6 +3,7 @@ import {
   Dispatch,
   ReactNode,
   useContext,
+  useEffect,
   useReducer,
 } from "react";
 import { ActionBudget, Budget, reducerBudget } from "./reducerBudget";
@@ -19,7 +20,17 @@ export interface ContextType {
 export const BudgetContext = createContext<ContextType | null>(null);
 
 export function BudgetContextProvider({ children }: Props) {
-  const [budget, setBudget] = useReducer(reducerBudget, []);
+  const storedBudgets = localStorage.getItem("budgets");
+
+  const initialStateBudget: Budget[] = storedBudgets
+    ? JSON.parse(storedBudgets)
+    : [];
+
+  const [budget, setBudget] = useReducer(reducerBudget, initialStateBudget);
+
+  useEffect(() => {
+    localStorage.setItem("budgets", JSON.stringify(budget));
+  });
 
   const valor = {
     budget,

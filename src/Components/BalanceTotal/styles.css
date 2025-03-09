@@ -32,18 +32,7 @@
   font-weight: 500;
 }
 
-.balance-total .total.presupuesto {
-  position: relative;
-}
 
-.balance-total .total.presupuesto button {
-  position: absolute;
-  width: 90%;
-  bottom: -25px;
-  padding: 5px 0px;
-  color: var(--color-primary);
-  cursor: pointer;
-}
 
 @media screen and (max-width: 600px) {
   .balance-total {

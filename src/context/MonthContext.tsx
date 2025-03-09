@@ -6,11 +6,16 @@ import {
   useContext,
   useState,
 } from "react";
-import { Transaction } from "./reducer";
+import { Transaction, TransactionType } from "./reducer";
 import { useDataContext } from "./TransactionContext";
 
 interface Props {
   children: ReactNode;
+}
+
+interface categoriasMes {
+  name: string;
+  type: TransactionType;
 }
 
 export interface ContextType {
@@ -18,8 +23,7 @@ export interface ContextType {
   setMonthSelected: Dispatch<SetStateAction<string>>;
   keysMonths: string[];
   transaccionesDelMes: Transaction[];
-  categoriasIngreso: string[];
-  categoriasEgreso: string[];
+  categoriasDelMes: categoriasMes[];
 }
 
 export const MonthContext = createContext<ContextType | null>(null);
@@ -70,27 +74,25 @@ export function MonthTransactionProvider({ children }: Props) {
     transaccionesPorMes[keysMonths[0]] ||
     [];
 
-  //Categorias de ingreso por mes
-  const obtenerCategoriasDelMes = (type: string) => {
-    return transaccionesDelMes
-      .filter((item) => item.type === type)
-      .reduce<string[]>((arr, item) => {
-        if (!arr.includes(item.category)) {
-          arr.push(item.category);
-        }
-        return arr;
-      }, []);
-  };
-  const categoriasIngreso = obtenerCategoriasDelMes("ingreso");
-  const categoriasEgreso = obtenerCategoriasDelMes("egreso");
+  const categoriasDelMes = transaccionesDelMes.reduce<categoriasMes[]>(
+    (arr, current) => {
+      if (!arr.some((item) => item.name === current.category)) {
+        arr.push({
+          name: current.category,
+          type: current.type,
+        });
+      }
+      return arr;
+    },
+    []
+  );
 
   const valor = {
     monthSelected,
     setMonthSelected,
     keysMonths,
     transaccionesDelMes,
-    categoriasEgreso,
-    categoriasIngreso,
+    categoriasDelMes,
   };
 
   return (

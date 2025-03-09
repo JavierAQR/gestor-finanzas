@@ -16,12 +16,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
-  closeModal: () => void;
   handlerAddCategory: (data: categoryInputs) => void;
 }
 
-const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
-
+const CategoriesLayout = ({ handlerAddCategory }: Props) => {
   const columns: Column<Category>[] = [
     {
       header: "NOMBRE",
@@ -61,11 +59,7 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
   });
 
   return (
-    <div className="modal">
-      <button onClick={closeModal} className="btn-cerrar">
-        <i className="fa-solid fa-xmark"></i>
-      </button>
-      <h1>Categorías</h1>
+    <>
       <form onSubmit={onSubmit}>
         <InputField
           name="name"
@@ -95,8 +89,8 @@ const ModalLayout = ({ closeModal, handlerAddCategory }: Props) => {
         columns={columns}
         handleDelete={handleDelete}
       />
-    </div>
+    </>
   );
 };
 
-export default ModalLayout;
+export default CategoriesLayout;

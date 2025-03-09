@@ -10,19 +10,13 @@ import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
 import { useBudgetContext } from "../../context/BudgetContext";
 
 interface Props {
-  closeModal: () => void;
   typeSelected: string;
   handleAddBudget: (data: budgetForm) => void;
   dataTable: Budget[];
 }
 
-const BudgetLayout = ({
-  closeModal,
-  typeSelected,
-  handleAddBudget,
-  dataTable,
-}: Props) => {
-  const { categoriasEgreso, categoriasIngreso } = useMonthContext();
+const BudgetLayout = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
+  const { categoriasDelMes } = useMonthContext();
   const { budget, setBudget } = useBudgetContext();
 
   const {
@@ -64,8 +58,16 @@ const BudgetLayout = ({
     },
   ];
 
-  const tipoCategorias =
-    typeSelected === "ingreso" ? categoriasIngreso : categoriasEgreso;
+  const obtenerCategoriasPorTipo = (tipo: string) => {
+    return categoriasDelMes
+      .filter((item) => item.type === tipo)
+      .map((item) => item.name);
+  };
+
+  const categoriasPorTipo =
+    typeSelected === "ingreso"
+      ? obtenerCategoriasPorTipo("ingreso")
+      : obtenerCategoriasPorTipo("egreso");
 
   //Array de las categorias ya agregadas (con respectivo presupuesto)
   const categoriasAgregadas = budget.reduce<string[]>((arr, item) => {
@@ -74,7 +76,7 @@ const BudgetLayout = ({
   }, []);
 
   //Categorias para el select (se muestran las que aun no tienen presupuesto agregado)
-  const categoriasFaltantes = tipoCategorias
+  const categoriasFaltantes = categoriasPorTipo
     .filter((item) => !categoriasAgregadas.includes(item))
     .reduce<selectData[]>((arr, item) => {
       arr.push({
@@ -85,10 +87,7 @@ const BudgetLayout = ({
     }, []);
 
   return (
-    <div className="modal">
-      <button onClick={closeModal} className="btn-cerrar">
-        <i className="fa-solid fa-xmark"></i>
-      </button>
+    <>
       <h1>Presupuesto de {typeSelected + "s"}</h1>
       <form onSubmit={onSubmit}>
         <SelectField
@@ -116,7 +115,7 @@ const BudgetLayout = ({
         columns={columns}
         handleDelete={handleDelete}
       />
-    </div>
+    </>
   );
 };
 

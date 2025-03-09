@@ -16,71 +16,6 @@
   flex-wrap: wrap;
 }
 
-.boton-formulario {
-  background-color: #d8cdff;
-  border-radius: 10px;
-  width: 120px;
-  color: #843aff;
-  cursor: pointer;
-  border: none;
-  font-weight: 600;
-  padding: 15px 10px;
-}
-
-.boton-formulario:hover {
-  background-color: #bea5ff;
-  box-shadow: 1px 1px 10px 1px #00000025;
-}
-
-.input-field {
-  position: relative;
-}
-
-.input-field input,
-.input-field select {
-  width: 150px;
-  height: 45px;
-  border: 2px solid #843aff;
-  border-radius: 6px;
-  outline: none;
-  padding: 0 15px;
-  font-size: 15px;
-  background: transparent;
-}
-
-.input-field select {
-  height: 49px;
-}
-
-.input-field label {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  font-size: 15px;
-  pointer-events: none;
-  transition: 0.3s;
-  color: #843aff;
-}
-
-.input-field.filled label,
-.input-field input:focus ~ label,
-.input-field select:focus ~ label {
-  top: 0;
-  left: 10px;
-  font-size: 13px;
-  padding: 0 5px;
-  background: var(--background);
-}
-
-.error-message {
-  color: tomato;
-  position: absolute;
-  left: 0px;
-  top: 105%;
-  font-size: 14px;
-}
-
 @media screen and (max-width: 600px) {
   .formulario-transaccion form {
     display: grid;
@@ -93,25 +28,6 @@
       "tipo categoria"
       "monto fecha"
       "boton boton";
-  }
-
-  .input-field:has(input[type="text"]) {
-    justify-self: center;
-    grid-area: desc;
-  }
-
-  .input-field:has(input[type="number"]) {
-    justify-self: end;
-    grid-area: monto;
-  }
-
-  .input-field:has(input[type="date"]) {
-    grid-area: fecha;
-  }
-
-  .input-field:has(select[name="type"]) {
-    justify-self: end;
-    grid-area: tipo;
   }
 
   .formulario-transaccion button {

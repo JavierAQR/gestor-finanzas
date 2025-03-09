@@ -1,5 +1,6 @@
 import { Transaction } from "../../context/reducer";
 import BudgetContainer from "../ManageBudget/BudgetContainer";
+import ReusableBalance from "./ReusableBalance";
 import "./styles.css";
 
 type Props = {
@@ -18,50 +19,34 @@ function BalanceTotal({ selectedTable, typeFilter, categoryFilter }: Props) {
     { ingresoTotal: 0, egresoTotal: 0 }
   );
 
-  const diferencia = ingresoTotal - egresoTotal;
+  //Diferencia general entre ingresos totales y egresos totales
+  const diferenciaTotal = ingresoTotal - egresoTotal;
+
+  //Muestra solo el ingreso total o el egreso total, dependiendo del tipo de transaccion elegido en el filtro de la tabla
+  const gastoTotalPorTipo =
+    typeFilter === "ingreso" ? ingresoTotal : egresoTotal;
 
   return (
     <div className="balance-total">
       {typeFilter === "" && (
         <>
-          <div className="total">
-            <h4>Total de ingresos</h4>
-            <span>S/ {ingresoTotal}</span>
-          </div>
-          <div className="total">
-            <h4>Total de egresos</h4>
-            <span> S/ {egresoTotal}</span>
-          </div>
-          <div className={`total`}>
-            <h4>{"Restante"}</h4>
-            <span>S/ {diferencia}</span>
-          </div>
+          <ReusableBalance titulo="Total de ingresos" monto={ingresoTotal} />
+          <ReusableBalance titulo="Total de egresos" monto={egresoTotal} />
+          <ReusableBalance titulo="Restante" monto={diferenciaTotal} />
         </>
       )}
-      {typeFilter === "ingreso" && (
+      {typeFilter !== "" && (
         <>
-          <div className="total">
-            <h4>Total de ingresos </h4>{" "}
-            {/*Cambiar a Total de (categoria) cuando haya una categoría seleccionada */}
-            <span>S/ {ingresoTotal}</span>
-          </div>
-          <BudgetContainer
-            typeSelected={typeFilter}
-            categoryFilter={categoryFilter}
-            montoTotal={ingresoTotal}
+          <ReusableBalance
+            titulo={`Total de ${
+              categoryFilter !== "" ? categoryFilter : typeFilter + "s"
+            } `}
+            monto={gastoTotalPorTipo}
           />
-        </>
-      )}
-      {typeFilter === "egreso" && (
-        <>
-          <div className="total">
-            <h4>Total de egresos</h4>
-            <span> S/ {egresoTotal}</span>
-          </div>
           <BudgetContainer
             typeSelected={typeFilter}
             categoryFilter={categoryFilter}
-            montoTotal={egresoTotal}
+            montoTotal={gastoTotalPorTipo}
           />
         </>
       )}

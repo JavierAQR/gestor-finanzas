@@ -1,13 +1,11 @@
 import { ChangeEvent } from "react";
-import { useDataContext } from "../../context/TransactionContext";
+import { useMonthContext } from "../../context/MonthContext";
 
 type Props = {
   tableSort: string;
   handleSortByDate: (e: ChangeEvent<HTMLSelectElement>) => void;
   categoryFilter: string;
-
   typeFilter: string;
-
   handleCategory: (e: ChangeEvent<HTMLSelectElement>) => void;
   handleType: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
@@ -20,7 +18,7 @@ const TableControlsLayout = ({
   handleType,
   handleCategory,
 }: Props) => {
-  const contextData = useDataContext();
+  const { categoriasDelMes } = useMonthContext();
 
   return (
     <div className={`table-controls `}>
@@ -40,7 +38,7 @@ const TableControlsLayout = ({
           onChange={handleCategory}
         >
           <option value="">Todo</option>
-          {contextData.categoryArray
+          {categoriasDelMes
             .filter((item) => item.type === typeFilter)
             .map((item, index) => (
               <option key={index} value={item.name}>

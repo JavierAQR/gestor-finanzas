@@ -1,3 +1,16 @@
 .presupuesto .modal-container .modal {
   min-width: 400px;
 }
+
+.presupuesto {
+  position: relative;
+}
+
+.presupuesto .btn-gestion-budget {
+  position: absolute;
+  width: 90%;
+  bottom: -25px;
+  padding: 5px 0px;
+  color: var(--color-primary);
+  cursor: pointer;
+}

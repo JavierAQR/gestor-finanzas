@@ -5,7 +5,7 @@ import { initialState, Transaction } from "../../context/reducer";
 import ErrorBoundary from "../../ErrorBoundary";
 import FormContainer from "../FormTransaction/FormContainer";
 import { TableControlsContainer } from "../TableControls";
-import ManageCategories from "../ManageCategories/ManageCategories";
+import CategoriesContainer from "../ManageCategories/CategoriesContainer";
 
 function MainControl() {
   const [editTransaction, setEditTransaction] =
@@ -22,7 +22,7 @@ function MainControl() {
   return (
     <>
       <ErrorBoundary>
-        <ManageCategories />
+        <CategoriesContainer />
         <FormContainer
           editTransaction={editTransaction}
           setEditTransaction={setEditTransaction}

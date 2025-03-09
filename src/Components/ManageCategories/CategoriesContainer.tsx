@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "./styles.css";
-import ModalContainer from "./ModalContainer";
-import ModalLayout from "./ModalLayout";
+import ModalContainer from "../ReusableModal/ModalContainer";
 import { useDataContext } from "../../context/TransactionContext";
 import { categoryInputs } from "../../context/reducerCategories";
+import CategoriesLayout from "./CategoriesLayout";
 
-const ManageCategories = () => {
+const CategoriesContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { setCategoryArray } = useDataContext();
@@ -26,14 +26,15 @@ const ManageCategories = () => {
       <button onClick={() => setIsModalOpen(true)} className="btn-categorias">
         GESTIONAR CATEGORÍAS
       </button>
-      <ModalContainer isOpen={isModalOpen}>
-        <ModalLayout
-          closeModal={() => setIsModalOpen(false)}
-          handlerAddCategory={handlerAddCategory}
-        />
+      <ModalContainer
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        titulo="Categorías"
+      >
+        <CategoriesLayout handlerAddCategory={handlerAddCategory} />
       </ModalContainer>
     </div>
   );
 };
 
-export default ManageCategories;
+export default CategoriesContainer;
