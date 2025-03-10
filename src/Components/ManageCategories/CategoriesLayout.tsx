@@ -5,6 +5,7 @@ import {
   categoryInputs,
 } from "../../context/reducerCategories";
 import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
+import "./Styles.css";
 
 import { useDataContext } from "../../context/TransactionContext";
 import InputField from "../ReusableFormFields/InputField";

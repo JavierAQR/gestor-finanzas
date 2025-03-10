@@ -1,9 +1,13 @@
-.presupuesto .modal-container .modal {
-  min-width: 400px;
-}
-
 .presupuesto {
   position: relative;
+}
+
+.presupuesto .modal {
+  justify-content: flex-start;
+}
+
+.presupuesto .modal form {
+  margin-bottom: 40px;
 }
 
 .presupuesto .btn-gestion-budget {

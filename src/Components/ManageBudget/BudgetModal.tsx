@@ -89,7 +89,6 @@ const BudgetModal = ({
 
   return (
     <>
-      <h1>Presupuesto de {typeSelected + "s"}</h1>
       <form onSubmit={onSubmit}>
         <SelectField
           name="category"

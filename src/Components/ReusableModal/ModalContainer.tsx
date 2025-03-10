@@ -1,16 +1,15 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import "./Styles.css";
 
 interface Props {
   isOpen: boolean;
   children: ReactNode;
   titulo?: string;
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ModalContainer = ({ isOpen, children, titulo, setIsOpen }: Props) => {
   if (!isOpen) return null;
-
-
 
   return (
     <div className="modal-container">

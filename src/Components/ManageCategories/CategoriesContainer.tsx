@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./styles.css";
 import ModalContainer from "../ReusableModal/ModalContainer";
 import { useDataContext } from "../../context/TransactionContext";
 import { categoryInputs } from "../../context/reducerCategories";

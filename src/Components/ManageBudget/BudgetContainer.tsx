@@ -133,7 +133,11 @@ const BudgetContainer = ({
           Gestionar Presupuesto
         </button>
         {/* Componente con el modal para gestionar los presupuestos */}
-        <ModalContainer isOpen={budgetIsOpen} setIsOpen={setBudgetIsOpen}>
+        <ModalContainer
+          titulo={`Presupuesto de ${typeSelected + "s"}`}
+          isOpen={budgetIsOpen}
+          setIsOpen={setBudgetIsOpen}
+        >
           <BudgetModal
             typeSelected={typeSelected}
             handleAddBudget={handleAddBudget}
