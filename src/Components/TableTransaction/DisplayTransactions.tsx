@@ -50,7 +50,6 @@ function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
       header: "MONTO S/",
       key: "amount",
       hide: false,
-      class: "type",
       function: typeAmount,
     },
     {

@@ -12,12 +12,18 @@ import { useBudgetContext } from "../../context/BudgetContext";
 interface Props {
   typeSelected: string;
   handleAddBudget: (data: budgetForm) => void;
+  handleDelete: (id: string) => void;
   dataTable: Budget[];
 }
 
-const BudgetModal = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
+const BudgetModal = ({
+  typeSelected,
+  handleAddBudget,
+  dataTable,
+  handleDelete,
+}: Props) => {
   const { categoriasDelMes } = useMonthContext();
-  const { budget, setBudget } = useBudgetContext();
+  const { budget } = useBudgetContext();
 
   const {
     register,
@@ -33,13 +39,6 @@ const BudgetModal = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
     resolver: zodResolver(budgetSchema),
   });
 
-  const handleDelete = (id: string) => {
-    setBudget({
-      type: "DELETE",
-      payload: id,
-    });
-  };
-
   const onSubmit = handleSubmit((data) => {
     handleAddBudget(data);
     reset();
@@ -50,11 +49,13 @@ const BudgetModal = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
       header: "CATEGORÍA",
       key: "category",
       hide: false,
+      class: "inactivo",
     },
     {
       header: "PRESUPUESTO",
       key: "budget",
       hide: false,
+      class: "inactivo",
     },
   ];
 

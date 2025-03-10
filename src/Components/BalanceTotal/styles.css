@@ -32,7 +32,13 @@
   font-weight: 500;
 }
 
+.balance-total .total.positivo {
+  background-color: rgb(119, 179, 119);
+}
 
+.balance-total .total.negativo {
+  background-color: rgb(241, 111, 111);
+}
 
 @media screen and (max-width: 600px) {
   .balance-total {

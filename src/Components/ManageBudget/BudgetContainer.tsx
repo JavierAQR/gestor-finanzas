@@ -19,7 +19,7 @@ const BudgetContainer = ({
   montoTotal,
 }: Props) => {
   const [budgetIsOpen, setBudgetIsOpen] = useState(false);
-  const { monthSelected } = useMonthContext();
+  const { monthSelected, categoriasDelMes } = useMonthContext();
   const { budget, setBudget } = useBudgetContext();
   const { categoryArray } = useDataContext();
 
@@ -46,11 +46,33 @@ const BudgetContainer = ({
     });
   };
 
-  //Metodo para obtener la data de presupuestos que se pasará a la tabla. Se filtra de acuerdo al filtro de tipo seleccionado (ingreso-egreso);
-  const obtenerBudgetTable = (tipo: string) =>
-    budget.filter((item) => item.type === tipo && item.date === monthSelected);
+  const handleDelete = (id: string) => {
+    setBudget({
+      type: "DELETE",
+      payload: id,
+    });
+  };
 
-  // Obtiene la data con los presupuestos correspondientes al tipo de transaccion seleccionado (ingreso-egreso)
+  //Metodo para obtener la data de presupuestos que se pasará a la tabla. Se filtra de acuerdo al filtro de tipo seleccionado (ingreso-egreso);
+  // Verifica si las categorias de los presupuestos tienen al menos 1 registro.
+  // Si la categoría de un presupuesto ya no tiene registros, ese presupuesto se elimina.
+  const obtenerBudgetTable = (tipo: string) => {
+    const filteredItems = budget.filter(
+      (item) => item.type === tipo && item.date === monthSelected
+    );
+    const invalidItems = filteredItems.filter(
+      (item) =>
+        !categoriasDelMes.some((categoria) => categoria.name === item.category)
+    );
+
+    invalidItems.forEach((item) => handleDelete(item.id));
+
+    return filteredItems.filter((item) =>
+      categoriasDelMes.some((categoria) => categoria.name === item.category)
+    );
+  };
+
+  // Obtiene la data con los presupuestos correspondientes al tipo de transaccion seleccionado (ingreso-egreso).
   const dataTable = obtenerBudgetTable(typeSelected);
 
   //Si no hay una categoría, en el título solo se muestra ingresos o egresos, si hay una categoría, se muestra el nombre de la categoría
@@ -115,6 +137,7 @@ const BudgetContainer = ({
           <BudgetModal
             typeSelected={typeSelected}
             handleAddBudget={handleAddBudget}
+            handleDelete={handleDelete}
             dataTable={dataTable}
           />
         </ModalContainer>
@@ -122,6 +145,7 @@ const BudgetContainer = ({
       {/* Mostrar la diferencia del presupuesto con el monto total (Mostrar exceso o ahorro)*/}
       {montoPresupuesto !== 0 && (
         <ReusableBalance
+          className={montoRestante < 0 ? "negativo" : "positivo"}
           titulo={tituloResultado}
           monto={Math.abs(montoRestante)}
         />
