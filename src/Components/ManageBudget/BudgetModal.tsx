@@ -15,7 +15,7 @@ interface Props {
   dataTable: Budget[];
 }
 
-const BudgetLayout = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
+const BudgetModal = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
   const { categoriasDelMes } = useMonthContext();
   const { budget, setBudget } = useBudgetContext();
 
@@ -119,4 +119,4 @@ const BudgetLayout = ({ typeSelected, handleAddBudget, dataTable }: Props) => {
   );
 };
 
-export default BudgetLayout;
+export default BudgetModal;

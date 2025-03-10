@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ModalContainer from "../ReusableModal/ModalContainer";
-import BudgetLayout from "./BudgetLayout";
+import BudgetModal from "./BudgetModal";
 import { budgetForm } from "../../context/reducerBudget";
 import { useBudgetContext } from "../../context/BudgetContext";
 import { useMonthContext } from "../../context/MonthContext";
@@ -72,12 +72,28 @@ const BudgetContainer = ({
   // Si la categoría actual tiene presupuesto, se retorna el monto del presupuesto
   // Si el filtro por categoria actual es ""(todas las categorias) entonces se retorna la suma de todos los presupuestos registados.
   // Si en caso la categoría no tiene presupuesto, se retorna 0.
-  const mostrarPresupuesto =
+  const montoPresupuesto =
     presupuestoCategoriaActual !== undefined
       ? presupuestoCategoriaActual.budget
       : categoryFilter === ""
       ? sumaPresupuestos
       : 0;
+
+  //Monto restante comparando el montoTotal de la categoría y el monto del presupuesto correspondiente
+  const montoRestante =
+    typeSelected === "ingreso"
+      ? montoTotal - montoPresupuesto
+      : montoPresupuesto - montoTotal;
+
+  //Titulo del balance del resultado dependiendo del tipo de transaccion y el signo del monto restante
+  const tituloResultado =
+    typeSelected === "ingreso"
+      ? montoRestante < 0
+        ? "Faltante"
+        : "Excedente"
+      : montoRestante < 0
+      ? "Sobrepaso"
+      : "Ahorro";
 
   return (
     <>
@@ -85,7 +101,7 @@ const BudgetContainer = ({
         {/* Balance que muestra el presupuesto correspondiente a la categoría */}
         <ReusableBalance
           titulo={`Presupuesto ${tituloPresupuesto}`}
-          monto={mostrarPresupuesto}
+          monto={montoPresupuesto}
         />
         {/* Botón que abre el modal */}
         <button
@@ -96,7 +112,7 @@ const BudgetContainer = ({
         </button>
         {/* Componente con el modal para gestionar los presupuestos */}
         <ModalContainer isOpen={budgetIsOpen} setIsOpen={setBudgetIsOpen}>
-          <BudgetLayout
+          <BudgetModal
             typeSelected={typeSelected}
             handleAddBudget={handleAddBudget}
             dataTable={dataTable}
@@ -104,11 +120,11 @@ const BudgetContainer = ({
         </ModalContainer>
       </div>
       {/* Mostrar la diferencia del presupuesto con el monto total (Mostrar exceso o ahorro)*/}
-      {mostrarPresupuesto !== 0 && (
-        <div className={`total`}>
-          <h4>{typeSelected === "ingreso" ? "Faltante" : "Ahorro"}</h4>
-          <span>S/ {mostrarPresupuesto - montoTotal}</span>
-        </div>
+      {montoPresupuesto !== 0 && (
+        <ReusableBalance
+          titulo={tituloResultado}
+          monto={Math.abs(montoRestante)}
+        />
       )}
     </>
   );
