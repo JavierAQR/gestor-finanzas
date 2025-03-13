@@ -1,22 +1,16 @@
 import { useState } from "react";
 import ModalContainer from "../ReusableModal/ModalContainer";
-import { useDataContext } from "../../context/TransactionContext";
-import { categoryInputs } from "../../context/reducerCategories";
 import CategoriesLayout from "./CategoriesLayout";
+import { categoryInputs } from "../../types";
+import { useCategoryStore } from "../../store/category";
 
 const CategoriesContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { setCategoryArray } = useDataContext();
+  const addNewCategory = useCategoryStore((state) => state.addNewCategory)
 
-  const handlerAddCategory = (data: categoryInputs) => {
-    setCategoryArray({
-      type: "ADD",
-      payload: {
-        name: data.name,
-        type: data.type,
-      },
-    });
+  const handleAddCategory = (data: categoryInputs) => {
+    addNewCategory(data);
   };
 
   return (
@@ -30,7 +24,7 @@ const CategoriesContainer = () => {
         setIsOpen={setIsModalOpen}
         titulo="Categorías"
       >
-        <CategoriesLayout handlerAddCategory={handlerAddCategory} />
+        <CategoriesLayout handleAddCategory={handleAddCategory} />
       </ModalContainer>
     </div>
   );

@@ -35,7 +35,7 @@ const PieChart = ({ array, text }: Props) => {
     ],
   };
   return (
-    <ReactECharts option={options} style={{ height: "400px", width: "70%" }} />
+    <ReactECharts option={options} style={{ width: "100%", height: "400px" }} />
   );
 };
 

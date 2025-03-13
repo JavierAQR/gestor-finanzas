@@ -7,13 +7,14 @@ import {
 } from "react";
 import "./styles.css";
 import TableControlsLayout from "./TableControlsLayout";
-import { Transaction } from "../../context/reducer";
 import { useMonthContext } from "../../context/MonthContext";
+import { Transaction, TransactionType } from "../../types";
+import { useCategoryStore } from "../../store/category";
 
 interface Props {
   setSelectedTable: Dispatch<SetStateAction<Transaction[]>>;
-  typeFilter: string;
-  setTypeFilter: Dispatch<SetStateAction<string>>;
+  typeFilter: TransactionType;
+  setTypeFilter: Dispatch<SetStateAction<TransactionType>>;
   categoryFilter: string;
   setCategoryFilter: Dispatch<SetStateAction<string>>;
 }
@@ -27,6 +28,7 @@ function TableControlsContainer({
 }: Props) {
   //Se importan las transacciones del mes correspondiente
   const { transaccionesDelMes } = useMonthContext();
+  const categories = useCategoryStore((state) => state.categories);
 
   //Estado para el filtro de ordenamiento
   const [tableSort, setTableSort] = useState("reciente");
@@ -35,6 +37,14 @@ function TableControlsContainer({
   //Se hace una copia para no alterar el array original
   const applyFilterAndSort = () => {
     let filteredTransactions = [...transaccionesDelMes];
+
+    const categorySelected = categories.find(
+      (cat) => cat.name === categoryFilter
+    );
+
+    if (categorySelected?.type !== typeFilter) {
+      setCategoryFilter("");
+    }
 
     if (typeFilter !== "" || categoryFilter !== "") {
       filteredTransactions = filteredTransactions.filter((item) => {
@@ -74,7 +84,7 @@ function TableControlsContainer({
 
   //Metodo para cambiar el filtro de tipo
   const handleType = (e: ChangeEvent<HTMLSelectElement>) => {
-    setTypeFilter(e.target.value);
+    setTypeFilter(e.target.value as TransactionType);
   };
 
   //Metodo para cambiar el filtro de categoria

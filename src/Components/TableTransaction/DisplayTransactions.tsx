@@ -1,8 +1,8 @@
 import "./DisplayStyles.css";
-import { Transaction } from "../../context/reducer";
 import { Dispatch, SetStateAction } from "react";
-import { useDataContext } from "../../context/TransactionContext";
 import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
+import { useTransactionStore } from "../../store/transaction";
+import { Transaction } from "../../types";
 
 type Props = {
   selectedTable: Transaction[];
@@ -10,17 +10,16 @@ type Props = {
 };
 
 function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
-  const contextData = useDataContext();
+  const deleteTransaction = useTransactionStore(
+    (state) => state.deleteTransaction
+  );
 
   const handleUpdateTransaction = (datos: Transaction) => {
     setEditTransaction(datos);
   };
 
   const handleDeleteTransaction = (id: string) => {
-    contextData.dispatch({
-      type: "DELETE",
-      payload: id,
-    });
+    deleteTransaction(id);
   };
 
   //Funcion para personalizar un campo

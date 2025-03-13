@@ -1,11 +1,12 @@
 import { useState } from "react";
 import BalanceTotal from "../BalanceTotal/BalanceTotal";
 import { DisplayTransactions } from "../TableTransaction";
-import { initialState, Transaction } from "../../context/reducer";
 import ErrorBoundary from "../../ErrorBoundary";
 import FormContainer from "../FormTransaction/FormContainer";
 import { TableControlsContainer } from "../TableControls";
 import CategoriesContainer from "../ManageCategories/CategoriesContainer";
+import { Transaction, TransactionType } from "../../types";
+import { initialState } from "../../store/transaction";
 
 function MainControl() {
   const [editTransaction, setEditTransaction] =
@@ -17,7 +18,7 @@ function MainControl() {
   const [categoryFilter, setCategoryFilter] = useState("");
 
   //Estado para el filtro por tipo
-  const [typeFilter, setTypeFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState<TransactionType>("");
 
   return (
     <>

@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useMonthContext } from "../../context/MonthContext";
-import { Budget, budgetForm } from "../../context/reducerBudget";
-import "./styles.css";
+import "./Styles.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { budgetSchema, TbudgetSchema } from "../../schemas/budgetSchema";
 import SelectField, { selectData } from "../ReusableFormFields/SelectField";
 import InputField from "../ReusableFormFields/InputField";
 import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
-import { useBudgetContext } from "../../context/BudgetContext";
+import { Budget, budgetForm } from "../../types";
+import { useBudgetStore } from "../../store/budget";
 
 interface Props {
   typeSelected: string;
@@ -23,7 +23,7 @@ const BudgetModal = ({
   handleDelete,
 }: Props) => {
   const { categoriasDelMes } = useMonthContext();
-  const { budget } = useBudgetContext();
+  const budget = useBudgetStore((b) => b.budget);
 
   const {
     register,

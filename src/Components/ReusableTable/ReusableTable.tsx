@@ -1,9 +1,5 @@
 import { ReactNode } from "react";
-import { Transaction } from "../../context/reducer";
-import { Category } from "../../context/reducerCategories";
 import "./SingleStyles.css";
-
-export type Registros = Transaction | Category;
 
 export interface Column<T> {
   header: string;

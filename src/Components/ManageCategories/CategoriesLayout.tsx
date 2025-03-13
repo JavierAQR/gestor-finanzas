@@ -1,13 +1,6 @@
 import { useForm } from "react-hook-form";
-import {
-  Category,
-  categoryInitialInputs,
-  categoryInputs,
-} from "../../context/reducerCategories";
 import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
 import "./Styles.css";
-
-import { useDataContext } from "../../context/TransactionContext";
 import InputField from "../ReusableFormFields/InputField";
 import SelectField from "../ReusableFormFields/SelectField";
 import {
@@ -15,12 +8,14 @@ import {
   TcategoriesSchema,
 } from "../../schemas/categoriesSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Category, categoryInputs } from "../../types";
+import { useCategoryStore } from "../../store/category";
 
 interface Props {
-  handlerAddCategory: (data: categoryInputs) => void;
+  handleAddCategory: (data: categoryInputs) => void;
 }
 
-const CategoriesLayout = ({ handlerAddCategory }: Props) => {
+const CategoriesLayout = ({ handleAddCategory }: Props) => {
   const columns: Column<Category>[] = [
     {
       header: "NOMBRE",
@@ -34,7 +29,8 @@ const CategoriesLayout = ({ handlerAddCategory }: Props) => {
     },
   ];
 
-  const { categoryArray, setCategoryArray } = useDataContext();
+  const categories = useCategoryStore((state) => state.categories);
+  const deleteCategory = useCategoryStore((state) => state.deleteCategory);
 
   const {
     register,
@@ -43,19 +39,19 @@ const CategoriesLayout = ({ handlerAddCategory }: Props) => {
     reset,
     formState: { errors },
   } = useForm<TcategoriesSchema>({
-    defaultValues: categoryInitialInputs,
+    defaultValues: {
+      name: "",
+      type: "",
+    },
     resolver: zodResolver(categoriesSchema),
   });
 
   const handleDelete = (id: string) => {
-    setCategoryArray({
-      type: "DELETE",
-      payload: id,
-    });
+    deleteCategory(id);
   };
 
   const onSubmit = handleSubmit((data) => {
-    handlerAddCategory(data);
+    handleAddCategory(data);
     reset();
   });
 
@@ -86,7 +82,7 @@ const CategoriesLayout = ({ handlerAddCategory }: Props) => {
         </button>
       </form>
       <ReusableTable
-        data={categoryArray}
+        data={categories}
         columns={columns}
         handleDelete={handleDelete}
       />

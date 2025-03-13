@@ -1,4 +1,4 @@
-import { Transaction } from "../../context/reducer";
+import { Transaction } from "../../types";
 import BudgetContainer from "../ManageBudget/BudgetContainer";
 import ReusableBalance from "./ReusableBalance";
 import "./styles.css";

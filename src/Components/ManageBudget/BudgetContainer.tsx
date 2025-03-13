@@ -1,11 +1,11 @@
 import { useState } from "react";
 import ModalContainer from "../ReusableModal/ModalContainer";
 import BudgetModal from "./BudgetModal";
-import { budgetForm } from "../../context/reducerBudget";
-import { useBudgetContext } from "../../context/BudgetContext";
 import { useMonthContext } from "../../context/MonthContext";
-import { useDataContext } from "../../context/TransactionContext";
 import ReusableBalance from "../BalanceTotal/ReusableBalance";
+import { budgetForm } from "../../types";
+import { useCategoryStore } from "../../store/category";
+import { useBudgetStore } from "../../store/budget";
 
 interface Props {
   typeSelected: string;
@@ -20,12 +20,18 @@ const BudgetContainer = ({
 }: Props) => {
   const [budgetIsOpen, setBudgetIsOpen] = useState(false);
   const { monthSelected, categoriasDelMes } = useMonthContext();
-  const { budget, setBudget } = useBudgetContext();
-  const { categoryArray } = useDataContext();
+  const budget = useBudgetStore((b) => b.budget);
+  const addNewBudget = useBudgetStore((b) => b.addNewBudget);
+  const deleteBudget = useBudgetStore((b) => b.deleteBudget);
+  const categories = useCategoryStore((state) => state.categories);
+
+  //Metodo para obtener la data de presupuestos que se pasará a la tabla. Se filtra de acuerdo al filtro de tipo seleccionado (ingreso-egreso);
+  // Verifica si las categorias de los presupuestos tienen al menos 1 registro.
+  // Si la categoría de un presupuesto ya no tiene registros, ese presupuesto se elimina.
 
   //Metodo para buscar el tipo correspondiente a la categoría pasada por parámetro
   const buscarTipo = (category: string) => {
-    const categoria = categoryArray.find((item) => item.name === category);
+    const categoria = categories.find((item) => item.name === category);
     if (categoria) {
       return categoria.type;
     } else {
@@ -35,27 +41,17 @@ const BudgetContainer = ({
 
   //Metodo para agregar un nuevo presupuesto. Obtiene como type el que corresponde a su category, y como date la fecha seleccionada en el contexto.
   const handleAddBudget = (data: budgetForm) => {
-    setBudget({
-      type: "ADD",
-      payload: {
-        budget: data.budget,
-        category: data.category,
-        type: buscarTipo(data.category),
-        date: monthSelected,
-      },
+    addNewBudget({
+      ...data,
+      type: buscarTipo(data.category),
+      date: monthSelected,
     });
   };
 
   const handleDelete = (id: string) => {
-    setBudget({
-      type: "DELETE",
-      payload: id,
-    });
+    deleteBudget(id);
   };
 
-  //Metodo para obtener la data de presupuestos que se pasará a la tabla. Se filtra de acuerdo al filtro de tipo seleccionado (ingreso-egreso);
-  // Verifica si las categorias de los presupuestos tienen al menos 1 registro.
-  // Si la categoría de un presupuesto ya no tiene registros, ese presupuesto se elimina.
   const obtenerBudgetTable = (tipo: string) => {
     const filteredItems = budget.filter(
       (item) => item.type === tipo && item.date === monthSelected
@@ -73,6 +69,7 @@ const BudgetContainer = ({
   };
 
   // Obtiene la data con los presupuestos correspondientes al tipo de transaccion seleccionado (ingreso-egreso).
+
   const dataTable = obtenerBudgetTable(typeSelected);
 
   //Si no hay una categoría, en el título solo se muestra ingresos o egresos, si hay una categoría, se muestra el nombre de la categoría

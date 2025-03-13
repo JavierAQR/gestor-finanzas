@@ -35,7 +35,7 @@ const BarChart = ({ ingreso, egreso }: Props) => {
   };
 
   return (
-    <ReactECharts option={options} style={{ height: "400px", width: "70%" }} />
+    <ReactECharts option={options} style={{ height: "400px", width: "100%" }} />
   );
 };
 

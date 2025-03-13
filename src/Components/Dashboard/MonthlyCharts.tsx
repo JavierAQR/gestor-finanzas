@@ -42,23 +42,23 @@ const MonthlyCharts = () => {
   const sumaEgresosTotales = totalType(arrayEgresosCategoría);
 
   return (
-    <>
-      <div className="chart">
-        <PieChart
-          array={arrayEgresosCategoría}
-          text={"Egresos Por Categoría"}
-        />
-      </div>
-      <div className="chart">
+    <div className="dashboard-mensual">
+      <div className="chart ingresos">
         <PieChart
           array={arrayIngresosCategoria}
           text={"Ingresos Por Categoría"}
         />
       </div>
-      <div className="chart">
+      <div className="chart egresos">
+        <PieChart
+          array={arrayEgresosCategoría}
+          text={"Egresos Por Categoría"}
+        />
+      </div>
+      <div className="chart bar">
         <BarChart ingreso={sumaIngresosTotales} egreso={sumaEgresosTotales} />
       </div>
-    </>
+    </div>
   );
 };
 

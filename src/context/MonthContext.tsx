@@ -6,8 +6,9 @@ import {
   useContext,
   useState,
 } from "react";
-import { Transaction, TransactionType } from "./reducer";
-import { useDataContext } from "./TransactionContext";
+
+import { Transaction, TransactionType } from "../types";
+import { useTransactionStore } from "../store/transaction";
 
 interface Props {
   children: ReactNode;
@@ -29,7 +30,7 @@ export interface ContextType {
 export const MonthContext = createContext<ContextType | null>(null);
 
 export function MonthTransactionProvider({ children }: Props) {
-  const { state } = useDataContext();
+  const transactions = useTransactionStore((state) => state.transactions);
 
   // Obtener la fecha actual
   const currentDate = new Date();
@@ -61,7 +62,7 @@ export function MonthTransactionProvider({ children }: Props) {
 
   //Objeto donde cada clave es una fecha y los valores de las claves son arrays de transacciones
   //correspondientes a la fecha
-  const transaccionesPorMes = obtenerTransaccionesPorFecha(state);
+  const transaccionesPorMes = obtenerTransaccionesPorFecha(transactions);
 
   //Array con las todas las claves del objeto historyTransactions (los meses)
   const keysMonths = Object.keys(transaccionesPorMes).sort((a, b) =>

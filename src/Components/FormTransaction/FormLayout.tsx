@@ -1,22 +1,23 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { initialState, inputs, Transaction } from "../../context/reducer";
+
 import "./FormStyles.css";
-import { Category } from "../../context/reducerCategories";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "../ReusableFormFields/InputField";
 import SelectField from "../ReusableFormFields/SelectField";
 import { formSchema, TformSchema } from "../../schemas/transactionSchema";
+import { Category, inputs, Transaction } from "../../types";
+import { initialState } from "../../store/transaction";
 
 type Props = {
-  handlerAddTransaction: (data: inputs) => void;
+  handleAddTransaction: (data: inputs) => void;
   expenseCategories: Category[];
   incomeCategories: Category[];
   editTransaction: Transaction;
 };
 
 const FormLayout = ({
-  handlerAddTransaction,
+  handleAddTransaction,
   expenseCategories,
   incomeCategories,
   editTransaction,
@@ -41,7 +42,7 @@ const FormLayout = ({
   }, [editTransaction, reset]);
 
   const onSubmit = handleSubmit((data) => {
-    handlerAddTransaction(data);
+    handleAddTransaction(data);
     reset(initialState);
   });
 
