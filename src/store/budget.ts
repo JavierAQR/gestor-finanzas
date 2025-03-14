@@ -7,6 +7,7 @@ interface budgetState {
   budget: Budget[];
   addNewBudget: (inputs: budgetInputs) => void;
   deleteBudget: (id: string) => void;
+  updateBudget: (id: string, inputs: budgetInputs) => void;
 }
 
 export const useBudgetStore = create<budgetState>()(
@@ -33,6 +34,19 @@ export const useBudgetStore = create<budgetState>()(
             }
           });
           set({ budget: newBudget });
+        },
+        updateBudget: (id: string, inputs: budgetInputs) => {
+          const { budget } = get();
+          const updateBudget = budget.map((b) => {
+            if (b.id === id) {
+              return {
+                ...b,
+                ...inputs,
+              };
+            }
+            return b;
+          });
+          set({ budget: updateBudget });
         },
       };
     },

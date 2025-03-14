@@ -70,10 +70,7 @@ export function MonthTransactionProvider({ children }: Props) {
   );
 
   //Array con todas las transacciones del mes elegido
-  const transaccionesDelMes =
-    transaccionesPorMes[monthSelected] ||
-    transaccionesPorMes[keysMonths[0]] ||
-    [];
+  const transaccionesDelMes = transaccionesPorMes[monthSelected] || [];
 
   const categoriasDelMes = transaccionesDelMes.reduce<categoriasMes[]>(
     (arr, current) => {

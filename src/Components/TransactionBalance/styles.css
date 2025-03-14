@@ -2,9 +2,9 @@
   display: flex;
   justify-content: center;
   min-height: 89px;
-  margin: 0 2rem;
   gap: 30px;
   flex-wrap: wrap;
+  margin-top: 32px;
 }
 
 .balance-total .total {

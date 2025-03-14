@@ -12,7 +12,7 @@ function Header() {
           to={"/table-transactions"}
           className={({ isActive }) => (isActive ? "active-link" : "")}
         >
-          <button>TABLA</button>
+          <button>PRINCIPAL</button>
         </NavLink>
         <NavLink
           to={"/dashboard"}

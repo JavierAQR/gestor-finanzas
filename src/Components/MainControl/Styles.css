@@ -1,0 +1,13 @@
+.principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-principal {
+  width: 75%;
+}
+
+.resultados-tabla {
+  width: 100%;
+}

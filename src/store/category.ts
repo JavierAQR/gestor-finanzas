@@ -8,6 +8,7 @@ interface categoryState {
   categories: Category[];
   addNewCategory: (inputs: categoryInputs) => void;
   deleteCategory: (id: string) => void;
+  updateCategory: (id: string, inputs: categoryInputs) => void;
 }
 
 export const useCategoryStore = create<categoryState>()(
@@ -69,6 +70,19 @@ export const useCategoryStore = create<categoryState>()(
             }
           });
           set({ categories: newCategories });
+        },
+        updateCategory: (id: string, inputs: categoryInputs) => {
+          const { categories } = get();
+          const updateCategory = categories.map((cat) => {
+            if (cat.id === id) {
+              return {
+                ...cat,
+                ...inputs,
+              };
+            }
+            return cat;
+          });
+          set({ categories: updateCategory });
         },
       };
     },

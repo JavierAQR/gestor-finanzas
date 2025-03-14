@@ -10,26 +10,21 @@ import TableControlsLayout from "./TableControlsLayout";
 import { useMonthContext } from "../../context/MonthContext";
 import { Transaction, TransactionType } from "../../types";
 import { useCategoryStore } from "../../store/category";
+import { useFilterContext } from "../../context/FilterContext";
 
 interface Props {
   setSelectedTable: Dispatch<SetStateAction<Transaction[]>>;
-  typeFilter: TransactionType;
-  setTypeFilter: Dispatch<SetStateAction<TransactionType>>;
-  categoryFilter: string;
-  setCategoryFilter: Dispatch<SetStateAction<string>>;
+  
 }
 
-function TableControlsContainer({
+function TableControls({
   setSelectedTable,
-  typeFilter,
-  setTypeFilter,
-  categoryFilter,
-  setCategoryFilter,
+ 
 }: Props) {
   //Se importan las transacciones del mes correspondiente
   const { transaccionesDelMes } = useMonthContext();
   const categories = useCategoryStore((state) => state.categories);
-
+  const {categoryFilter, setCategoryFilter, typeFilter, setTypeFilter} = useFilterContext()
   //Estado para el filtro de ordenamiento
   const [tableSort, setTableSort] = useState("reciente");
 
@@ -104,4 +99,4 @@ function TableControlsContainer({
   );
 }
 
-export default TableControlsContainer;
+export default TableControls;

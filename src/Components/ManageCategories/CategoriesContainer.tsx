@@ -1,22 +1,14 @@
 import { useState } from "react";
-import ModalContainer from "../ReusableModal/ModalContainer";
+import ModalContainer from "../Modal/ModalContainer";
 import CategoriesLayout from "./CategoriesLayout";
-import { categoryInputs } from "../../types";
-import { useCategoryStore } from "../../store/category";
 
-const CategoriesContainer = () => {
+const ManageCategories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const addNewCategory = useCategoryStore((state) => state.addNewCategory)
-
-  const handleAddCategory = (data: categoryInputs) => {
-    addNewCategory(data);
-  };
-
   return (
-    <div className="manage-categories">
+    <div className="manage-section">
       <h1>Ingresar Transacción</h1>
-      <button onClick={() => setIsModalOpen(true)} className="btn-categorias">
+      <button onClick={() => setIsModalOpen(true)} className="btn-open-modal">
         GESTIONAR CATEGORÍAS
       </button>
       <ModalContainer
@@ -24,10 +16,10 @@ const CategoriesContainer = () => {
         setIsOpen={setIsModalOpen}
         titulo="Categorías"
       >
-        <CategoriesLayout handleAddCategory={handleAddCategory} />
+        <CategoriesLayout />
       </ModalContainer>
     </div>
   );
 };
 
-export default CategoriesContainer;
+export default ManageCategories;

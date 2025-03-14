@@ -1,0 +1,11 @@
+.balance {
+  width: 75%;
+}
+
+.presupuesto .modal {
+  justify-content: flex-start;
+}
+
+.presupuesto .modal form {
+  margin-bottom: 40px;
+}

@@ -1,12 +1,12 @@
 import "./DisplayStyles.css";
 import { Dispatch, SetStateAction } from "react";
-import ReusableTable, { Column } from "../ReusableTable/ReusableTable";
+import ReusableTable, { Column } from "../Table/ReusableTable";
 import { useTransactionStore } from "../../store/transaction";
 import { Transaction } from "../../types";
 
 type Props = {
   selectedTable: Transaction[];
-  setEditTransaction: Dispatch<SetStateAction<Transaction>>;
+  setEditTransaction: Dispatch<SetStateAction<Transaction | null>>;
 };
 
 function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {

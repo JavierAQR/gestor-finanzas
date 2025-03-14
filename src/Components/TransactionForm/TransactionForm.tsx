@@ -1,16 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
-import FormLayout from "./FormLayout";
+import FormLayout from "./TransactionFormLayout";
 import { inputs, Transaction } from "../../types";
 import { useCategoryStore } from "../../store/category";
-import { initialState, useTransactionStore } from "../../store/transaction";
+import { useTransactionStore } from "../../store/transaction";
 
 type Props = {
-  editTransaction: Transaction;
-  setEditTransaction: Dispatch<SetStateAction<Transaction>>;
+  editTransaction: Transaction | null;
+  setEditTransaction: Dispatch<SetStateAction<Transaction | null>>;
 };
 
-function FormContainer({ editTransaction, setEditTransaction }: Props) {
-  
+function TransactionForm({ editTransaction, setEditTransaction }: Props) {
   const addNewTransaction = useTransactionStore(
     (state) => state.addNewTransaction
   );
@@ -20,10 +19,10 @@ function FormContainer({ editTransaction, setEditTransaction }: Props) {
   const categories = useCategoryStore((state) => state.categories);
 
   const handleAddTransaction = (data: inputs) => {
-    if (editTransaction === initialState) {
+    if (!editTransaction) {
       addNewTransaction(data);
     } else {
-      setEditTransaction(initialState);
+      setEditTransaction(null);
       updateTransaction(editTransaction.id, data);
     }
   };
@@ -50,4 +49,4 @@ function FormContainer({ editTransaction, setEditTransaction }: Props) {
   );
 }
 
-export default FormContainer;
+export default TransactionForm;

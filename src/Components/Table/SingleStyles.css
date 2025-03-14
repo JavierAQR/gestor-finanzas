@@ -2,7 +2,7 @@
   width: 80%;
   display: flex;
   justify-content: center;
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

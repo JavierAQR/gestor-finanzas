@@ -1,5 +1,5 @@
 .formulario-transaccion {
-  margin: 0 0 3.5rem 0;
+  margin: 0 0 2.5rem 0;
 }
 
 .formulario-transaccion h1 {
@@ -10,8 +10,6 @@
   display: flex;
   justify-content: center;
   margin-top: 2rem;
-  margin-left: 10px;
-  margin-right: 10px;
   gap: 30px;
   flex-wrap: wrap;
 }
