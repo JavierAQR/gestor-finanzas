@@ -38,13 +38,15 @@ const TableControlsLayout = ({
           onChange={handleCategory}
         >
           <option value="">Todo</option>
-          {categoriasDelMes
-            .filter((item) => item.type === typeFilter)
-            .map((item, index) => (
-              <option key={index} value={item.name}>
-                {item.name}
-              </option>
-            ))}
+          {categoriasDelMes.map((item, index) => {
+            if (item.type === typeFilter) {
+              return (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              );
+            }
+          })}
         </select>
       </div>
       <div className="control">

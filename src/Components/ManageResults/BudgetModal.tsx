@@ -3,7 +3,7 @@ import { useMonthContext } from "../../context/MonthContext";
 import "./Styles.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { budgetSchema, TbudgetSchema } from "../../schemas/budgetSchema";
-import SelectField, { selectData } from "../FormFields/SelectField";
+import SelectField from "../FormFields/SelectField";
 import InputField from "../FormFields/InputField";
 import ReusableTable, { Column } from "../Table/ReusableTable";
 import { Budget, budgetForm } from "../../types";
@@ -73,40 +73,19 @@ const BudgetModal = ({ typeFilter, dataTable, handleDelete }: Props) => {
     setEditBudget(inputs);
   };
 
-  const obtenerCategoriasDelTipo = (tipo: string) => {
-    const categorias = categoriasDelMes
-      .filter((item) => item.type === tipo)
-      .map((item) => {
-        return {
-          name: item.name,
-          value: item.name,
-        };
-      });
-    return categorias;
-  };
+  //Array de categorias correspondientes al tipo seleccionado
+  const typeCategories = categoriasDelMes
+    .filter((item) => item.type === typeFilter)
+    .map((item) => item.name);
 
-  const categoriasSeleccionadas: selectData[] =
-    obtenerCategoriasDelTipo(typeFilter);
+  // Convertir budgetCategories a un Set para búsquedas eficientes.
+  // budgetCategories ahora es un objeto con las categorias con presupuesto.
+  const budgetCategoriesSet = new Set(budget.map((item) => item.category));
 
-  //Array de las categorias ya agregadas (con respectivo presupuesto)
-  const categoriasAgregadas = budget.reduce<selectData[]>((arr, item) => {
-    arr.push({
-      name: item.category,
-      value: item.category,
-    });
-    return arr;
-  }, []);
-
-  //Categorias para el select (se muestran las que aun no tienen presupuesto agregado)
-  const categoriasFaltantes = categoriasSeleccionadas
-    .filter(
-      (item) =>
-        !categoriasAgregadas.some((category) => category.name === item.name)
-    )
-    .reduce<selectData[]>((arr, item) => {
-      arr.push(item);
-      return arr;
-    }, []);
+  // Categorías para el select (se muestran las que aún no tienen presupuesto)
+  const pendingCategories = typeCategories.filter(
+    (item) => !budgetCategoriesSet.has(item)
+  );
 
   const {
     register,
@@ -146,7 +125,7 @@ const BudgetModal = ({ typeFilter, dataTable, handleDelete }: Props) => {
             register={register}
             errors={errors}
             watch={watch}
-            data={!editBudget ? categoriasFaltantes : categoriasSeleccionadas}
+            data={!editBudget ? pendingCategories : typeCategories}
           />
           <InputField
             name="budget"

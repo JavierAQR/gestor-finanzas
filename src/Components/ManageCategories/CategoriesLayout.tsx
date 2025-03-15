@@ -98,10 +98,7 @@ const CategoriesLayout = () => {
             register={register}
             errors={errors}
             watch={watch}
-            data={[
-              { name: "Egreso", value: "egreso" },
-              { name: "Ingreso", value: "ingreso" },
-            ]}
+            data={["ingreso", "egreso"]}
           />
         </>
       </FormContainer>

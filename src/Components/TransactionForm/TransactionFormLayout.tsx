@@ -51,9 +51,7 @@ const TransactionFormLayout = ({
   //Este array de objetos [{id: string, name: string, type: string}]
   //Es convertido a [{name: string, value: string}]
   //Para luego ser iterado en un SelectField como Options <option value={value}>{name}<option/>
-  const typeSelect = typeSelected.map((item) => {
-    return { name: item.name, value: item.name };
-  });
+  const typeSelect = typeSelected.map((item) => item.name);
 
   return (
     <>
@@ -66,10 +64,7 @@ const TransactionFormLayout = ({
               register={register}
               errors={errors}
               watch={watch}
-              data={[
-                { name: "Egreso", value: "egreso" },
-                { name: "Ingreso", value: "ingreso" },
-              ]}
+              data={["ingreso", "egreso"]}
             />
 
             <InputField

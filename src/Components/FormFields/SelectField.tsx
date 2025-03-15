@@ -7,17 +7,12 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 
-export interface selectData {
-  name: string;
-  value: string;
-}
-
 interface Props<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   watch: UseFormWatch<T>;
-  data: selectData[];
+  data: string[];
   label?: string;
   disabled?: boolean;
 }
@@ -42,8 +37,8 @@ const SelectField = <T extends FieldValues>({
           <select {...register(name)}>
             <option disabled></option>
             {data.map((item, index) => (
-              <option key={index} value={item.value}>
-                {item.name}
+              <option key={index} value={item}>
+                {item}
               </option>
             ))}
           </select>

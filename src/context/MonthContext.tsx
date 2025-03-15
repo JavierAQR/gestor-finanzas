@@ -47,43 +47,39 @@ export function MonthTransactionProvider({ children }: Props) {
   //Estado para manejar el mes selecciona, el que por defecto será el actual
   const [monthSelected, setMonthSelected] = useState(fechaActual);
 
-  function obtenerTransaccionesPorFecha(transacciones: Transaction[]) {
-    return transacciones.reduce<{
-      [key: string]: Transaction[];
-    }>((obj, item) => {
-      const monthKey = item.date.slice(0, 7);
-      if (!obj[monthKey]) {
-        obj[monthKey] = [];
-      }
-      obj[monthKey].push(item);
-      return obj;
-    }, {});
-  }
-
-  //Objeto donde cada clave es una fecha y los valores de las claves son arrays de transacciones
-  //correspondientes a la fecha
-  const transaccionesPorMes = obtenerTransaccionesPorFecha(transactions);
-
-  //Array con las todas las claves del objeto historyTransactions (los meses)
-  const keysMonths = Object.keys(transaccionesPorMes).sort((a, b) =>
-    b.localeCompare(a)
+  //Obtener las fechas registradas
+  const keysMonths = Array.from(
+    new Set(
+      transactions
+        .map((item) => item.date.slice(0, 7))
+        .sort((a, b) => b.localeCompare(a))
+    )
   );
 
   //Array con todas las transacciones del mes elegido
-  const transaccionesDelMes = transaccionesPorMes[monthSelected] || [];
+  const transaccionesDelMes =
+    transactions.filter((item) => item.date.slice(0, 7) === monthSelected) ||
+    [];
 
-  const categoriasDelMes = transaccionesDelMes.reduce<categoriasMes[]>(
-    (arr, current) => {
-      if (!arr.some((item) => item.name === current.category)) {
-        arr.push({
+  const categoriasDelMes = transaccionesDelMes.reduce<{
+    map: Map<string, categoriasMes>;
+    arr: categoriasMes[];
+  }>(
+    (acc, current) => {
+      if (!acc.map.has(current.category)) {
+        const categoria = {
           name: current.category,
           type: current.type,
-        });
+        };
+        acc.map.set(current.category, categoria); // Almacena en el Map
+        acc.arr.push(categoria); // Almacena en el array
       }
-      return arr;
+      return acc;
     },
-    []
-  );
+    { map: new Map(), arr: [] }
+  ).arr;
+
+
 
   const valor = {
     monthSelected,

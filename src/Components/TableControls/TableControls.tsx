@@ -14,17 +14,14 @@ import { useFilterContext } from "../../context/FilterContext";
 
 interface Props {
   setSelectedTable: Dispatch<SetStateAction<Transaction[]>>;
-  
 }
 
-function TableControls({
-  setSelectedTable,
- 
-}: Props) {
+function TableControls({ setSelectedTable }: Props) {
   //Se importan las transacciones del mes correspondiente
   const { transaccionesDelMes } = useMonthContext();
   const categories = useCategoryStore((state) => state.categories);
-  const {categoryFilter, setCategoryFilter, typeFilter, setTypeFilter} = useFilterContext()
+  const { categoryFilter, setCategoryFilter, typeFilter, setTypeFilter } =
+    useFilterContext();
   //Estado para el filtro de ordenamiento
   const [tableSort, setTableSort] = useState("reciente");
 

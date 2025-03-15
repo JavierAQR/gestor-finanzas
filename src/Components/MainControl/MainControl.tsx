@@ -5,7 +5,7 @@ import { Transaction } from "../../types";
 import ManageResults from "../ManageResults/ManageResults";
 import "./Styles.css";
 import { FilterContextProvider } from "../../context/FilterContext";
-import ManageCategories from "../ManageCategories/CategoriesContainer";
+import ManageCategories from "../ManageCategories/ManageCategories";
 import TransactionForm from "../TransactionForm/TransactionForm";
 import { TableControls } from "../TableControls";
 
