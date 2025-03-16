@@ -20,8 +20,14 @@ export const initialState: Transaction = {
   type: "",
 };
 
+interface totalAmount {
+  ingresos: number;
+  egresos: number;
+}
+
 interface transactionState {
   transactions: Transaction[];
+  totalAmountByType: (data?: Transaction[]) => totalAmount;
   addNewTransaction: (inputs: inputs) => void;
   deleteTransaction: (id: string) => void;
   updateTransaction: (id: string, datosAct: inputs) => void;
@@ -64,6 +70,27 @@ export const useTransactionStore = create<transactionState>()(
             return tr;
           });
           set({ transactions: updateTransactions });
+        },
+        totalAmountByType: (data?: Transaction[]) => {
+          const { transactions } = get();
+          let arrayData = transactions;
+          if (data) {
+            arrayData = data;
+          }
+          return arrayData.reduce<{
+            ingresos: number;
+            egresos: number;
+          }>(
+            (obj, item) => {
+              if (item.type === "ingreso") {
+                obj.ingresos += item.amount;
+              } else {
+                obj.egresos += item.amount;
+              }
+              return obj;
+            },
+            { ingresos: 0, egresos: 0 }
+          );
         },
       };
     },

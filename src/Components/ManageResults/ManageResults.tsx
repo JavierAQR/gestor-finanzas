@@ -10,10 +10,10 @@ interface Props {
 }
 
 const ManageResults = ({ selectedTable }: Props) => {
+  const budget = useBudgetStore((b) => b.budget);
   const deleteBudget = useBudgetStore((b) => b.deleteBudget);
   const { monthSelected, categoriasDelMes } = useMonthContext();
   const { typeFilter, categoryFilter } = useFilterContext();
-  const budget = useBudgetStore((b) => b.budget);
 
   const handleDelete = (id: string) => {
     deleteBudget(id);

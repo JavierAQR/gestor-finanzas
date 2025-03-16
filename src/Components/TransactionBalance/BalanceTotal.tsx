@@ -1,4 +1,5 @@
 import { useFilterContext } from "../../context/FilterContext";
+import { useTransactionStore } from "../../store/transaction";
 import { Budget, Transaction } from "../../types";
 import BudgetContainer from "../ManageResults/BudgetContainer";
 import ReusableBalance from "./ReusableBalance";
@@ -6,31 +7,24 @@ import "./styles.css";
 
 type Props = {
   selectedTable: Transaction[];
-
   budgetCategory: Budget | undefined;
   totalBudgetAmount: number;
 };
 
 function BalanceTotal({
   selectedTable,
-
   budgetCategory,
   totalBudgetAmount,
 }: Props) {
   const { typeFilter, categoryFilter } = useFilterContext();
+  const getTotalAmountByType = useTransactionStore(
+    (state) => state.totalAmountByType
+  );
 
-  const getTotalAmountByType = (typeFilter: string) => {
-    return selectedTable
-      .filter((item) => item.type === typeFilter)
-      .reduce((acc, item) => (acc += Number(item.amount)), 0);
-  };
-
-  //Diferencia general entre ingresos totales y egresos totales
-  const remaining =
-    getTotalAmountByType("ingreso") - getTotalAmountByType("egreso");
+  const { ingresos, egresos } = getTotalAmountByType(selectedTable);
 
   //Muestra solo el ingreso total o el egreso total, dependiendo del tipo de transaccion elegido en el filtro de la tabla
-  const totalAmountByType = getTotalAmountByType(typeFilter);
+  const totalAmountByType = typeFilter === "ingreso" ? ingresos : egresos;
 
   // Si la categoría actual tiene presupuesto, se retorna el monto del presupuesto
   // Si en caso la categoría no tiene presupuesto, se retorna 0.
@@ -51,15 +45,9 @@ function BalanceTotal({
     <div className="balance-total">
       {typeFilter === "" && (
         <>
-          <ReusableBalance
-            titulo="Total de ingresos"
-            monto={getTotalAmountByType("ingreso")}
-          />
-          <ReusableBalance
-            titulo="Total de egresos"
-            monto={getTotalAmountByType("egreso")}
-          />
-          <ReusableBalance titulo="Restante" monto={remaining} />
+          <ReusableBalance titulo="Total de ingresos" monto={ingresos} />
+          <ReusableBalance titulo="Total de egresos" monto={egresos} />
+          <ReusableBalance titulo="Restante" monto={ingresos - egresos} />
         </>
       )}
       {typeFilter !== "" && (

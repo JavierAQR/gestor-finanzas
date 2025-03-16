@@ -27,10 +27,8 @@ const CategoriesLayout = () => {
     },
   ];
   const [editCategory, setEditCategory] = useState<Category | null>(null);
-  const categories = useCategoryStore((state) => state.categories);
-  const deleteCategory = useCategoryStore((state) => state.deleteCategory);
-  const updateCategory = useCategoryStore((state) => state.updateCategory);
-  const addNewCategory = useCategoryStore((state) => state.addNewCategory);
+  const { categories, addNewCategory, updateCategory, deleteCategory } =
+    useCategoryStore((category) => category);
 
   const handleDelete = (id: string) => {
     deleteCategory(id);
