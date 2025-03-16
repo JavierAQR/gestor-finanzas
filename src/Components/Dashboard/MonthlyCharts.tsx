@@ -30,7 +30,7 @@ const MonthlyCharts = () => {
   const totalCategoriesEgreso = getAmountByCategory("egreso");
   const totalCategoriesIngreso = getAmountByCategory("ingreso");
 
-  const { ingresos, egresos } = getTotalAmountByType();
+  const { ingresos, egresos } = getTotalAmountByType(transaccionesDelMes);
 
   return (
     <div className="dashboard-mensual">

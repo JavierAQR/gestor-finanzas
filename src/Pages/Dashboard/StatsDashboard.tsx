@@ -1,5 +1,5 @@
-import GeneralCharts from "./GeneralCharts";
-import MonthlyCharts from "./MonthlyCharts";
+import GeneralCharts from "../../Components/Dashboard/GeneralCharts";
+import MonthlyCharts from "../../Components/Dashboard/MonthlyCharts";
 import "./style.css";
 
 const StatsDashboard = () => {

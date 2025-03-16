@@ -17,8 +17,8 @@ function MainControl() {
   const [selectedTable, setSelectedTable] = useState<Transaction[]>([]);
 
   return (
-    <div className="principal">
-      <ErrorBoundary>
+    <ErrorBoundary>
+      <div className="principal">
         <div className="form-principal">
           <ManageCategories />
           <TransactionForm
@@ -36,8 +36,8 @@ function MainControl() {
             />
           </div>
         </FilterContextProvider>
-      </ErrorBoundary>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

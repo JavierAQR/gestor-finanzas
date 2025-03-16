@@ -59,23 +59,12 @@ function DisplayTransactions({ selectedTable, setEditTransaction }: Props) {
   ];
 
   return (
-    <>
-      {selectedTable.length === 0 ? (
-        <div className="tabla-vacía">
-          <h3>No se encontraron transacciones registradas.</h3>
-          <span>📁</span>
-        </div>
-      ) : (
-        <>
-          <ReusableTable
-            data={selectedTable}
-            columns={columns}
-            handleDelete={handleDeleteTransaction}
-            handleUpdate={handleUpdateTransaction}
-          />
-        </>
-      )}
-    </>
+    <ReusableTable
+      data={selectedTable}
+      columns={columns}
+      handleDelete={handleDeleteTransaction}
+      handleUpdate={handleUpdateTransaction}
+    />
   );
 }
 

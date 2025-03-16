@@ -50,6 +50,18 @@ tr:hover {
   gap: 20px;
 }
 
+.tabla-vacía {
+  color: var(--color-light);
+  display: grid;
+  align-content: center;
+  background-color: var(--color-fondo);
+  text-align: center;
+
+  padding: 30px;
+  width: 100%;
+  height: 200px;
+}
+
 @media screen and (max-width: 600px) {
   .reusable-table {
     width: 100%;
